@@ -333,6 +333,56 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
   background:radial-gradient(circle,rgba(206,43,43,.09),transparent 65%);transform:translate(-50%,-50%);display:none}
 @media(hover:hover) and (pointer:fine){#cglow{display:block}}
 
+/* ---------- wizard + HQ modals ---------- */
+.modal{position:fixed;inset:0;z-index:960;display:none;align-items:flex-start;justify-content:center;
+  background:rgba(10,12,15,.86);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);overflow-y:auto;padding:30px 14px 60px}
+.modal.on{display:flex}
+.mbox{background:var(--gun);border:1px solid #2E353D;border-top:5px solid var(--red);width:100%;max-width:720px;
+  animation:pageIn .35s ease both;position:relative;margin-top:2vh}
+.mhead{display:flex;align-items:center;gap:12px;padding:16px 20px;background:#101215;border-bottom:1px solid #2A3038}
+.mhead h3{font-size:20px;letter-spacing:2px}
+.mhead .x{margin-left:auto;width:38px;height:38px;background:none;border:1px solid var(--steel);color:var(--white);
+  font-size:18px;cursor:pointer;font-family:'Oswald';transition:.15s}
+.mhead .x:hover{border-color:var(--red);color:var(--red)}
+.mbody{padding:24px 20px}
+.wizbar{display:flex;gap:6px;margin-bottom:22px}
+.wizbar i{flex:1;height:6px;background:#2A3038;position:relative;overflow:hidden;font-style:normal}
+.wizbar i::after{content:"";position:absolute;inset:0;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .35s}
+.wizbar i.done::after{transform:scaleX(1)}
+.wstep-t{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:4px}
+.wstep-h{font-family:'Anton';font-size:26px;color:var(--white);letter-spacing:1px;text-transform:uppercase;margin-bottom:18px}
+.wf{margin-bottom:16px}
+.wchecks{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+.wcheck{display:flex;align-items:center;gap:10px;background:#101215;border:1px solid #2E353D;padding:11px 12px;
+  cursor:pointer;font-size:14.5px;transition:.15s;user-select:none}
+.wcheck:hover{border-color:var(--red)}
+.wcheck.on{border-color:var(--red);background:#1d1315;box-shadow:inset 0 0 0 1px var(--red)}
+.wcheck b{width:16px;height:16px;flex:0 0 auto;border:2px solid var(--steel);display:inline-block;position:relative}
+.wcheck.on b{border-color:var(--red);background:var(--red)}
+.wcheck.on b::after{content:"✓";position:absolute;inset:0;color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center}
+.wcheck .up{margin-left:auto;font-size:10px;letter-spacing:1.5px;color:var(--amber);border:1px solid var(--amber);padding:2px 6px;white-space:nowrap}
+.wnav{display:flex;gap:12px;margin-top:26px}
+.upnote{background:#1d1712;border:1px solid var(--amber);border-left:5px solid var(--amber);padding:13px 16px;
+  font-size:14px;color:#e8c98a;margin-top:14px;display:none}
+.upnote.on{display:block}
+.rev{background:#101215;border:1px solid #2E353D;padding:16px;font-size:14.5px;line-height:1.75;max-height:300px;overflow-y:auto}
+.rev b{color:var(--white)}
+.rev .rvup{color:var(--amber)}
+.done-hex{width:90px;height:98px;margin:10px auto 18px;animation:pop .5s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+/* HQ */
+.hq-orders .req{border-left-color:var(--red)}
+.hq-orders .req.st-building{border-left-color:var(--amber)}
+.hq-orders .req.st-delivered{border-left-color:var(--green)}
+.badge.n{background:rgba(206,43,43,.16);color:#ff8d8d;border:1px solid var(--red)}
+.hqset{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:16px}
+.hqset .full2{grid-column:1/-1}
+.fbnote{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--amber);border:1px dashed var(--amber);padding:6px 12px;margin-top:8px}
+.copyarea{width:100%;height:300px;background:#0C0E11;border:1px solid #2E353D;color:#cfe3cf;
+  font-family:Menlo,Consolas,monospace;font-size:12.5px;padding:14px;line-height:1.6;white-space:pre;resize:vertical}
+.verbadge{cursor:default}
+
 /* ---------- responsive ---------- */
 @media(max-width:900px){
   .grid3{grid-template-columns:1fr}
@@ -421,17 +471,17 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
       <div class="card reveal"><span class="cnum">T-1</span><h3>The Storefront</h3><div class="redline"></div>
         <p style="font-size:14.5px;color:var(--steel-hi)">Your business, front and center. Built to get you found and get you called.</p>
         <ul><li>Full custom design</li><li>Up to 5 pages</li><li>Click-to-call &amp; contact forms</li><li>Found-on-Google setup</li></ul>
-        <a class="btn btn-ghost" style="margin-top:16px;width:100%;justify-content:center" href="#/pricing">From $600</a>
+        <a class="btn btn-ghost" style="margin-top:16px;width:100%;justify-content:center" href="#/pricing">From $<span data-p="t1b">600</span></a>
       </div>
       <div class="card feat reveal"><span class="ribbon">Most Popular</span><span class="cnum">T-2</span><h3>The Booking Rig</h3><div class="redline"></div>
         <p style="font-size:14.5px;color:var(--steel-hi)">Everything in T-1, plus customers book you straight from the site.</p>
         <ul><li>Live availability calendar</li><li>Trip / appointment requests</li><li>Automatic confirmations</li><li>Review &amp; photo showcase</li></ul>
-        <a class="btn btn-red" style="margin-top:16px;width:100%;justify-content:center" href="#/pricing">From $1,000</a>
+        <a class="btn btn-red" style="margin-top:16px;width:100%;justify-content:center" href="#/pricing">From $<span data-p="t2b">1,000</span></a>
       </div>
       <div class="card reveal"><span class="cnum">T-3</span><h3>The Command Center</h3><div class="redline"></div>
         <p style="font-size:14.5px;color:var(--steel-hi)">A full operations hub. You approve, schedule, and run it all from one dashboard.</p>
         <ul><li>Client accounts &amp; approvals</li><li>Admin schedule builder</li><li>Deposits &amp; reminders</li><li>Priority support</li></ul>
-        <a class="btn btn-ghost" style="margin-top:16px;width:100%;justify-content:center" href="#/pricing">From $2,000</a>
+        <a class="btn btn-ghost" style="margin-top:16px;width:100%;justify-content:center" href="#/pricing">From $<span data-p="t3b">2,000</span></a>
       </div>
     </div>
   </div>
@@ -449,7 +499,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
     <div class="tagplate"><h2>Full Feature Loadout</h2></div>
     <p class="sect-sub">Every tier includes everything from the tier before it. Grey "+" items carry forward automatically.</p>
 
-    <div class="tierhead"><h3>Tier 1 — The Storefront</h3><span class="tp">$600 build · $250/yr</span></div>
+    <div class="tierhead"><h3>Tier 1 — The Storefront</h3><span class="tp">$<span data-p="t1b">600</span> build · $<span data-p="t1y">250</span>/yr</span></div>
     <div class="chk">
       <div>100% custom design — zero templates</div>
       <div>Up to 5 pages</div>
@@ -465,7 +515,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
       <div>Updates &amp; support included</div>
     </div>
 
-    <div class="tierhead"><h3>Tier 2 — The Booking Rig</h3><span class="tp">$1,000 build · $400/yr</span></div>
+    <div class="tierhead"><h3>Tier 2 — The Booking Rig</h3><span class="tp">$<span data-p="t2b">1,000</span> build · $<span data-p="t2y">400</span>/yr</span></div>
     <div class="chk">
       <div class="inh">Everything in Tier 1</div>
       <div>Live availability calendar</div>
@@ -479,7 +529,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
       <div>FAQ section</div>
     </div>
 
-    <div class="tierhead"><h3>Tier 3 — The Command Center</h3><span class="tp">$2,000 build · $700/yr</span></div>
+    <div class="tierhead"><h3>Tier 3 — The Command Center</h3><span class="tp">$<span data-p="t3b">2,000</span> build · $<span data-p="t3y">700</span>/yr</span></div>
     <div class="chk">
       <div class="inh">Everything in Tier 1 &amp; 2</div>
       <div>Client accounts &amp; login</div>
@@ -496,12 +546,12 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
     <table class="addon-t">
       <thead><tr><th>Add-On</th><th>What You Get</th><th>Price</th></tr></thead>
       <tbody>
-        <tr><td>Extra Page</td><td>Any additional page beyond your tier's count</td><td>$75</td></tr>
-        <tr><td>Pro Gallery</td><td>Expanded photo/video gallery with albums</td><td>$100</td></tr>
-        <tr><td>Blog / News</td><td>Post updates, reports, and announcements yourself</td><td>$150</td></tr>
-        <tr><td>Logo &amp; Branding</td><td>Custom logo, colors &amp; brand kit</td><td>$200</td></tr>
-        <tr><td>SEO Boost</td><td>Deep search tune-up to climb Google results</td><td>$200</td></tr>
-        <tr><td>Business Email</td><td>you@yourbusiness.com professional address</td><td>$50</td></tr>
+        <tr><td>Extra Page</td><td>Any additional page beyond your tier's count</td><td>$<span data-p="a_page">75</span></td></tr>
+        <tr><td>Pro Gallery</td><td>Expanded photo/video gallery with albums</td><td>$<span data-p="a_gallery">100</span></td></tr>
+        <tr><td>Blog / News</td><td>Post updates, reports, and announcements yourself</td><td>$<span data-p="a_blog">150</span></td></tr>
+        <tr><td>Logo &amp; Branding</td><td>Custom logo, colors &amp; brand kit</td><td>$<span data-p="a_logo">200</span></td></tr>
+        <tr><td>SEO Boost</td><td>Deep search tune-up to climb Google results</td><td>$<span data-p="a_seo">200</span></td></tr>
+        <tr><td>Business Email</td><td>you@yourbusiness.com professional address</td><td>$<span data-p="a_email">50</span></td></tr>
       </tbody>
     </table>
     <div class="cta-row" style="margin-top:34px">
@@ -518,32 +568,32 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
     <p class="sect-sub">One build fee. One yearly fee that covers your domain, updates, and support. No hourly surprises, no hostage fees.</p>
     <div class="grid3">
       <div class="card"><span class="cnum">T-1</span><h3>The Storefront</h3>
-        <div class="price">$600 <small>build</small></div><div class="yr">+ $250 / year</div>
+        <div class="price">$<span data-p="t1b">600</span> <small>build</small></div><div class="yr">+ $<span data-p="t1y">250</span> / year</div>
         <ul>
           <li>Full custom design</li><li>Up to 5 pages</li><li>Your own .com domain</li>
           <li>Contact &amp; call buttons</li><li>Found-on-Google setup</li><li>Updates &amp; support included</li>
         </ul>
-        <button class="btn btn-ghost" style="margin-top:14px;width:100%;justify-content:center" onclick="quoteMe('Tier 1 — The Storefront')">Start A Tier 1 Build</button>
+        <button class="btn btn-ghost" style="margin-top:14px;width:100%;justify-content:center" onclick="openWizard(1)">Start A Tier 1 Build</button>
       </div>
       <div class="card feat"><span class="ribbon">Most Popular</span><span class="cnum">T-2</span><h3>The Booking Rig</h3>
-        <div class="price">$1,000 <small>build</small></div><div class="yr">+ $400 / year</div>
+        <div class="price">$<span data-p="t2b">1,000</span> <small>build</small></div><div class="yr">+ $<span data-p="t2y">400</span> / year</div>
         <ul>
           <li class="mut">Everything in Tier 1</li><li>Live availability calendar</li><li>Booking request forms</li>
           <li>Instant confirmations</li><li>Reviews &amp; testimonials</li><li>Specials &amp; newsletter tools</li>
         </ul>
-        <button class="btn btn-red" style="margin-top:14px;width:100%;justify-content:center" onclick="quoteMe('Tier 2 — The Booking Rig')">Start A Tier 2 Build</button>
+        <button class="btn btn-red" style="margin-top:14px;width:100%;justify-content:center" onclick="openWizard(2)">Start A Tier 2 Build</button>
       </div>
       <div class="card"><span class="cnum">T-3</span><h3>The Command Center</h3>
-        <div class="price">$2,000 <small>build</small></div><div class="yr">+ $700 / year</div>
+        <div class="price">$<span data-p="t3b">2,000</span> <small>build</small></div><div class="yr">+ $<span data-p="t3y">700</span> / year</div>
         <ul>
           <li class="mut">Everything in Tier 1 &amp; 2</li><li>Client accounts &amp; approvals</li><li>Owner admin dashboard</li>
           <li>Schedule builder</li><li>Deposits &amp; reminders</li><li>Priority support</li>
         </ul>
-        <button class="btn btn-ghost" style="margin-top:14px;width:100%;justify-content:center" onclick="quoteMe('Tier 3 — The Command Center')">Start A Tier 3 Build</button>
+        <button class="btn btn-ghost" style="margin-top:14px;width:100%;justify-content:center" onclick="openWizard(3)">Start A Tier 3 Build</button>
       </div>
     </div>
     <p style="margin-top:30px;color:var(--steel-hi);font-size:14.5px;letter-spacing:.5px">
-      ◆ Founding-client rate: first builds in each trade get an introductory discount in exchange for a testimonial. Ask when you reach out.
+      <span id="foundNote">◆ Founding-client rate: first builds in each trade get an introductory discount in exchange for a testimonial. Ask when you reach out.</span>
     </p>
   </div>
 </section>
@@ -672,6 +722,55 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
   </div>
 </section>
 
+<!-- ============ PAGE: HQ (hidden owner panel) ============ -->
+<section class="page" id="pg-hq">
+  <div class="wrap sect">
+    <div class="tagplate"><h2>OC Headquarters</h2></div>
+
+    <div class="pinbox" id="hqPinBox">
+      <p style="font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--steel-hi)">Owner Only</p>
+      <h3 style="font-size:30px;margin-top:8px">Enter PIN</h3>
+      <div class="pindots"><i id="hd0"></i><i id="hd1"></i><i id="hd2"></i><i id="hd3"></i></div>
+      <div class="padgrid">
+        <div class="pk" onclick="hqKey(1)">1</div><div class="pk" onclick="hqKey(2)">2</div><div class="pk" onclick="hqKey(3)">3</div>
+        <div class="pk" onclick="hqKey(4)">4</div><div class="pk" onclick="hqKey(5)">5</div><div class="pk" onclick="hqKey(6)">6</div>
+        <div class="pk" onclick="hqKey(7)">7</div><div class="pk" onclick="hqKey(8)">8</div><div class="pk" onclick="hqKey(9)">9</div>
+        <div></div><div class="pk" onclick="hqKey(0)">0</div><div class="pk" onclick="hqClearPin()">⌫</div>
+      </div>
+    </div>
+
+    <div id="hq" style="display:none">
+      <div class="fbnote">⚠ Local storage only — Firebase sync slot ready, not connected</div>
+
+      <div class="tierhead" style="margin-top:26px"><h3>Active Orders</h3><span class="badge n" id="hqCount">0 orders</span></div>
+      <p style="color:var(--steel-hi);font-size:14px;margin-bottom:14px">Tap <b style="color:var(--white)">Copy for Claude</b> on any order, then paste it straight into a Claude chat to start the build.</p>
+      <div class="hq-orders" id="hqOrders"></div>
+
+      <div class="tierhead" style="margin-top:44px"><h3>Site Settings</h3><span class="tp" style="font-size:15px">Prices &amp; text shown to customers</span></div>
+      <div class="hqset">
+        <div><label class="fl">Tier 1 Build $</label><input class="fi" id="s_t1b" inputmode="numeric"></div>
+        <div><label class="fl">Tier 1 / Yr $</label><input class="fi" id="s_t1y" inputmode="numeric"></div>
+        <div><label class="fl">Tier 2 Build $</label><input class="fi" id="s_t2b" inputmode="numeric"></div>
+        <div><label class="fl">Tier 2 / Yr $</label><input class="fi" id="s_t2y" inputmode="numeric"></div>
+        <div><label class="fl">Tier 3 Build $</label><input class="fi" id="s_t3b" inputmode="numeric"></div>
+        <div><label class="fl">Tier 3 / Yr $</label><input class="fi" id="s_t3y" inputmode="numeric"></div>
+        <div><label class="fl">Extra Page $</label><input class="fi" id="s_a_page" inputmode="numeric"></div>
+        <div><label class="fl">Pro Gallery $</label><input class="fi" id="s_a_gallery" inputmode="numeric"></div>
+        <div><label class="fl">Blog $</label><input class="fi" id="s_a_blog" inputmode="numeric"></div>
+        <div><label class="fl">Logo Kit $</label><input class="fi" id="s_a_logo" inputmode="numeric"></div>
+        <div><label class="fl">SEO Boost $</label><input class="fi" id="s_a_seo" inputmode="numeric"></div>
+        <div><label class="fl">Biz Email $</label><input class="fi" id="s_a_email" inputmode="numeric"></div>
+        <div class="full2"><label class="fl">Pricing Page Note</label><textarea class="fi" id="s_note" rows="2"></textarea></div>
+      </div>
+      <div class="wnav">
+        <button class="btn btn-red" onclick="saveSettings()">Save Settings <span class="arr">▸</span></button>
+        <button class="btn btn-ghost" onclick="hqLock()">Lock HQ</button>
+      </div>
+      <p style="margin-top:26px"><button class="bsm no" onclick="clearOrders()">Delete All Orders</button></p>
+    </div>
+  </div>
+</section>
+
 <!-- ============ FOOTER ============ -->
 <footer>
   <div class="wrap frow">
@@ -686,13 +785,47 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
   </div>
 </footer>
 
-<div class="verbadge">OC SHOWCASE v1.0</div>
+<!-- ============ WIZARD MODAL ============ -->
+<div class="modal" id="wizModal">
+  <div class="mbox">
+    <div class="mhead">
+      <span class="lamp" style="width:10px;height:10px;border-radius:50%;background:var(--red);box-shadow:0 0 10px var(--red-glow)"></span>
+      <h3 id="wizTitle">Start Your Build</h3>
+      <button class="x" onclick="closeWizard()" aria-label="Close">✕</button>
+    </div>
+    <div class="mbody">
+      <div class="wizbar" id="wizBar"></div>
+      <div id="wizBody"></div>
+      <div class="upnote" id="wizUp"></div>
+      <div class="wnav">
+        <button class="btn btn-ghost" id="wizBack" onclick="wizNav(-1)">◂ Back</button>
+        <button class="btn btn-red" id="wizNext" onclick="wizNav(1)">Next <span class="arr">▸</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ORDER VIEW MODAL ============ -->
+<div class="modal" id="ordModal">
+  <div class="mbox">
+    <div class="mhead"><h3 id="ordTitle">Order</h3><button class="x" onclick="document.getElementById('ordModal').classList.remove('on')">✕</button></div>
+    <div class="mbody">
+      <p style="color:var(--steel-hi);font-size:13.5px;margin-bottom:12px">Full build brief — copy it and paste directly into Claude.</p>
+      <textarea class="copyarea" id="ordText" readonly></textarea>
+      <div class="wnav">
+        <button class="btn btn-red" onclick="copyOrderText()">Copy For Claude <span class="arr">▸</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="verbadge" id="verBadge">OC SHOWCASE v2.0</div>
 <div id="toast"></div>
 
 <script>
 "use strict";
 /* ================= ROUTER (back-button safe) ================= */
-var ROUTES = ["home","features","pricing","demos","admin"];
+var ROUTES = ["home","features","pricing","demos","admin","hq"];
 function currentRoute(){
   var h = location.hash.replace(/^#\/?/, "").split("?")[0];
   return ROUTES.indexOf(h) >= 0 ? h : "home";
@@ -711,6 +844,7 @@ function renderRoute(){
   requestAnimationFrame(bindReveals);
   if (r==="demos") initCalendar();
   if (r==="admin") renderAdmin();
+  if (r==="hq") renderHQ();
 }
 function go(r){ location.hash = "#/"+r; }
 window.addEventListener("hashchange", renderRoute);
@@ -964,11 +1098,6 @@ function formSubmit(){
   window.addEventListener("pointerup", function(){ dragging = false; });
 })();
 
-/* ================= PRICING CTA ================= */
-function quoteMe(tier){
-  toast(tier + " — nice pick. Contact form coming to this button soon!");
-}
-
 /* ================= ADMIN ================= */
 var pinBuf = [];
 function pinKey(n){
@@ -1093,8 +1222,466 @@ function renderSchedule(){
   });
 }
 
+/* ================= STORE (local now → Firebase later) ================= */
+var DEFAULT_SET = {t1b:600,t1y:250,t2b:1000,t2y:400,t3b:2000,t3y:700,
+  a_page:75,a_gallery:100,a_blog:150,a_logo:200,a_seo:200,a_email:50,
+  note:"◆ Founding-client rate: first builds in each trade get an introductory discount in exchange for a testimonial. Ask when you reach out."};
+var store = {orders:[], nextOrder:1, settings:{}};
+function loadStore(){
+  try{
+    var raw = localStorage.getItem("ocw_store");
+    if (raw) store = JSON.parse(raw);
+  }catch(e){}
+  if (!store.orders) store.orders = [];
+  if (!store.nextOrder) store.nextOrder = 1;
+  store.settings = Object.assign({}, DEFAULT_SET, store.settings || {});
+}
+function saveStore(){
+  try{ localStorage.setItem("ocw_store", JSON.stringify(store)); }catch(e){}
+  /* ── FIREBASE SYNC SLOT ──────────────────────────────
+     When Firebase is connected, push here:
+     db.collection("ocw").doc("store").set(store)
+     and load in loadStore() on boot.
+  ───────────────────────────────────────────────────── */
+}
+function money(n){ return Number(n).toLocaleString("en-US"); }
+function applySettings(){
+  var s = store.settings;
+  document.querySelectorAll("[data-p]").forEach(function(el){
+    var k = el.getAttribute("data-p");
+    if (s[k] !== undefined) el.textContent = money(s[k]);
+  });
+  var fn = document.getElementById("foundNote");
+  if (fn) fn.textContent = s.note;
+}
+
+/* ================= INTAKE WIZARD ================= */
+var TIER_NAMES = {1:"Tier 1 — The Storefront", 2:"Tier 2 — The Booking Rig", 3:"Tier 3 — The Command Center"};
+function tierPrice(t){
+  var s = store.settings;
+  return "$" + money(s["t"+t+"b"]) + " build + $" + money(s["t"+t+"y"]) + "/yr";
+}
+function wizQDef(tier){
+  var s = store.settings;
+  var steps = [
+    {t:"The Business", f:[
+      {k:"biz", l:"Business name", ty:"text", req:1, ph:"Riverside Guide Co."},
+      {k:"trade", l:"What's your trade?", ty:"select", opts:["Fishing / Hunting Guide","Contractor / Construction","Landscaping","Salon / Barber","Auto Shop","Restaurant / Food","Photography","Real Estate","Fitness / Training","Other"]},
+      {k:"years", l:"Years in business", ty:"text", ph:"e.g. 12"},
+      {k:"area", l:"Service area", ty:"text", ph:"Clackamas County / Willamette River"},
+      {k:"owner", l:"Your name", ty:"text", req:1},
+      {k:"phone", l:"Best phone", ty:"text", ph:"(503) 555-0142"},
+      {k:"email", l:"Best email", ty:"text"}
+    ]},
+    {t:"Goals & Look", f:[
+      {k:"goal", l:"The #1 job of this site", ty:"select", opts:["Get phone calls","Get booking requests","Show off my work","Look more professional","Sell products","Something else"]},
+      {k:"vibe", l:"Describe your style in 3 words", ty:"text", ph:"rugged, trustworthy, local"},
+      {k:"colors", l:"Colors you want", ty:"text", ph:"dark green & silver"},
+      {k:"avoid", l:"Colors or looks to avoid", ty:"text"},
+      {k:"logo", l:"Do you have a logo?", ty:"select", opts:["Yes — I'll send it","Sort of — needs cleanup","No — I need one made"]},
+      {k:"cursite", l:"Current website (if any)", ty:"text", ph:"none / oldsite.com"},
+      {k:"inspo", l:"1–2 sites you like the look of", ty:"textarea"}
+    ]},
+    {t:"Pages & Content", f:[
+      {k:"pages", l:"Pages you want (Tier includes 5)", ty:"checks", opts:["Home","About","Services / Trips","Gallery","Contact","Reviews","FAQ","Blog / News","Specials"]},
+      {k:"photos", l:"Do you have photos ready?", ty:"select", opts:["Plenty — I'll send them","Some — may need more","No — need help with that"]},
+      {k:"words", l:"Who writes the text?", ty:"select", opts:["I'll provide it","Write it for me from my notes"]},
+      {k:"must", l:"Anything that MUST be on the site", ty:"textarea", ph:"License #, certifications, a specific photo..."}
+    ]}
+  ];
+  if (tier === 1){
+    steps.push({t:"Contact Setup", f:[
+      {k:"contact", l:"How should customers reach you?", ty:"checks", opts:["Call button","Text button","Contact form","Map & directions","Business hours"]},
+      {k:"social", l:"Social links to include", ty:"text", ph:"Facebook, Instagram..."}
+    ]});
+  }
+  if (tier === 2){
+    steps.push({t:"Booking Setup", f:[
+      {k:"bookwhat", l:"What do customers book?", ty:"text", req:1, ph:"Full-day salmon trip, half-day walleye..."},
+      {k:"lengths", l:"Typical lengths / time slots", ty:"text", ph:"6 AM full day, 1 PM half day"},
+      {k:"bookdays", l:"Days & hours you take bookings", ty:"text", ph:"Wed–Sun, first light to 4 PM"},
+      {k:"season", l:"Busy season notes", ty:"text", ph:"Spring chinook Mar–May is slammed"},
+      {k:"confirm", l:"How should bookings confirm?", ty:"select", opts:["Auto-confirm open slots","I want to approve each request first"]},
+      {k:"contact", l:"Contact methods too?", ty:"checks", opts:["Call button","Text button","Contact form","Map & directions","Business hours"]}
+    ]});
+  }
+  if (tier === 3){
+    steps.push({t:"Command Center Setup", f:[
+      {k:"bookwhat", l:"What do customers book?", ty:"text", req:1},
+      {k:"lengths", l:"Typical lengths / time slots", ty:"text"},
+      {k:"applyinfo", l:"What must customers provide when applying?", ty:"textarea", ph:"Party size, experience level, license status..."},
+      {k:"deposit", l:"Deposits? How much?", ty:"text", ph:"$100 to hold the date"},
+      {k:"reminders", l:"Automatic reminders", ty:"checks", opts:["Email reminders","Text reminders"]},
+      {k:"staff", l:"Just you, or staff too?", ty:"text", ph:"Me + one deckhand"},
+      {k:"rules", l:"Your approval / cancellation rules", ty:"textarea", ph:"48-hr cancel notice, no-shows forfeit deposit..."}
+    ]});
+  }
+  // upsell step
+  var ups = [];
+  if (tier === 1){
+    ups.push({k:"up_cal", l:"Live booking calendar", tag:"TIER 2"});
+    ups.push({k:"up_rev", l:"Reviews & testimonials", tag:"TIER 2"});
+    ups.push({k:"up_dash", l:"Owner dashboard & approvals", tag:"TIER 3"});
+  }
+  if (tier === 2){
+    ups.push({k:"up_dash", l:"Owner dashboard & approvals", tag:"TIER 3"});
+    ups.push({k:"up_dep", l:"Deposits & auto reminders", tag:"TIER 3"});
+  }
+  ups.push({k:"up_gal", l:"Pro gallery", tag:"+$"+money(s.a_gallery)});
+  ups.push({k:"up_blog", l:"Blog / news section", tag:"+$"+money(s.a_blog)});
+  ups.push({k:"up_logo", l:"Logo & branding kit", tag:"+$"+money(s.a_logo)});
+  ups.push({k:"up_seo", l:"SEO boost", tag:"+$"+money(s.a_seo)});
+  ups.push({k:"up_email", l:"Business email", tag:"+$"+money(s.a_email)});
+  steps.push({t:"Bolt-Ons", intro:"Want any of these on the build sheet? We'll price them in your quote — no commitment.", f:[
+    {k:"upsells", l:"", ty:"upchecks", opts:ups}
+  ]});
+  steps.push({t:"Review & Send", f:[
+    {k:"extra", l:"Anything else we should know?", ty:"textarea"}
+  ], review:true});
+  return steps;
+}
+
+var wiz = {tier:0, step:0, steps:[], ans:{}, done:false};
+function openWizard(tier){
+  wiz = {tier:tier, step:0, steps:wizQDef(tier), ans:{}, done:false};
+  document.getElementById("wizTitle").textContent = TIER_NAMES[tier];
+  document.getElementById("wizModal").classList.add("on");
+  document.body.style.overflow = "hidden";
+  wizRender();
+}
+function closeWizard(){
+  document.getElementById("wizModal").classList.remove("on");
+  document.body.style.overflow = "";
+}
+function wizCollect(){
+  var stepDef = wiz.steps[wiz.step];
+  if (!stepDef) return true;
+  var ok = true;
+  stepDef.f.forEach(function(f){
+    if (f.ty === "checks" || f.ty === "upchecks"){
+      var vals = [];
+      document.querySelectorAll('[data-wk="'+f.k+'"] .wcheck.on').forEach(function(c){
+        vals.push(c.getAttribute("data-v"));
+      });
+      wiz.ans[f.k] = vals;
+    } else {
+      var el = document.getElementById("w_"+f.k);
+      if (el) wiz.ans[f.k] = el.value.trim();
+      if (f.req && !wiz.ans[f.k]){ ok = false; el && el.focus(); }
+    }
+  });
+  return ok;
+}
+function wizNav(dir){
+  if (dir > 0 && !wizCollect()){ toast("Fill the required field first."); return; }
+  if (dir < 0) wizCollect();
+  if (wiz.done){ closeWizard(); return; }
+  var last = wiz.steps.length - 1;
+  if (dir > 0 && wiz.step === last){ wizSubmit(); return; }
+  wiz.step = Math.max(0, Math.min(last, wiz.step + dir));
+  wizRender();
+}
+function upFlags(){
+  var flags = [];
+  var a = wiz.ans;
+  if ((a.pages||[]).length > 5) flags.push("Wants " + a.pages.length + " pages — " + ((a.pages.length-5)) + " extra page(s) at $" + money(store.settings.a_page) + " each");
+  if ((a.pages||[]).indexOf("Blog / News") >= 0) flags.push("Blog / News page — Blog add-on $" + money(store.settings.a_blog));
+  if (a.logo === "No — I need one made" || a.logo === "Sort of — needs cleanup") flags.push("Needs logo work — Logo & Branding kit $" + money(store.settings.a_logo));
+  if (a.confirm === "I want to approve each request first" && wiz.tier === 2) flags.push("Wants approval flow — that's Tier 3 territory (upgrade pitch)");
+  var upNames = {up_cal:"Booking calendar (Tier 2 upgrade)", up_rev:"Reviews showcase (Tier 2 upgrade)",
+    up_dash:"Owner dashboard (Tier 3 upgrade)", up_dep:"Deposits & reminders (Tier 3 upgrade)",
+    up_gal:"Pro gallery add-on", up_blog:"Blog add-on", up_logo:"Logo & branding add-on",
+    up_seo:"SEO boost add-on", up_email:"Business email add-on"};
+  (a.upsells||[]).forEach(function(k){ if (upNames[k]) flags.push(upNames[k]); });
+  return flags;
+}
+function wizRender(){
+  var bar = document.getElementById("wizBar");
+  bar.innerHTML = "";
+  wiz.steps.forEach(function(_, i){
+    var iEl = document.createElement("i");
+    if (i <= wiz.step) iEl.className = "done";
+    bar.appendChild(iEl);
+  });
+  var stepDef = wiz.steps[wiz.step];
+  var body = document.getElementById("wizBody");
+  var h = "<div class='wstep-t'>Step " + (wiz.step+1) + " of " + wiz.steps.length + "</div>";
+  h += "<div class='wstep-h'>" + stepDef.t + "</div>";
+  if (stepDef.intro) h += "<p style='color:var(--steel-hi);font-size:14px;margin:-8px 0 16px'>" + stepDef.intro + "</p>";
+  if (stepDef.review){
+    h += "<div class='rev'>" + reviewHTML() + "</div>";
+  }
+  stepDef.f.forEach(function(f){
+    var v = wiz.ans[f.k];
+    if (f.ty === "text"){
+      h += "<div class='wf'><label class='fl'>" + f.l + (f.req?" *":"") + "</label><input class='fi' id='w_"+f.k+"' placeholder='"+(f.ph||"")+"' value='"+esc(v||"")+"'></div>";
+    } else if (f.ty === "textarea"){
+      h += "<div class='wf'><label class='fl'>" + f.l + "</label><textarea class='fi' id='w_"+f.k+"' rows='3' placeholder='"+(f.ph||"")+"'>"+esc(v||"")+"</textarea></div>";
+    } else if (f.ty === "select"){
+      h += "<div class='wf'><label class='fl'>" + f.l + "</label><select class='fi' id='w_"+f.k+"'>";
+      f.opts.forEach(function(o){ h += "<option"+(v===o?" selected":"")+">"+o+"</option>"; });
+      h += "</select></div>";
+    } else if (f.ty === "checks"){
+      h += "<div class='wf'>"+(f.l?"<label class='fl'>"+f.l+"</label>":"")+"<div class='wchecks' data-wk='"+f.k+"'>";
+      f.opts.forEach(function(o){
+        var on = (v||[]).indexOf(o) >= 0;
+        h += "<div class='wcheck"+(on?" on":"")+"' data-v='"+esc(o)+"' onclick='this.classList.toggle(\"on\");wizUpNote()'><b></b>"+o+"</div>";
+      });
+      h += "</div></div>";
+    } else if (f.ty === "upchecks"){
+      h += "<div class='wf'><div class='wchecks' data-wk='"+f.k+"' style='grid-template-columns:1fr'>";
+      f.opts.forEach(function(o){
+        var on = (v||[]).indexOf(o.k) >= 0;
+        h += "<div class='wcheck"+(on?" on":"")+"' data-v='"+o.k+"' onclick='this.classList.toggle(\"on\")'><b></b>"+o.l+"<span class='up'>"+o.tag+"</span></div>";
+      });
+      h += "</div></div>";
+    }
+  });
+  body.innerHTML = h;
+  document.getElementById("wizBack").style.visibility = wiz.step === 0 ? "hidden" : "visible";
+  document.getElementById("wizNext").innerHTML = (wiz.step === wiz.steps.length-1) ? "Send My Build Order <span class='arr'>▸</span>" : "Next <span class='arr'>▸</span>";
+  wizUpNote();
+}
+function wizUpNote(){
+  var note = document.getElementById("wizUp");
+  var pagesWrap = document.querySelector('[data-wk="pages"]');
+  if (pagesWrap){
+    var n = pagesWrap.querySelectorAll(".wcheck.on").length;
+    if (n > 5){
+      note.innerHTML = "Heads up: your tier includes 5 pages — the extra " + (n-5) + " will show as a $" + money(store.settings.a_page) + "/page add-on in your quote. Or ask about upgrading a tier.";
+      note.classList.add("on");
+      return;
+    }
+  }
+  note.classList.remove("on");
+}
+function reviewHTML(){
+  var a = wiz.ans;
+  var h = "<b>" + esc(a.biz||"Your business") + "</b> · " + esc(a.trade||"") +
+    "<br>" + esc(a.owner||"") + " · " + esc(a.phone||"") + " " + esc(a.email||"") +
+    "<br>Goal: " + esc(a.goal||"—") + " · Style: " + esc(a.vibe||"—") +
+    "<br>Pages: " + esc((a.pages||[]).join(", ") || "—");
+  var flags = upFlags();
+  if (flags.length){
+    h += "<br><br><span class='rvup'>⬆ On the quote sheet:</span>";
+    flags.forEach(function(f){ h += "<br><span class='rvup'>• " + esc(f) + "</span>"; });
+  }
+  return h;
+}
+function wizSubmit(){
+  var a = wiz.ans;
+  var order = {
+    id: store.nextOrder++,
+    ts: new Date().toISOString(),
+    tier: wiz.tier,
+    status: "new",
+    ans: a,
+    flags: upFlags()
+  };
+  store.orders.unshift(order);
+  saveStore();
+  wiz.done = true;
+  document.getElementById("wizBar").innerHTML = "";
+  document.getElementById("wizUp").classList.remove("on");
+  document.getElementById("wizBody").innerHTML =
+    "<div style='text-align:center;padding:14px 0'>" +
+    "<svg class='done-hex' viewBox='0 0 100 110'><polygon points='50,4 94,29 94,81 50,106 6,81 6,29' fill='#22262B' stroke='#3FA35B' stroke-width='7'/><text x='50' y='68' text-anchor='middle' font-family='Anton, sans-serif' font-size='40' fill='#F2F4F6'>✓</text></svg>" +
+    "<div class='wstep-h'>Order Received</div>" +
+    "<p style='color:var(--offw);max-width:440px;margin:0 auto;line-height:1.7'>Thanks, " + esc((a.owner||"").split(" ")[0] || "friend") + " — your build sheet for <b style='color:var(--white)'>" + esc(a.biz||"your business") + "</b> is in the shop. We'll reach out within 1 business day with your flat quote.</p></div>";
+  document.getElementById("wizBack").style.visibility = "hidden";
+  document.getElementById("wizNext").innerHTML = "Close <span class='arr'>▸</span>";
+}
+
+/* ================= HQ (hidden owner panel) ================= */
+var HQ_PIN = "2325";
+var hqBuf = [];
+var hqUnlocked = false;
+function hqKey(n){
+  if (hqBuf.length >= 4) return;
+  hqBuf.push(n); hqDots();
+  if (hqBuf.length === 4){
+    if (hqBuf.join("") === HQ_PIN){
+      hqUnlocked = true;
+      setTimeout(renderHQ, 200);
+    } else {
+      var pb = document.getElementById("hqPinBox");
+      pb.classList.add("shake");
+      setTimeout(function(){ pb.classList.remove("shake"); hqClearPin(); }, 450);
+    }
+  }
+}
+function hqClearPin(){ hqBuf = []; hqDots(); }
+function hqDots(){
+  for (var i=0;i<4;i++) document.getElementById("hd"+i).classList.toggle("on", i < hqBuf.length);
+}
+function hqLock(){ hqUnlocked = false; hqClearPin(); renderHQ(); go("home"); }
+function renderHQ(){
+  var locked = !hqUnlocked;
+  document.getElementById("hqPinBox").style.display = locked ? "block" : "none";
+  document.getElementById("hq").style.display = locked ? "none" : "block";
+  if (locked) return;
+  // settings fields
+  var s = store.settings;
+  ["t1b","t1y","t2b","t2y","t3b","t3y","a_page","a_gallery","a_blog","a_logo","a_seo","a_email"].forEach(function(k){
+    document.getElementById("s_"+k).value = s[k];
+  });
+  document.getElementById("s_note").value = s.note;
+  renderOrders();
+}
+function renderOrders(){
+  var wrap = document.getElementById("hqOrders");
+  document.getElementById("hqCount").textContent = store.orders.length + " order" + (store.orders.length===1?"":"s");
+  wrap.innerHTML = "";
+  if (!store.orders.length){
+    wrap.innerHTML = "<p style='color:var(--steel-hi);padding:16px 0'>No orders yet. When a customer finishes the build questionnaire, it lands here.</p>";
+    return;
+  }
+  store.orders.forEach(function(o){
+    var d = new Date(o.ts);
+    var div = document.createElement("div");
+    div.className = "req st-" + o.status;
+    var stBadge = o.status==="new" ? "<span class='badge n'>New</span>" :
+                  o.status==="building" ? "<span class='badge p'>In Build</span>" :
+                  "<span class='badge a'>Delivered</span>";
+    div.innerHTML =
+      "<div class='who'><b>#" + o.id + " · " + esc(o.ans.biz||"—") + "</b><span>" + esc(o.ans.trade||"") + " · " + d.toLocaleDateString() + "</span></div>" +
+      "<div class='meta'>" + esc(TIER_NAMES[o.tier]) + (o.flags.length ? " · <em>" + o.flags.length + " upsell flag" + (o.flags.length>1?"s":"") + "</em>" : "") + "</div>" +
+      "<div class='acts'></div>";
+    var acts = div.querySelector(".acts");
+    var bCopy = mkBtn("Copy For Claude", "bsm ok", function(){ copyOrder(o); });
+    var bView = mkBtn("View", "bsm no", function(){ viewOrder(o); });
+    var bStat = mkBtn("Status ▸", "bsm no", function(){
+      o.status = o.status==="new" ? "building" : o.status==="building" ? "delivered" : "new";
+      saveStore(); renderOrders();
+    });
+    var bDel = mkBtn("✕", "bsm no", function(){
+      if (confirm("Delete order #" + o.id + " (" + (o.ans.biz||"") + ")? This can't be undone.")){
+        store.orders = store.orders.filter(function(x){ return x.id !== o.id; });
+        saveStore(); renderOrders();
+      }
+    });
+    acts.appendChild(bCopy); acts.appendChild(bView); acts.appendChild(bStat); acts.appendChild(bDel);
+    acts.insertAdjacentHTML("beforeend", stBadge);
+    wrap.appendChild(div);
+  });
+}
+function mkBtn(txt, cls, fn){
+  var b = document.createElement("button");
+  b.className = cls; b.textContent = txt;
+  b.addEventListener("click", fn);
+  return b;
+}
+function orderBrief(o){
+  var s = store.settings;
+  var a = o.ans;
+  var L = [];
+  L.push("=== OC CUSTOM WEBSITES — BUILD ORDER #" + o.id + " ===");
+  L.push("Tier: " + TIER_NAMES[o.tier] + " ($" + money(s["t"+o.tier+"b"]) + " build + $" + money(s["t"+o.tier+"y"]) + "/yr)");
+  L.push("Submitted: " + new Date(o.ts).toLocaleString());
+  L.push("");
+  L.push("— BUSINESS —");
+  L.push("Business name: " + (a.biz||"—"));
+  L.push("Trade: " + (a.trade||"—"));
+  L.push("Years in business: " + (a.years||"—"));
+  L.push("Service area: " + (a.area||"—"));
+  L.push("Owner: " + (a.owner||"—") + " | Phone: " + (a.phone||"—") + " | Email: " + (a.email||"—"));
+  L.push("");
+  L.push("— GOALS & LOOK —");
+  L.push("#1 goal: " + (a.goal||"—"));
+  L.push("Style words: " + (a.vibe||"—"));
+  L.push("Colors wanted: " + (a.colors||"—"));
+  L.push("Avoid: " + (a.avoid||"—"));
+  L.push("Logo status: " + (a.logo||"—"));
+  L.push("Current site: " + (a.cursite||"—"));
+  L.push("Inspiration sites: " + (a.inspo||"—"));
+  L.push("");
+  L.push("— PAGES & CONTENT —");
+  L.push("Pages: " + ((a.pages||[]).join(", ")||"—"));
+  L.push("Photos: " + (a.photos||"—"));
+  L.push("Copywriting: " + (a.words||"—"));
+  L.push("Must include: " + (a.must||"—"));
+  if (o.tier >= 2){
+    L.push("");
+    L.push("— BOOKING SETUP —");
+    L.push("Customers book: " + (a.bookwhat||"—"));
+    L.push("Slot lengths: " + (a.lengths||"—"));
+    if (a.bookdays) L.push("Booking days/hours: " + a.bookdays);
+    if (a.season) L.push("Season notes: " + a.season);
+    if (a.confirm) L.push("Confirmation style: " + a.confirm);
+  }
+  if (o.tier === 3){
+    L.push("Application must collect: " + (a.applyinfo||"—"));
+    L.push("Deposits: " + (a.deposit||"—"));
+    L.push("Reminders: " + ((a.reminders||[]).join(", ")||"—"));
+    L.push("Staff: " + (a.staff||"—"));
+    L.push("Approval/cancel rules: " + (a.rules||"—"));
+  }
+  if (a.contact && a.contact.length){
+    L.push("Contact methods: " + a.contact.join(", "));
+  }
+  if (a.social) L.push("Social links: " + a.social);
+  L.push("");
+  L.push("— UPSELL / ADD-ON FLAGS —");
+  if (o.flags.length) o.flags.forEach(function(f){ L.push("• " + f); });
+  else L.push("None");
+  if (a.extra){
+    L.push("");
+    L.push("— EXTRA NOTES —");
+    L.push(a.extra);
+  }
+  L.push("=== END ORDER ===");
+  L.push("");
+  L.push("Build a complete, professional single-file website for this client per OC Custom Websites standards: mobile-first for iOS Safari, custom design matching their style answers, working back-button navigation, and only the features included in their tier (note upsell flags separately).");
+  return L.join("\n");
+}
+var curOrderText = "";
+function viewOrder(o){
+  curOrderText = orderBrief(o);
+  document.getElementById("ordTitle").textContent = "Order #" + o.id + " — " + (o.ans.biz||"");
+  document.getElementById("ordText").value = curOrderText;
+  document.getElementById("ordModal").classList.add("on");
+}
+function copyOrder(o){
+  curOrderText = orderBrief(o);
+  doCopy(curOrderText);
+}
+function copyOrderText(){ doCopy(curOrderText || document.getElementById("ordText").value); }
+function doCopy(txt){
+  var done = function(){ toast("Copied — paste it straight into Claude."); };
+  var fail = function(){
+    var ta = document.getElementById("ordText");
+    document.getElementById("ordModal").classList.add("on");
+    ta.value = txt; ta.focus(); ta.select();
+    toast("Tap-and-hold the text to copy.");
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(done, fail);
+  } else fail();
+}
+function saveSettings(){
+  var s = store.settings;
+  ["t1b","t1y","t2b","t2y","t3b","t3y","a_page","a_gallery","a_blog","a_logo","a_seo","a_email"].forEach(function(k){
+    var v = parseInt(document.getElementById("s_"+k).value, 10);
+    if (!isNaN(v) && v >= 0) s[k] = v;
+  });
+  var note = document.getElementById("s_note").value.trim();
+  if (note) s.note = note;
+  saveStore(); applySettings();
+  toast("Settings saved — live across the whole site.");
+}
+function clearOrders(){
+  if (!store.orders.length){ toast("Nothing to delete."); return; }
+  if (confirm("Delete ALL " + store.orders.length + " orders? This can't be undone.")){
+    store.orders = []; saveStore(); renderOrders();
+    toast("All orders deleted.");
+  }
+}
+
 /* ================= BOOT ================= */
 document.addEventListener("DOMContentLoaded", function(){
+  loadStore();
+  applySettings();
+  document.getElementById("verBadge").addEventListener("click", function(){ go("hq"); });
   if (!location.hash) history.replaceState(null, "", "#/home");
   renderRoute();
 });
