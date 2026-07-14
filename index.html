@@ -255,9 +255,24 @@ input.fi:focus,select.fi:focus,textarea.fi:focus{border-color:var(--red);box-sha
 .ba .handle{position:absolute;top:0;bottom:0;left:var(--cut,50%);width:4px;background:var(--red);z-index:5;box-shadow:0 0 16px var(--red-glow)}
 .ba .handle::after{content:"◂ ▸";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
   background:var(--red);color:#fff;font-size:13px;padding:9px 10px;white-space:nowrap;letter-spacing:2px}
-.ba .balab{position:absolute;top:12px;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;padding:5px 10px;z-index:4}
-.ba .balab.l{left:12px;background:rgba(90,77,58,.85);color:#f4efe3}
+.ba .balab{position:absolute;top:12px;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;padding:5px 10px;font-weight:700}
+.ba .balab.l{left:12px;background:rgba(20,22,26,.82);color:#F2F4F6;border-left:4px solid #8A97A3}
 .ba .balab.r{right:12px;background:var(--red);color:#fff}
+.ba .pane.photo{background-size:cover;background-position:center}
+.badots{display:flex;gap:8px;margin-top:14px;align-items:center}
+.badots i{width:30px;height:6px;background:#3A424B;cursor:pointer;transition:.2s}
+.badots i.on{background:var(--red);box-shadow:0 0 10px var(--red-glow)}
+.badots span{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--steel-hi);margin-left:6px}
+/* HQ pair builder */
+.bapend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.baslot{width:110px;height:82px;border:1px dashed var(--steel);display:flex;align-items:center;justify-content:center;
+  font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--steel-hi);cursor:pointer;text-align:center;
+  background:#101215;background-size:cover;background-position:center;transition:.15s}
+.baslot:hover{border-color:var(--red);color:var(--white)}
+.baslot.has{border-style:solid;border-color:var(--green);color:transparent}
+.bapair{display:flex;align-items:center;gap:10px;background:#1B2025;border:1px solid #262C33;padding:10px;margin-top:10px}
+.bapair img{width:96px;height:68px;object-fit:cover;border:1px solid #2E353D}
+.bapair .arrowsym{color:var(--red);font-size:18px}
 
 /* ---------- admin ---------- */
 .pinbox{max-width:420px;margin:60px auto;text-align:center}
@@ -434,6 +449,67 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 .qsheet .qtot .r2.g span:last-child{color:#CE2B2B}
 .qsheet .qterms{margin-top:24px;border-top:1px solid #e2e5ea;padding-top:14px;font-size:12.5px;color:#5A6B85}
 .qsheet .qfoot{margin-top:26px;text-align:center;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#8A97A3}
+
+/* ---------- split sync demo ---------- */
+.split{display:grid;grid-template-columns:1fr 40px 1fr;align-items:stretch}
+.spane{background:#14171B;border:1px solid #262C33;padding:14px 12px;min-width:0}
+.sphead{display:flex;flex-direction:column;gap:2px;padding:8px 10px;margin:-14px -12px 12px;border-bottom:2px solid var(--steel)}
+.sphead span{font-family:'Anton';font-size:14px;letter-spacing:2px;color:var(--white)}
+.sphead i{font-style:normal;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--steel-hi)}
+.sphead.cust{background:#10151c;border-bottom-color:#3d6ea5}
+.sphead.own{background:#181114;border-bottom-color:var(--red)}
+.spbiz{font-family:'Anton';font-size:17px;letter-spacing:1.5px;color:var(--white);margin-bottom:8px}
+.spnote{font-size:11.5px;letter-spacing:.5px;color:var(--steel-hi);margin-bottom:6px}
+.spempty{font-size:12px;color:var(--steel-l);padding:6px 0}
+.scal{display:grid;grid-template-columns:repeat(6,1fr);gap:3px;margin-top:4px}
+.scal .sdl{font-size:9px;letter-spacing:1px;color:var(--steel-hi);text-align:center;padding:3px 0;text-transform:uppercase}
+.scal .shl{font-size:9px;color:var(--steel-hi);display:flex;align-items:center;justify-content:flex-end;padding-right:4px}
+.scell{aspect-ratio:1.5;background:#1B2025;border:1px solid #262C33;cursor:pointer;transition:.12s;position:relative;min-height:24px}
+.scell:hover{border-color:var(--red)}
+.scell.blk{background:repeating-linear-gradient(45deg,#33230f 0 5px,#241a0c 5px 10px);border-color:var(--amber);pointer-events:none}
+.scal.own .scell.blk{pointer-events:auto}
+.scell.bkd{background:var(--red-d);border-color:var(--red);pointer-events:none}
+.scal.own .scell.bkd{pointer-events:none}
+.scell.sel{background:#3d6ea5;border-color:#6ea8e5;box-shadow:0 0 10px rgba(90,150,220,.5)}
+.scell.justin{animation:cellin .7s ease}
+@keyframes cellin{0%{box-shadow:0 0 0 3px var(--red)}100%{box-shadow:0 0 0 0 transparent}}
+.slegend{display:flex;gap:12px;margin-top:8px;font-size:10px;color:var(--steel-hi);letter-spacing:.5px;flex-wrap:wrap}
+.slegend i{display:inline-block;width:10px;height:10px;margin-right:4px;vertical-align:-1px}
+.lg-open{background:#1B2025;border:1px solid #262C33}
+.lg-blk{background:repeating-linear-gradient(45deg,#33230f 0 3px,#241a0c 3px 6px);border:1px solid var(--amber)}
+.lg-bkd{background:var(--red-d);border:1px solid var(--red)}
+.spstatus{margin-top:10px;background:#101215;border:1px solid #2E353D;border-left:4px solid var(--steel);padding:9px 11px;font-size:12.5px;color:var(--offw)}
+.spstatus.pend{border-left-color:var(--amber);color:#e8c98a}
+.spstatus.ok{border-left-color:var(--green);color:#9fd8ae}
+.spstatus.no{border-left-color:var(--red)}
+.sdivider{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--steel-l)}
+.sdivider span{font-size:20px;transition:.2s}
+.sdivider b{font-size:8.5px;letter-spacing:2px;writing-mode:vertical-rl;color:var(--steel-l)}
+.sdivider.zap span{color:var(--red);text-shadow:0 0 16px var(--red-glow);transform:scale(1.5)}
+.sdivider.zap b{color:var(--red)}
+.jobchips{display:flex;flex-wrap:wrap;gap:6px}
+.jchip{padding:8px 11px;background:#1B2025;border:1px solid var(--steel);font-size:11.5px;font-weight:600;letter-spacing:.5px;
+  color:var(--offw);cursor:pointer;transition:.15s;user-select:none}
+.jchip:hover{border-color:var(--red);transform:translateY(-2px)}
+.jchip em{font-style:normal;color:var(--red);font-weight:700;margin-right:5px}
+.jchip.done{opacity:.4;pointer-events:none;text-decoration:line-through}
+.sreq{background:#1B2025;border:1px solid #262C33;border-left:4px solid var(--amber);padding:8px 10px;margin-bottom:6px;
+  font-size:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;animation:pageIn .3s ease}
+.sreq b{color:var(--white)}
+.sreq .bsm{padding:6px 10px;font-size:10px}
+.sense{margin-top:14px;border-top:1px dashed #2E353D;padding-top:12px}
+.sense .srow{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed #23282E;font-size:12.5px}
+.sense .srow b{font-family:'Anton';color:var(--white);letter-spacing:.5px}
+.synclog{background:#0C0E11;border:1px solid #23282E;padding:10px 12px;max-height:150px;overflow-y:auto;font-family:Menlo,Consolas,monospace;font-size:11px;line-height:1.8;color:#7fae8a}
+.synclog .lg-c{color:#6ea8e5}
+.synclog .lg-o{color:#e08585}
+@media(max-width:640px){
+  .split{grid-template-columns:1fr 24px 1fr}
+  .spane{padding:10px 7px}
+  .sphead{margin:-10px -7px 10px}
+  .jchip{font-size:10px;padding:6px 8px}
+  .scell{min-height:18px}
+}
 
 /* ---------- recommended days ---------- */
 .cal .day.rec{border-color:var(--green);box-shadow:inset 0 0 0 1px var(--green)}
@@ -713,9 +789,52 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
     <div class="tagplate"><h2>Live Demo Floor</h2></div>
     <p class="sect-sub">These aren't screenshots — they're the real systems, running right now. Book a fake trip, then open the <a href="#/admin" style="color:var(--red);font-weight:600">Admin page</a> to approve it like an owner would.</p>
 
+    <!-- DEMO 01: SPLIT SYNC -->
+    <div class="demobox">
+      <div class="dhead"><span class="lamp"></span><h3>Demo 01 — Customer + Owner, Synced Live</h3><span class="dtag">Tier 3</span></div>
+      <div class="dbody">
+        <p style="margin-bottom:6px;color:var(--steel-hi);font-size:14.5px">One site, two faces. The left is what your <b style="color:var(--white)">customers</b> see. The right is <b style="color:var(--white)">yours</b> — PIN-locked, with the books and payroll customers can never touch. Do anything on either side and watch the other react.</p>
+        <p style="margin-bottom:18px;color:var(--amber);font-size:12.5px;letter-spacing:1px">⚠ NOTHING HERE SAVES — this sandbox wipes clean every visit, so break it all you want.</p>
+        <div class="split">
+          <div class="spane">
+            <div class="sphead cust"><span>CUSTOMER SIDE</span><i>what the public sees</i></div>
+            <div class="spbiz">RIVERBEND GUIDE CO.</div>
+            <p class="spnote">Tap an open slot, then request it:</p>
+            <div class="scal" id="custCal"></div>
+            <div class="slegend"><span><i class="lg-open"></i>Open</span><span><i class="lg-blk"></i>Unavailable</span><span><i class="lg-bkd"></i>Booked</span></div>
+            <button class="bsm ok" id="custReqBtn" style="margin-top:10px;opacity:.4;pointer-events:none" onclick="splitRequest()">Request This Slot</button>
+            <div class="spstatus" id="custStatus">No request yet.</div>
+            <p class="spnote" style="margin-top:12px;color:var(--steel-l)">Customers never see the other side of this wall ▸</p>
+          </div>
+          <div class="sdivider" id="syncDiv"><span>⇄</span><b>SYNC</b></div>
+          <div class="spane">
+            <div class="sphead own"><span>🔒 OWNER SIDE</span><i>PIN-protected</i></div>
+            <p class="spnote" style="margin-top:2px">One-tap job scheduling — tap a job, it lands on the next open slot:</p>
+            <div class="jobchips" id="jobChips"></div>
+            <p class="spnote" style="margin-top:12px">Incoming requests:</p>
+            <div id="splitReqs"><p class="spempty">Nothing waiting. Make a request on the customer side ◂</p></div>
+            <p class="spnote" style="margin-top:12px">Your schedule (tap an open slot to block it off):</p>
+            <div class="scal own" id="ownCal"></div>
+            <div class="sense" id="senseBox">
+              <button class="bsm no" id="senseBtn" onclick="senseUnlock()">🔒 Private Books — Unlock with PIN 2468</button>
+              <div id="senseIn" style="display:none">
+                <div class="srow"><span>This week's revenue</span><b>$2,340</b></div>
+                <div class="srow"><span>Unpaid invoices</span><b>2 · $575</b></div>
+                <div class="srow"><span>Payroll due Friday</span><b>$1,939</b></div>
+                <div class="srow"><span>Fuel &amp; job costs</span><b>$410</b></div>
+                <p class="spnote" style="margin-top:8px;color:var(--green)">✓ Bookkeeping, payroll &amp; margins live behind YOUR pin — same website, a world away from what customers see.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="spnote" style="margin:14px 0 4px">Live wire — every sync between the two sides:</p>
+        <div class="synclog" id="syncLog"></div>
+      </div>
+    </div>
+
     <!-- DEMO 1: booking calendar -->
     <div class="demobox">
-      <div class="dhead"><span class="lamp"></span><h3>Demo 01 — Booking Calendar</h3><span class="dtag">Tier 2</span></div>
+      <div class="dhead"><span class="lamp"></span><h3>Demo 02 — Booking Calendar</h3><span class="dtag">Tier 2</span></div>
       <div class="dbody">
         <p style="margin-bottom:18px;color:var(--steel-hi);font-size:14.5px">Pick an open date, grab a time slot, and lock it in. Crossed-out days are already full — just like your real season would show.</p>
         <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px">
@@ -733,7 +852,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 
     <!-- DEMO 2: multi-step request form -->
     <div class="demobox">
-      <div class="dhead"><span class="lamp"></span><h3>Demo 02 — Trip Request Form</h3><span class="dtag">Tier 2</span></div>
+      <div class="dhead"><span class="lamp"></span><h3>Demo 03 — Trip Request Form</h3><span class="dtag">Tier 2</span></div>
       <div class="dbody">
         <div class="steps"><i id="st1" class="done"></i><i id="st2"></i><i id="st3"></i></div>
         <div id="fstep1">
@@ -770,15 +889,15 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 
     <!-- DEMO 3: before/after -->
     <div class="demobox">
-      <div class="dhead"><span class="lamp"></span><h3>Demo 03 — Before / After Slider</h3><span class="dtag">Tier 2</span></div>
+      <div class="dhead"><span class="lamp"></span><h3>Demo 04 — Before / After Slider</h3><span class="dtag">Tier 2</span></div>
       <div class="dbody">
         <p style="margin-bottom:18px;color:var(--steel-hi);font-size:14.5px">Drag the red handle. Perfect for remodels, detail work, landscaping — any trade where the results speak.</p>
         <div class="ba" id="baBox">
-          <div class="pane old"><h4>Riverside Guide Service</h4><p>Welcome to my Web Site!! Best viewed in 800x600. Last updated 2009. Click HERE to enter.</p></div>
-          <div class="pane new"><h4>Riverside Guide Co.</h4><p>Book Your Water ▸</p></div>
-          <span class="balab l">Before</span><span class="balab r">After</span>
+          <div class="pane old" id="baOld"><h4>Riverside Guide Service</h4><p>Welcome to my Web Site!! Best viewed in 800x600. Last updated 2009. Click HERE to enter.</p><span class="balab l">Before</span></div>
+          <div class="pane new" id="baNew"><h4>Riverside Guide Co.</h4><p>Book Your Water ▸</p><span class="balab r">After</span></div>
           <div class="handle"></div>
         </div>
+        <div class="badots" id="baDots" style="display:none"></div>
       </div>
     </div>
 
@@ -841,7 +960,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
         <b class="display" style="font-size:28px;color:var(--red)" id="payTotal">$0</b>
       </div>
 
-      <div class="tierhead" style="margin-top:44px"><h3>Customer List</h3><span class="tp" style="font-size:15px">Your regulars, one tap away</span></div>
+      <div class="tierhead" style="margin-top:44px"><h3>Customer List</h3><span class="tp" style="font-size:15px">Your regulars, all in one place</span></div>
       <input class="fi" id="custSearch" placeholder="Search customers…" style="max-width:340px;margin-bottom:12px" oninput="renderCusts()">
       <div id="custList"></div>
 
@@ -899,6 +1018,18 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
           <button class="bsm ok" style="margin-top:4px" onclick="document.getElementById('photoFile').click()">+ Add Photos From Phone</button>
           <span id="photoBusy" style="display:none;margin-left:10px;font-size:12px;letter-spacing:1.5px;color:var(--amber)">COMPRESSING…</span>
           <div class="photomgr" id="photoMgr"></div>
+        </div>
+        <div class="full2">
+          <label class="fl">Before / After Pairs — for the slide-to-compare demo</label>
+          <input type="file" id="baFileB" accept="image/*" style="display:none">
+          <input type="file" id="baFileA" accept="image/*" style="display:none">
+          <div class="bapend">
+            <div class="baslot" id="baSlotB" onclick="document.getElementById('baFileB').click()">Tap to pick<br>BEFORE photo</div>
+            <span class="arrowsym" style="color:var(--red);font-size:20px">▸</span>
+            <div class="baslot" id="baSlotA" onclick="document.getElementById('baFileA').click()">Tap to pick<br>AFTER photo</div>
+            <button class="bsm ok" id="baSaveBtn" style="opacity:.4;pointer-events:none" onclick="saveBAPair()">Save Pair</button>
+          </div>
+          <div id="baMgr"></div>
         </div>
       </div>
       <div class="wnav">
@@ -1010,7 +1141,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 <!-- ============ LIGHTBOX ============ -->
 <div id="lightbox" onclick="this.classList.remove('on')"><img id="lightImg" alt=""></div>
 
-<div class="verbadge" id="verBadge">OC SHOWCASE v6.0</div>
+<div class="verbadge" id="verBadge">OC SHOWCASE v7.0</div>
 <div id="toast"></div>
 
 <!-- Firebase (compat SDK via CDN) -->
@@ -1066,6 +1197,13 @@ function subscribeCloud(){
       renderShowcase();
       if (currentRoute()==="hq" && hqUnlocked) renderPhotoMgr();
     });
+    db.collection("ocw_ba").orderBy("epoch","desc").onSnapshot(function(snap){
+      store.bapairs = [];
+      snap.forEach(function(d){ store.bapairs.push({id:d.id, before:d.data().before, after:d.data().after}); });
+      cacheBA();
+      if (currentRoute()==="demos") renderBADemo();
+      if (currentRoute()==="hq" && hqUnlocked) renderBAMgr();
+    });
   }catch(e){}
 }
 /* ================= ROUTER (back-button safe) ================= */
@@ -1087,7 +1225,7 @@ function renderRoute(){
   window.scrollTo(0,0);
   requestAnimationFrame(bindReveals);
   if (r==="home"){ renderShowcase(); } else { stopShowcase(); stopModeTimers(); }
-  if (r==="demos") initCalendar();
+  if (r==="demos"){ initCalendar(); renderBADemo(); initSplit(); }
   if (r==="admin") renderAdmin();
   if (r==="hq") renderHQ();
 }
@@ -1203,6 +1341,191 @@ function runCounters(){
     g.style.left = e.clientX + "px"; g.style.top = e.clientY + "px";
   }, {passive:true});
 })();
+
+/* ================= SPLIT SYNC DEMO (ephemeral — resets every visit) ================= */
+var SP_DAYS = ["THU","FRI","SAT","SUN","MON"];
+var SP_HOURS = ["6A","8A","10A","1P"];
+var sp = null;
+function initSplit(){
+  // fresh state every time the demos page opens — nothing is ever saved
+  sp = {
+    cells: {"FRI-10A":"blk", "SAT-6A":"bkd", "SUN-1P":"blk"},
+    jobs: [
+      {n:"Fix gutter — Hendersons", done:false},
+      {n:"Full-day trip — party of 3", done:false},
+      {n:"Detail — Black F-150", done:false},
+      {n:"Estimate — deck rebuild", done:false},
+      {n:"Sprinkler blowout — Elm St", done:false}
+    ],
+    reqs: [], reqN: 0, sel: null, unlocked: false, logN: 0
+  };
+  var st = document.getElementById("custStatus");
+  if (st){ st.className = "spstatus"; st.textContent = "No request yet."; }
+  var btn = document.getElementById("custReqBtn");
+  if (btn){ btn.style.opacity = ".4"; btn.style.pointerEvents = "none"; }
+  var si = document.getElementById("senseIn");
+  if (si) si.style.display = "none";
+  var sb = document.getElementById("senseBtn");
+  if (sb) sb.style.display = "inline-block";
+  var lg = document.getElementById("syncLog");
+  if (lg) lg.innerHTML = "";
+  spLog("Sandbox reset — fresh demo, nothing saved from last time.", "");
+  renderJobChips();
+  renderSplitReqs();
+  renderSplitCals();
+}
+function spTime(){
+  var d = new Date();
+  return ("0"+d.getHours()).slice(-2) + ":" + ("0"+d.getMinutes()).slice(-2) + ":" + ("0"+d.getSeconds()).slice(-2);
+}
+function spLog(msg, side){
+  var lg = document.getElementById("syncLog");
+  if (!lg) return;
+  var cls = side === "c" ? "lg-c" : side === "o" ? "lg-o" : "";
+  var line = document.createElement("div");
+  line.innerHTML = "<span class='"+cls+"'>" + spTime() + " — " + esc(msg) + "</span>";
+  lg.insertBefore(line, lg.firstChild);
+  while (lg.children.length > 24) lg.removeChild(lg.lastChild);
+}
+function spZap(){
+  var d = document.getElementById("syncDiv");
+  if (!d) return;
+  d.classList.remove("zap"); void d.offsetWidth; d.classList.add("zap");
+  setTimeout(function(){ d.classList.remove("zap"); }, 700);
+}
+function spOpenCell(){
+  for (var h=0; h<SP_HOURS.length; h++)
+    for (var d=0; d<SP_DAYS.length; d++){
+      var k = SP_DAYS[d] + "-" + SP_HOURS[h];
+      if (!sp.cells[k]) return k;
+    }
+  return null;
+}
+function renderSplitCals(){
+  ["custCal","ownCal"].forEach(function(gid){
+    var g = document.getElementById(gid);
+    if (!g) return;
+    var isOwner = gid === "ownCal";
+    g.innerHTML = "";
+    g.appendChild(document.createElement("div"));
+    SP_DAYS.forEach(function(d){
+      var el = document.createElement("div"); el.className = "sdl"; el.textContent = d; g.appendChild(el);
+    });
+    SP_HOURS.forEach(function(h){
+      var lab = document.createElement("div"); lab.className = "shl"; lab.textContent = h; g.appendChild(lab);
+      SP_DAYS.forEach(function(d){
+        var key = d + "-" + h;
+        var c = document.createElement("div");
+        var stt = sp.cells[key];
+        c.className = "scell" + (stt ? " " + stt : "") + (sp.sel === key && !isOwner ? " sel" : "");
+        if (isOwner){
+          if (!stt || stt === "blk"){
+            c.addEventListener("click", function(){
+              if (sp.cells[key] === "blk"){ delete sp.cells[key]; spLog("Owner re-opened " + key.replace("-"," "), "o"); }
+              else { sp.cells[key] = "blk"; spLog("Owner blocked off " + key.replace("-"," ") + " — instantly unavailable to customers", "o"); }
+              spZap(); renderSplitCals();
+            });
+          }
+        } else {
+          if (!stt){
+            c.addEventListener("click", function(){
+              sp.sel = key;
+              var btn = document.getElementById("custReqBtn");
+              btn.style.opacity = "1"; btn.style.pointerEvents = "auto";
+              renderSplitCals();
+            });
+          }
+        }
+        g.appendChild(c);
+      });
+    });
+  });
+}
+function splitRequest(){
+  if (!sp.sel || sp.cells[sp.sel]) return;
+  sp.reqN++;
+  var names = ["Sam R.","Jordan P.","Casey M.","Alex T.","Riley B."];
+  var req = {id: sp.reqN, who: names[(sp.reqN-1) % names.length], cell: sp.sel};
+  sp.reqs.unshift(req);
+  var st = document.getElementById("custStatus");
+  st.className = "spstatus pend";
+  st.textContent = "Request sent for " + sp.sel.replace("-"," ") + " — waiting on approval…";
+  spLog("Customer " + req.who + " requested " + sp.sel.replace("-"," "), "c");
+  spLog("Synced ⇄ landed on owner side instantly", "");
+  sp.sel = null;
+  var btn = document.getElementById("custReqBtn");
+  btn.style.opacity = ".4"; btn.style.pointerEvents = "none";
+  spZap(); renderSplitReqs(); renderSplitCals();
+}
+function renderSplitReqs(){
+  var wrap = document.getElementById("splitReqs");
+  if (!wrap) return;
+  wrap.innerHTML = "";
+  if (!sp.reqs.length){
+    wrap.innerHTML = "<p class='spempty'>Nothing waiting. Make a request on the customer side ◂</p>";
+    return;
+  }
+  sp.reqs.forEach(function(r){
+    var div = document.createElement("div");
+    div.className = "sreq";
+    div.innerHTML = "<div><b>" + esc(r.who) + "</b> wants <b>" + r.cell.replace("-"," ") + "</b></div>";
+    var ok = mkBtn("Approve","bsm ok",function(){ splitDecide(r, true); });
+    var no = mkBtn("Pass","bsm no",function(){ splitDecide(r, false); });
+    div.appendChild(ok); div.appendChild(no);
+    wrap.appendChild(div);
+  });
+}
+function splitDecide(r, yes){
+  sp.reqs = sp.reqs.filter(function(x){ return x.id !== r.id; });
+  var st = document.getElementById("custStatus");
+  if (yes){
+    sp.cells[r.cell] = "bkd";
+    st.className = "spstatus ok";
+    st.textContent = "✓ Confirmed! " + r.who + " is booked for " + r.cell.replace("-"," ") + ". Auto-confirmation sent.";
+    spLog("Owner approved " + r.who + " → " + r.cell.replace("-"," "), "o");
+    spLog("Synced ⇄ customer sees CONFIRMED + slot closes for everyone else", "");
+  } else {
+    st.className = "spstatus no";
+    st.textContent = "That slot didn't work out — pick another open time.";
+    spLog("Owner passed on " + r.who + "'s request — polite note goes out automatically", "o");
+    spLog("Synced ⇄ customer side updated", "");
+  }
+  spZap(); renderSplitReqs(); renderSplitCals();
+  // pulse the booked cell
+  if (yes) setTimeout(function(){
+    document.querySelectorAll(".scell.bkd").forEach(function(c){ c.classList.add("justin"); });
+  }, 50);
+}
+function renderJobChips(){
+  var wrap = document.getElementById("jobChips");
+  if (!wrap) return;
+  wrap.innerHTML = "";
+  sp.jobs.forEach(function(j){
+    var chip = document.createElement("div");
+    chip.className = "jchip" + (j.done ? " done" : "");
+    chip.innerHTML = "<em>+</em>" + esc(j.n);
+    chip.addEventListener("click", function(){
+      if (j.done) return;
+      var k = spOpenCell();
+      if (!k){ toast("Week's full — open a slot first."); return; }
+      sp.cells[k] = "bkd";
+      j.done = true;
+      spLog("Owner tapped \u201c" + j.n + "\u201d → auto-placed at " + k.replace("-"," ") + ". One tap, scheduled.", "o");
+      spLog("Synced ⇄ that slot just closed on the customer side", "");
+      spZap(); renderJobChips(); renderSplitCals();
+      setTimeout(function(){
+        document.querySelectorAll(".scell.bkd").forEach(function(c){ c.classList.add("justin"); });
+      }, 50);
+    });
+    wrap.appendChild(chip);
+  });
+}
+function senseUnlock(){
+  sp.unlocked = true;
+  document.getElementById("senseBtn").style.display = "none";
+  document.getElementById("senseIn").style.display = "block";
+  spLog("Owner unlocked the private books with their PIN — customers can never get here", "o");
+}
 
 /* ================= SHARED DEMO STATE (in-memory) ================= */
 var DAYS = ["MON","TUE","WED","THU","FRI","SAT","SUN"];
@@ -1586,8 +1909,7 @@ function renderCusts(){
       div.innerHTML = "<div><b>"+c.n+"</b><br><span>"+c.d+"</span></div>";
       var acts = document.createElement("div");
       acts.style.cssText = "display:flex;gap:8px;margin-left:auto";
-      acts.appendChild(mkBtn("Call","bsm ok",function(){ toast("Would dial "+c.p+" — one tap from the water."); }));
-      acts.appendChild(mkBtn("Text","bsm no",function(){ toast("Would text "+c.n.split(" ")[0]+" — no digging for numbers."); }));
+      acts.appendChild(mkBtn("Job History","bsm no",function(){ toast(c.n.split(" ")[0] + " — full trip history, notes & balance, one tap deep."); }));
       div.appendChild(acts);
       wrap.appendChild(div);
     });
@@ -1632,7 +1954,7 @@ var DEFAULT_SET = {
   t2feat:["Live availability calendar","Trip / appointment request forms","Instant booking confirmations","Google reviews & star ratings","Testimonial showcase","Specials & newsletter tools","Before / after sliders","FAQ section"],
   t3feat:["Client accounts & login","Booking application & approval flow","Owner admin dashboard","Schedule builder","Deposits & payment collection","Automated email/text reminders","Cancellation & reschedule handling","Priority same-week support"],
   note:"◆ Founding-client rate: first builds in each business type get an introductory discount in exchange for a testimonial. Ask when you reach out."};
-var store = {orders:[], settings:{}, photos:[]};
+var store = {orders:[], settings:{}, photos:[], bapairs:[]};
 function loadStore(){
   try{
     var s = localStorage.getItem("ocw_settings");
@@ -1646,7 +1968,12 @@ function loadStore(){
     var ph = localStorage.getItem("ocw_photos_cache");
     store.photos = ph ? JSON.parse(ph) : [];
   }catch(e){ store.photos = []; }
+  try{
+    var ba = localStorage.getItem("ocw_ba_cache");
+    store.bapairs = ba ? JSON.parse(ba) : [];
+  }catch(e){ store.bapairs = []; }
 }
+function cacheBA(){ try{ localStorage.setItem("ocw_ba_cache", JSON.stringify(store.bapairs)); }catch(e){} }
 function cachePhotos(){ try{ localStorage.setItem("ocw_photos_cache", JSON.stringify(store.photos)); }catch(e){ /* photos too big for local cache — cloud is source of truth */ } }
 function cacheOrders(){ try{ localStorage.setItem("ocw_orders_cache", JSON.stringify(store.orders)); }catch(e){} }
 function cacheSettings(){ try{ localStorage.setItem("ocw_settings", JSON.stringify(store.settings)); }catch(e){} }
@@ -2285,6 +2612,7 @@ function fillSettingsForm(){
   });
   var note = document.getElementById("s_note"); if (note) note.value = s.note;
   renderPhotoMgr();
+  renderBAMgr();
   renderTierEditor();
 }
 function renderTierEditor(){
@@ -2574,6 +2902,115 @@ function saveSettings(){
   toast(FB_OK ? "Saved & synced — live across every device." : "Saved on this device.");
 }
 
+/* ================= BEFORE / AFTER PAIRS ================= */
+var pendingBA = {before:null, after:null};
+function handleBAFile(file, side){
+  if (!file) return;
+  var busy = document.getElementById("photoBusy");
+  if (busy) busy.style.display = "inline";
+  compressImage(file, function(dataUrl){
+    if (busy) busy.style.display = "none";
+    if (!dataUrl){ toast("Couldn't read that photo — try another."); return; }
+    pendingBA[side] = dataUrl;
+    paintBASlots();
+  });
+}
+function paintBASlots(){
+  var sb = document.getElementById("baSlotB");
+  var sa = document.getElementById("baSlotA");
+  var btn = document.getElementById("baSaveBtn");
+  if (!sb || !sa || !btn) return;
+  if (pendingBA.before){ sb.classList.add("has"); sb.style.backgroundImage = "url('"+pendingBA.before+"')"; }
+  else { sb.classList.remove("has"); sb.style.backgroundImage = ""; }
+  if (pendingBA.after){ sa.classList.add("has"); sa.style.backgroundImage = "url('"+pendingBA.after+"')"; }
+  else { sa.classList.remove("has"); sa.style.backgroundImage = ""; }
+  var ready = pendingBA.before && pendingBA.after;
+  btn.style.opacity = ready ? "1" : ".4";
+  btn.style.pointerEvents = ready ? "auto" : "none";
+}
+function saveBAPair(){
+  if (!pendingBA.before || !pendingBA.after) return;
+  var id = "BA" + Date.now().toString(36) + Math.floor(Math.random()*900+100);
+  var rec = {id:id, before:pendingBA.before, after:pendingBA.after};
+  store.bapairs.unshift(rec);
+  if (FB_OK){ try{ db.collection("ocw_ba").doc(id).set({before:rec.before, after:rec.after, epoch:Date.now()}); }catch(e){} }
+  cacheBA();
+  pendingBA = {before:null, after:null};
+  paintBASlots();
+  renderBAMgr();
+  toast(FB_OK ? "Before/After pair saved & synced." : "Pair saved on this device.");
+}
+function delBAPair(id){
+  store.bapairs = store.bapairs.filter(function(p){ return p.id !== id; });
+  if (FB_OK){ try{ db.collection("ocw_ba").doc(id).delete(); }catch(e){} }
+  cacheBA(); renderBAMgr();
+  toast("Pair removed.");
+}
+function renderBAMgr(){
+  var wrap = document.getElementById("baMgr");
+  if (!wrap) return;
+  paintBASlots();
+  wrap.innerHTML = "";
+  if (!store.bapairs.length){
+    wrap.innerHTML = "<p style='color:var(--steel-hi);font-size:13px;margin-top:10px'>No pairs yet — pick a before photo, an after photo, then Save Pair. They power the slide-to-compare demo.</p>";
+    return;
+  }
+  store.bapairs.forEach(function(p){
+    var div = document.createElement("div");
+    div.className = "bapair";
+    var b = document.createElement("img"); b.src = p.before; b.alt = "Before";
+    var arr = document.createElement("span"); arr.className = "arrowsym"; arr.textContent = "▸";
+    var a = document.createElement("img"); a.src = p.after; a.alt = "After";
+    var x = document.createElement("button"); x.className = "bsm no"; x.textContent = "✕"; x.style.marginLeft = "auto";
+    x.addEventListener("click", function(){ delBAPair(p.id); });
+    div.appendChild(b); div.appendChild(arr); div.appendChild(a); div.appendChild(x);
+    wrap.appendChild(div);
+  });
+}
+/* --- demo renderer: real pairs when available, mockup otherwise --- */
+var baIdx = 0;
+function renderBADemo(){
+  var old = document.getElementById("baOld");
+  var neu = document.getElementById("baNew");
+  var dots = document.getElementById("baDots");
+  if (!old || !neu || !dots) return;
+  var pairs = store.bapairs;
+  if (!pairs.length){
+    // fallback mockup stays as authored in the HTML
+    old.className = "pane old";
+    neu.className = "pane new";
+    old.style.backgroundImage = ""; neu.style.backgroundImage = "";
+    old.querySelectorAll("h4,p").forEach(function(e){ e.style.display = ""; });
+    neu.querySelectorAll("h4,p").forEach(function(e){ e.style.display = ""; });
+    dots.style.display = "none";
+    return;
+  }
+  baIdx = baIdx % pairs.length;
+  var p = pairs[baIdx];
+  old.className = "pane old photo";
+  neu.className = "pane new photo";
+  old.style.backgroundImage = "url('" + p.before + "')";
+  neu.style.backgroundImage = "url('" + p.after + "')";
+  old.querySelectorAll("h4,p").forEach(function(e){ e.style.display = "none"; });
+  neu.querySelectorAll("h4,p").forEach(function(e){ e.style.display = "none"; });
+  // pair switcher dots
+  if (pairs.length > 1){
+    dots.style.display = "flex";
+    dots.innerHTML = "";
+    pairs.forEach(function(_, i){
+      var d = document.createElement("i");
+      if (i === baIdx) d.className = "on";
+      d.addEventListener("click", function(){ baIdx = i; renderBADemo(); });
+      dots.appendChild(d);
+    });
+    var lab = document.createElement("span");
+    lab.textContent = "Project " + (baIdx+1) + " of " + pairs.length;
+    dots.appendChild(lab);
+  } else {
+    dots.style.display = "none";
+  }
+}
+
 /* ================= QUOTE GENERATOR ================= */
 var quote = { code:"", biz:"", lines:[] };
 function openQuote(o){
@@ -2835,6 +3272,8 @@ document.addEventListener("DOMContentLoaded", function(){
   initFirebase();
   document.getElementById("verBadge").addEventListener("click", function(){ go("hq"); });
   document.getElementById("photoFile").addEventListener("change", function(){ handlePhotoFiles(this.files); });
+  document.getElementById("baFileB").addEventListener("change", function(){ handleBAFile(this.files[0], "before"); this.value=""; });
+  document.getElementById("baFileA").addEventListener("change", function(){ handleBAFile(this.files[0], "after"); this.value=""; });
   if (!location.hash) history.replaceState(null, "", "#/home");
   renderRoute();
 });
