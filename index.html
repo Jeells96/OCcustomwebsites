@@ -435,6 +435,46 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 .qsheet .qterms{margin-top:24px;border-top:1px solid #e2e5ea;padding-top:14px;font-size:12.5px;color:#5A6B85}
 .qsheet .qfoot{margin-top:26px;text-align:center;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#8A97A3}
 
+/* ---------- recommended days ---------- */
+.cal .day.rec{border-color:var(--green);box-shadow:inset 0 0 0 1px var(--green)}
+.cal .day.rec::after{content:"";position:absolute;top:3px;right:3px;width:6px;height:6px;border-radius:50%;background:var(--green)}
+.cal .day{position:relative}
+
+/* ---------- admin daily view ---------- */
+.dayview .dvrow{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid #262C33;font-size:14.5px}
+.dayview .dvrow:last-child{border-bottom:none}
+.dayview .dvrow b{width:64px;font-family:'Anton';letter-spacing:1px;color:var(--white);font-weight:400}
+.dayview .dvrow .st{margin-left:auto}
+
+/* ---------- back-office demo panels ---------- */
+.inv{display:flex;align-items:center;gap:14px;background:#1B2025;border:1px solid #262C33;border-left:5px solid var(--steel);padding:13px 15px;margin-bottom:9px;flex-wrap:wrap}
+.inv.paid{border-left-color:var(--green)}
+.inv.due{border-left-color:var(--amber)}
+.inv.over{border-left-color:var(--red)}
+.inv b{color:var(--white);font-weight:600}
+.inv .amt{font-family:'Anton';font-size:19px;color:var(--white);margin-left:auto}
+.payrow{display:grid;grid-template-columns:1fr 90px 90px 110px;gap:10px;align-items:center;padding:10px 0;border-bottom:1px dashed #2A3038}
+.payrow input{background:#101215;border:1px solid #2E353D;color:var(--white);font-family:'Oswald';font-size:15px;padding:9px 10px;outline:none;text-align:right}
+.payrow input:focus{border-color:var(--red)}
+.payrow .gp{font-family:'Anton';color:var(--white);font-size:17px;text-align:right}
+.payhead{display:grid;grid-template-columns:1fr 90px 90px 110px;gap:10px;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--steel-hi);padding-bottom:6px}
+.cust{display:flex;align-items:center;gap:12px;background:#1B2025;border:1px solid #262C33;padding:12px 14px;margin-bottom:8px;flex-wrap:wrap}
+.cust b{color:var(--white);font-weight:600}
+.cust span{color:var(--steel-hi);font-size:13px}
+
+/* ---------- showcase gallery ---------- */
+.showgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px;margin-top:8px}
+.showcard{background:#F2F4F6;padding:10px 10px 30px;box-shadow:0 10px 26px rgba(0,0,0,.5);cursor:pointer;
+  transition:transform .3s cubic-bezier(.34,1.4,.64,1), box-shadow .3s}
+.showcard:nth-child(3n+1){transform:rotate(-2.2deg)}
+.showcard:nth-child(3n+2){transform:rotate(1.6deg)}
+.showcard:nth-child(3n){transform:rotate(-0.8deg)}
+.showcard:hover{transform:rotate(0deg) scale(1.05);box-shadow:0 20px 44px rgba(206,43,43,.25);z-index:2}
+.showcard img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#22262B}
+#lightbox{position:fixed;inset:0;z-index:980;background:rgba(8,10,12,.94);display:none;align-items:center;justify-content:center;padding:20px}
+#lightbox.on{display:flex}
+#lightbox img{max-width:94vw;max-height:86vh;box-shadow:0 30px 80px rgba(0,0,0,.8);border:4px solid #F2F4F6}
+
 /* ---------- responsive ---------- */
 @media(max-width:900px){
   .grid3{grid-template-columns:1fr}
@@ -538,6 +578,12 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
     </div>
   </div>
 
+  <div class="wrap sect" style="padding-top:0;display:none" id="showcaseSec">
+    <div class="tagplate reveal"><h2>Fresh Off The Bench</h2></div>
+    <p class="sect-sub reveal">Recent work, straight from the shop floor. Tap any photo for a closer look.</p>
+    <div class="showgrid" id="showGrid"></div>
+  </div>
+
   <div class="wrap sect" style="padding-top:0">
     <div class="tagplate reveal"><h2>Kick The Tires Yourself</h2></div>
     <p class="sect-sub reveal">Don't take the word for it — the booking system, request forms, and owner dashboard are all running live on this site. Go break something.</p>
@@ -562,14 +608,16 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 
     <div class="tierhead"><h3>À La Carte Add-Ons</h3><span class="tp">Any tier</span></div>
     <table class="addon-t">
-      <thead><tr><th>Add-On</th><th>What You Get</th><th>Price</th></tr></thead>
+      <thead><tr><th>Add-On</th><th>What You Get</th><th>Pricing</th></tr></thead>
       <tbody>
-        <tr><td>Extra Page</td><td>Any additional page beyond your tier's count</td><td>$<span data-p="a_page">75</span></td></tr>
-        <tr><td>Extra Photo Galleries</td><td>More photo albums to show off your work</td><td>$<span data-p="a_gallery">100</span></td></tr>
-        <tr><td>News &amp; Updates</td><td>A section you can post news and updates to yourself</td><td>$<span data-p="a_blog">150</span></td></tr>
-        <tr><td>Logo &amp; Branding</td><td>Custom logo, colors &amp; brand kit</td><td>$<span data-p="a_logo">200</span></td></tr>
-        <tr><td>Show Up Higher on Google</td><td>Search tune-up so more customers find you</td><td>$<span data-p="a_seo">200</span></td></tr>
-        <tr><td>Business Email</td><td>you@yourbusiness.com professional address</td><td>$<span data-p="a_email">50</span></td></tr>
+        <tr><td>Extra Page</td><td>Any additional page beyond your tier's count</td><td style="color:var(--red);font-family:'Oswald';font-weight:700;font-size:13px;letter-spacing:1.5px">REQUEST A QUOTE</td></tr>
+        <tr><td>Extra Photo Galleries</td><td>More photo albums to show off your work</td><td style="color:var(--red);font-family:'Oswald';font-weight:700;font-size:13px;letter-spacing:1.5px">REQUEST A QUOTE</td></tr>
+        <tr><td>Extra Photo Slots</td><td>Every site includes 15 photos — add more any time</td><td style="color:var(--red);font-family:'Oswald';font-weight:700;font-size:13px;letter-spacing:1.5px">REQUEST A QUOTE</td></tr>
+        <tr><td>Premium Photo Displays</td><td>Background photo shuffle or slideshow instead of a basic gallery</td><td style="color:var(--red);font-family:'Oswald';font-weight:700;font-size:13px;letter-spacing:1.5px">REQUEST A QUOTE</td></tr>
+        <tr><td>News &amp; Updates</td><td>A section you can post news and updates to yourself</td><td style="color:var(--red);font-family:'Oswald';font-weight:700;font-size:13px;letter-spacing:1.5px">REQUEST A QUOTE</td></tr>
+        <tr><td>Logo &amp; Branding</td><td>Custom logo, colors &amp; brand kit</td><td style="color:var(--red);font-family:'Oswald';font-weight:700;font-size:13px;letter-spacing:1.5px">REQUEST A QUOTE</td></tr>
+        <tr><td>Show Up Higher on Google</td><td>Search tune-up so more customers find you</td><td style="color:var(--red);font-family:'Oswald';font-weight:700;font-size:13px;letter-spacing:1.5px">REQUEST A QUOTE</td></tr>
+        <tr><td>Business Email</td><td>you@yourbusiness.com professional address</td><td style="color:var(--red);font-family:'Oswald';font-weight:700;font-size:13px;letter-spacing:1.5px">REQUEST A QUOTE</td></tr>
       </tbody>
     </table>
     <div class="cta-row" style="margin-top:34px">
@@ -622,6 +670,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
           <b class="display" style="font-size:22px;letter-spacing:2px" id="calTitle"></b>
         </div>
         <div class="cal" id="calGrid"></div>
+        <p id="calTip" style="margin-top:14px;font-size:13.5px;color:var(--steel-hi);letter-spacing:.5px"></p>
         <div id="slotWrap" style="display:none">
           <p style="margin:20px 0 4px;font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--steel-hi)">Open slots — <span id="slotDay" style="color:var(--white)"></span></p>
           <div class="slotrow" id="slotRow"></div>
@@ -717,7 +766,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
       <div class="tierhead" style="margin-top:8px"><h3>Booking Requests</h3><span class="badge p" id="pendBadge">0 waiting</span></div>
       <div id="reqList"></div>
 
-      <div class="tierhead" style="margin-top:40px"><h3>Schedule Builder</h3><span class="tp" style="font-size:15px">Tap a cell to block / unblock</span></div>
+      <div class="tierhead" style="margin-top:40px"><h3>Schedule Builder</h3><span class="tp" style="font-size:15px">Tap a cell to block · tap a day name for the daily view</span></div>
       <div class="scroller">
         <div class="schegrid" id="scheGrid"></div>
       </div>
@@ -726,7 +775,26 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
         <span><i style="background:repeating-linear-gradient(45deg,#33230f 0 4px,#241a0c 4px 8px);border:1px solid var(--amber)"></i>Blocked</span>
         <span><i style="background:var(--red-d);border:1px solid var(--red)"></i>Booked</span>
       </div>
-      <button class="btn btn-ghost" style="margin-top:30px" onclick="adminLock()">Lock Control Room</button>
+
+      <div class="tierhead" style="margin-top:44px"><h3>Billing &amp; Invoices</h3><span class="tp" style="font-size:15px">Know who's paid — no spreadsheet</span></div>
+      <p style="color:var(--steel-hi);font-size:14px;margin-bottom:12px">Every job gets an invoice you can track. One tap marks it paid; one tap sends a friendly reminder.</p>
+      <div id="invList"></div>
+
+      <div class="tierhead" style="margin-top:44px"><h3>Payroll Helper</h3><span class="tp" style="font-size:15px">Payday math, done</span></div>
+      <p style="color:var(--steel-hi);font-size:14px;margin-bottom:12px">Punch in hours and rate — gross pay totals itself. Try changing the numbers.</p>
+      <div class="payhead"><span>Crew</span><span style="text-align:right">Hours</span><span style="text-align:right">Rate $</span><span style="text-align:right">Gross</span></div>
+      <div id="payRows"></div>
+      <div style="display:flex;justify-content:flex-end;gap:14px;margin-top:12px;align-items:baseline">
+        <span style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--steel-hi)">Payroll total</span>
+        <b class="display" style="font-size:28px;color:var(--red)" id="payTotal">$0</b>
+      </div>
+
+      <div class="tierhead" style="margin-top:44px"><h3>Customer List</h3><span class="tp" style="font-size:15px">Your regulars, one tap away</span></div>
+      <input class="fi" id="custSearch" placeholder="Search customers…" style="max-width:340px;margin-bottom:12px" oninput="renderCusts()">
+      <div id="custList"></div>
+
+      <p style="margin-top:36px;color:var(--steel-hi);font-size:14px;max-width:640px">This whole back office — bookings, schedule, billing, payroll, customers — lives behind one login on <b style="color:var(--white)">your</b> site. Built to fit however you actually run your business.</p>
+      <button class="btn btn-ghost" style="margin-top:20px" onclick="adminLock()">Lock Control Room</button>
     </div>
   </div>
 </section>
@@ -773,6 +841,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
         <div><label class="fl">Google Ranking $</label><input class="fi" id="s_a_seo" inputmode="numeric"></div>
         <div><label class="fl">Biz Email $</label><input class="fi" id="s_a_email" inputmode="numeric"></div>
         <div class="full2"><label class="fl">Pricing Page Note</label><textarea class="fi" id="s_note" rows="2"></textarea></div>
+        <div class="full2"><label class="fl">Showcase Photos — image links, one per line (shows a fancy gallery on the home page)</label><textarea class="fi" id="s_photos" rows="4" placeholder="https://…/site-screenshot-1.jpg&#10;https://…/logo-work.png"></textarea></div>
       </div>
       <div class="wnav">
         <button class="btn btn-red" onclick="saveSettings()">Save Settings <span class="arr">▸</span></button>
@@ -872,7 +941,18 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
   </div>
 </div>
 
-<div class="verbadge" id="verBadge">OC SHOWCASE v4.1</div>
+<!-- ============ DAILY VIEW MODAL ============ -->
+<div class="modal" id="dayModal">
+  <div class="mbox" style="max-width:460px">
+    <div class="mhead"><h3 id="dayTitle">Daily View</h3><button class="x" onclick="document.getElementById('dayModal').classList.remove('on')">✕</button></div>
+    <div class="mbody dayview" id="dayBody" style="padding:8px 0"></div>
+  </div>
+</div>
+
+<!-- ============ LIGHTBOX ============ -->
+<div id="lightbox" onclick="this.classList.remove('on')"><img id="lightImg" alt=""></div>
+
+<div class="verbadge" id="verBadge">OC SHOWCASE v5.0</div>
 <div id="toast"></div>
 
 <!-- Firebase (compat SDK via CDN) -->
@@ -1090,16 +1170,29 @@ function initCalendar(){
   var dim = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
   var today = now.getDate();
   var fullDays = [ (today+2)%dim+1, (today+5)%dim+1, (today+9)%dim+1 ];
+  var recDays = [];
   for (var i=0;i<first;i++){ var sp=document.createElement("div"); grid.appendChild(sp); }
   for (var d=1; d<=dim; d++){
     var el = document.createElement("div");
     el.className = "day"; el.textContent = d;
+    var isRec = (d >= today) && (fullDays.indexOf(d) < 0) && (d % 4 === 1);
     if (d < today) el.className += " off";
     else if (fullDays.indexOf(d) >= 0) el.className += " full";
-    else el.addEventListener("click", (function(day, node){
-      return function(){ pickDay(day, node); };
-    })(d, el));
+    else {
+      if (isRec){ el.className += " rec"; recDays.push(d); }
+      el.addEventListener("click", (function(day, node){
+        return function(){ pickDay(day, node); };
+      })(d, el));
+    }
     grid.appendChild(el);
+  }
+  // smart availability tip
+  var tip = document.getElementById("calTip");
+  if (tip && recDays.length){
+    var mon = monthNames[now.getMonth()].slice(0,3);
+    tip.innerHTML = "◆ <b>Smart tip for their customers:</b> best availability on " +
+      recDays.slice(0,3).map(function(d){ return mon + " " + d; }).join(", ") +
+      " — the calendar recommends open days automatically.";
   }
 }
 function pickDay(day, node){
@@ -1233,6 +1326,9 @@ function renderAdmin(){
   renderRequests();
   renderSchedule();
   renderAdminStats();
+  renderInvoices();
+  renderPayroll();
+  renderCusts();
 }
 function renderAdminStats(){
   var p=0,a=0;
@@ -1271,6 +1367,13 @@ function renderRequests(){
       acts.insertBefore(no, acts.firstChild);
       acts.insertBefore(ok, acts.firstChild);
     }
+    if (r.status === "approved"){
+      var rs = document.createElement("button");
+      rs.className = "bsm no"; rs.textContent = "Reschedule";
+      rs.addEventListener("click", function(){ rescheduleReq(r.id); });
+      var acts2 = div.querySelector(".acts");
+      acts2.insertBefore(rs, acts2.firstChild);
+    }
     list.appendChild(div);
   });
 }
@@ -1280,28 +1383,160 @@ function decide(id, status){
   r.status = status;
   if (status === "approved"){
     var key = pickOpenCell();
-    if (key) state.booked[key] = 1;
+    if (key){ state.booked[key] = 1; r.cell = key; }
     toast("Approved — dropped onto the schedule.");
   } else {
     toast("Declined. The requester would get a polite note.");
   }
   renderRequests(); renderSchedule(); renderAdminStats();
 }
-function pickOpenCell(){
-  for (var d=0; d<DAYS.length; d++){
-    for (var h=0; h<HOURS.length; h++){
-      var k = DAYS[d] + "-" + HOURS[h];
-      if (!state.booked[k] && !state.blocked[k]) return k;
-    }
+function rescheduleReq(id){
+  var r = state.requests.filter(function(x){ return x.id===id; })[0];
+  if (!r || r.status !== "approved") return;
+  var old = r.cell;
+  var key = pickOpenCell(old);       // next opening AFTER the current slot
+  if (!key){ toast("No other open slots this week — clear a block first."); return; }
+  if (old) delete state.booked[old];
+  state.booked[key] = 1; r.cell = key; r.when = key.replace("-", " · ");
+  toast("Rescheduled to " + key.replace("-"," ") + " — customer auto-notified. Zero phone tag.");
+  renderRequests(); renderSchedule(); renderAdminStats();
+}
+function cellOrder(){
+  var out = [];
+  for (var d=0; d<DAYS.length; d++)
+    for (var h=0; h<HOURS.length; h++)
+      out.push(DAYS[d] + "-" + HOURS[h]);
+  return out;
+}
+function pickOpenCell(afterKey){
+  var order = cellOrder();
+  var start = 0;
+  if (afterKey){
+    var idx = order.indexOf(afterKey);
+    if (idx >= 0) start = idx + 1;
+  }
+  // scan forward from start, wrapping once, skipping the afterKey itself
+  for (var i=0; i<order.length; i++){
+    var k = order[(start + i) % order.length];
+    if (k === afterKey) continue;
+    if (!state.booked[k] && !state.blocked[k]) return k;
   }
   return null;
+}
+function openDayView(day){
+  document.getElementById("dayTitle").textContent = day + " — Daily View";
+  var body = document.getElementById("dayBody");
+  body.innerHTML = "";
+  HOURS.forEach(function(h){
+    var key = day + "-" + h;
+    var row = document.createElement("div");
+    row.className = "dvrow";
+    var st = state.booked[key] ? "<span class='badge n st'>Booked</span>"
+           : state.blocked[key] ? "<span class='badge p st'>Blocked</span>"
+           : "<span class='badge a st'>Open</span>";
+    row.innerHTML = "<b>" + h + "</b><span style='color:var(--steel-hi);font-size:13px'>" +
+      (state.booked[key] ? "Customer booking on the books" : state.blocked[key] ? "Blocked off by you" : "Available to book") + "</span>" + st;
+    if (!state.booked[key]){
+      row.style.cursor = "pointer";
+      row.addEventListener("click", function(){
+        if (state.blocked[key]) delete state.blocked[key]; else state.blocked[key] = 1;
+        openDayView(day); renderSchedule(); renderAdminStats();
+      });
+    }
+    body.appendChild(row);
+  });
+  document.getElementById("dayModal").classList.add("on");
+}
+
+/* ===== back-office demos (billing / payroll / customers) ===== */
+var invoices = [
+  {id:1, who:"Dale Hutchins", job:"Full-day trip · Jun 28", amt:450, st:"paid"},
+  {id:2, who:"Marisol Vega", job:"Photo session · Jul 6", amt:275, st:"due"},
+  {id:3, who:"KC Plumbing (referral)", job:"Half-day trip · Jun 14", amt:300, st:"over"}
+];
+function renderInvoices(){
+  var wrap = document.getElementById("invList");
+  if (!wrap) return;
+  wrap.innerHTML = "";
+  invoices.forEach(function(v){
+    var div = document.createElement("div");
+    div.className = "inv " + v.st;
+    var lab = v.st==="paid" ? "<span class='badge a'>Paid</span>" : v.st==="due" ? "<span class='badge p'>Due</span>" : "<span class='badge n'>Overdue</span>";
+    div.innerHTML = "<div><b>"+v.who+"</b><br><span style='color:var(--steel-hi);font-size:13px'>"+v.job+"</span></div><span class='amt'>$"+money(v.amt)+"</span>";
+    var acts = document.createElement("div");
+    acts.style.cssText = "display:flex;gap:8px;align-items:center";
+    if (v.st !== "paid"){
+      acts.appendChild(mkBtn("Mark Paid","bsm ok",function(){ v.st="paid"; renderInvoices(); toast("Marked paid — books updated."); }));
+      acts.appendChild(mkBtn("Send Reminder","bsm no",function(){ toast("Friendly payment reminder sent to "+v.who.split(" ")[0]+"."); }));
+    }
+    acts.insertAdjacentHTML("beforeend", lab);
+    div.appendChild(acts);
+    wrap.appendChild(div);
+  });
+}
+var crew = [
+  {name:"You (owner draw)", hrs:38, rate:35},
+  {name:"Deckhand — Tyler", hrs:24, rate:19},
+  {name:"Weekend help — Sam", hrs:9, rate:17}
+];
+function renderPayroll(){
+  var wrap = document.getElementById("payRows");
+  if (!wrap) return;
+  wrap.innerHTML = "";
+  crew.forEach(function(c, i){
+    var row = document.createElement("div");
+    row.className = "payrow";
+    var nm = document.createElement("div"); nm.textContent = c.name; nm.style.color = "var(--white)";
+    var h = document.createElement("input"); h.value = c.hrs; h.inputMode = "decimal";
+    var r = document.createElement("input"); r.value = c.rate; r.inputMode = "decimal";
+    var g = document.createElement("div"); g.className = "gp";
+    function upd(){
+      c.hrs = parseFloat(h.value)||0; c.rate = parseFloat(r.value)||0;
+      g.textContent = "$" + money(Math.round(c.hrs * c.rate));
+      var tot = 0; crew.forEach(function(x){ tot += (x.hrs||0)*(x.rate||0); });
+      document.getElementById("payTotal").textContent = "$" + money(Math.round(tot));
+    }
+    h.addEventListener("input", upd); r.addEventListener("input", upd);
+    row.appendChild(nm); row.appendChild(h); row.appendChild(r); row.appendChild(g);
+    wrap.appendChild(row);
+    upd();
+  });
+}
+var custs = [
+  {n:"Dale Hutchins", d:"4 trips · big spring chinook guy", p:"(503) 555-0117"},
+  {n:"Marisol Vega", d:"Photo sessions · refers friends", p:"(971) 555-0242"},
+  {n:"Ray & Donna Culp", d:"Anniversary trip every August", p:"(503) 555-0388"},
+  {n:"KC Plumbing crew", d:"Company outing · 6 seats", p:"(503) 555-0455"}
+];
+function renderCusts(){
+  var wrap = document.getElementById("custList");
+  if (!wrap) return;
+  var q = (document.getElementById("custSearch").value||"").toLowerCase();
+  wrap.innerHTML = "";
+  custs.filter(function(c){ return !q || (c.n+" "+c.d).toLowerCase().indexOf(q) >= 0; })
+    .forEach(function(c){
+      var div = document.createElement("div");
+      div.className = "cust";
+      div.innerHTML = "<div><b>"+c.n+"</b><br><span>"+c.d+"</span></div>";
+      var acts = document.createElement("div");
+      acts.style.cssText = "display:flex;gap:8px;margin-left:auto";
+      acts.appendChild(mkBtn("Call","bsm ok",function(){ toast("Would dial "+c.p+" — one tap from the water."); }));
+      acts.appendChild(mkBtn("Text","bsm no",function(){ toast("Would text "+c.n.split(" ")[0]+" — no digging for numbers."); }));
+      div.appendChild(acts);
+      wrap.appendChild(div);
+    });
+  if (!wrap.children.length) wrap.innerHTML = "<p style='color:var(--steel-hi);padding:10px 0'>No matches — clear the search to see everyone.</p>";
 }
 function renderSchedule(){
   var g = document.getElementById("scheGrid");
   g.innerHTML = "";
   var corner = document.createElement("div"); g.appendChild(corner);
   DAYS.forEach(function(d){
-    var el = document.createElement("div"); el.className = "dlab"; el.textContent = d; g.appendChild(el);
+    var el = document.createElement("div"); el.className = "dlab"; el.textContent = d;
+    el.style.cursor = "pointer";
+    el.title = "Open daily view";
+    el.addEventListener("click", function(){ openDayView(d); });
+    g.appendChild(el);
   });
   HOURS.forEach(function(h){
     var lab = document.createElement("div"); lab.className = "hlab"; lab.textContent = h; g.appendChild(lab);
@@ -1362,6 +1597,30 @@ function applySettings(){
   var fn = document.getElementById("foundNote");
   if (fn) fn.textContent = s.note;
   renderTiers();
+  renderShowcase();
+}
+function renderShowcase(){
+  var sec = document.getElementById("showcaseSec");
+  var grid = document.getElementById("showGrid");
+  if (!sec || !grid) return;
+  var ph = store.settings.photos || [];
+  if (!ph.length){ sec.style.display = "none"; return; }
+  sec.style.display = "block";
+  grid.innerHTML = "";
+  ph.forEach(function(url){
+    var card = document.createElement("div");
+    card.className = "showcard reveal";
+    var img = document.createElement("img");
+    img.src = url; img.loading = "lazy"; img.alt = "Recent work";
+    img.onerror = function(){ card.remove(); };
+    card.appendChild(img);
+    card.addEventListener("click", function(){
+      document.getElementById("lightImg").src = url;
+      document.getElementById("lightbox").classList.add("on");
+    });
+    grid.appendChild(card);
+  });
+  requestAnimationFrame(bindReveals);
 }
 function renderTiers(){
   // home teaser lists (first 4 features)
@@ -1453,6 +1712,8 @@ function wizQDef(tier){
     {k:"pages", l:"Which pages do you want?", ty:"checks", opts:[
       "Home","About","Services / Pricing","Photo Gallery","Reviews","Contact","FAQ","News / Updates","Specials / Deals","Other"]},
     {k:"photos", l:"Do you have photos ready to use?", ty:"select", opts:["Plenty — I'll send them","Some — might need more","Not yet — need help there"]},
+    {k:"photodisp", l:"How should your photos be displayed?", ty:"select", opts:["Basic gallery (included)","Background photo shuffle","Small slideshow","Mix of these"]},
+    {k:"photocount", l:"Roughly how many photos? (15 included)", ty:"select", opts:["Under 15 (included)","15–30","30+","Not sure yet"]},
     {k:"wording", l:"The written words on your site (about you, service descriptions) — who's providing them?", ty:"select", opts:[
       "I'll write and send the wording","Write it for me based on my answers here","A bit of both"]},
     {k:"reviews", l:"Got any reviews or testimonials we can feature?", ty:"textarea", ph:"Paste a couple, or say where they live (Google, Facebook)"},
@@ -1504,11 +1765,11 @@ function wizQDef(tier){
     ups.push({k:"up_dash", l:"Owner dashboard to approve & schedule", tag:"TIER 3"});
     ups.push({k:"up_dep", l:"Take deposits + auto reminders", tag:"TIER 3"});
   }
-  ups.push({k:"up_gal", l:"Extra photo galleries", tag:"+$"+money(s.a_gallery)});
-  ups.push({k:"up_blog", l:"News / updates section you post to", tag:"+$"+money(s.a_blog)});
-  ups.push({k:"up_logo", l:"Logo & branding kit", tag:"+$"+money(s.a_logo)});
-  ups.push({k:"up_seo", l:"Show up higher on Google", tag:"+$"+money(s.a_seo)});
-  ups.push({k:"up_email", l:"Professional email (you@yourbusiness.com)", tag:"+$"+money(s.a_email)});
+  ups.push({k:"up_gal", l:"Extra photo galleries", tag:"QUOTE"});
+  ups.push({k:"up_blog", l:"News / updates section you post to", tag:"QUOTE"});
+  ups.push({k:"up_logo", l:"Logo & branding kit", tag:"QUOTE"});
+  ups.push({k:"up_seo", l:"Show up higher on Google", tag:"QUOTE"});
+  ups.push({k:"up_email", l:"Professional email (you@yourbusiness.com)", tag:"QUOTE"});
   steps.push({t:"Optional Extras", intro:"Want any of these on the build? We'll price them into your quote — nothing's locked in.", f:[
     {k:"upsells", l:"", ty:"upchecks", opts:ups}
   ]});
@@ -1625,10 +1886,12 @@ function upFlags(){
   var inc = tierPages(wiz.tier);
   var np = (a.pages||[]).length;
   if (inc > 0 && np > inc){
-    flags.push("Wants " + np + " pages — " + (np-inc) + " over the " + inc + "-page tier, at $" + money(store.settings.a_page) + "/page (or pitch a tier upgrade)");
+    flags.push("Wants " + np + " pages — " + (np-inc) + " over the " + inc + "-page tier (quote the extras or pitch an upgrade)");
   }
-  if ((a.pages||[]).indexOf("News / Updates") >= 0) flags.push("Wants a News/Updates page — add-on $" + money(store.settings.a_blog));
-  if (a.logo === "No — I need one made" || a.logo === "Sort of — needs cleanup") flags.push("Needs logo work — Logo & Branding kit $" + money(store.settings.a_logo));
+  if ((a.pages||[]).indexOf("News / Updates") >= 0) flags.push("Wants a News/Updates page — add-on to quote");
+  if (a.photodisp && a.photodisp !== "Basic gallery (included)") flags.push("Wants premium photo display: " + a.photodisp + " — add-on to quote");
+  if (a.photocount === "15–30" || a.photocount === "30+") flags.push("Wants " + a.photocount + " photos — extra photo slots beyond the 15 included (quote it)");
+  if (a.logo === "No — I need one made" || a.logo === "Sort of — needs cleanup") flags.push("Needs logo work — Logo & Branding kit to quote");
   if (a.photos === "Not yet — need help there") flags.push("Has no photos yet — may need a photo plan");
   if (a.confirm === "Wait for me to approve each one first" && wiz.tier === 2) flags.push("Wants to approve each booking — that's a Tier 3 feature (upgrade pitch)");
   var upNames = {
@@ -1717,7 +1980,7 @@ function wizUpNote(){
     var inc = tierPages(wiz.tier);
     var n = pagesWrap.querySelectorAll(".wcheck.on").length;
     if (inc > 0 && n > inc){
-      note.innerHTML = "Heads up: your tier includes " + inc + " pages — the extra " + (n-inc) + " would show as a $" + money(store.settings.a_page) + "/page add-on in your quote. Or ask about bumping up a tier.";
+      note.innerHTML = "Heads up: your tier includes " + inc + " pages — the extra " + (n-inc) + " will be quoted as add-ons on your build sheet (or ask about bumping up a tier).";
       note.classList.add("on");
       return;
     }
@@ -1797,6 +2060,7 @@ function fillSettingsForm(){
     var el = document.getElementById("s_"+k); if (el) el.value = s[k];
   });
   var note = document.getElementById("s_note"); if (note) note.value = s.note;
+  var ph = document.getElementById("s_photos"); if (ph) ph.value = (s.photos||[]).join("\n");
   renderTierEditor();
 }
 function renderTierEditor(){
@@ -1991,6 +2255,10 @@ function saveSettings(){
   });
   var note = document.getElementById("s_note").value.trim();
   if (note) s.note = note;
+  var phEl = document.getElementById("s_photos");
+  if (phEl){
+    s.photos = phEl.value.split("\n").map(function(x){ return x.trim(); }).filter(function(x){ return /^https?:\/\//i.test(x); });
+  }
   // tier packages
   for (var t=1; t<=3; t++){
     var nm = document.getElementById("tn_"+t);
@@ -2027,6 +2295,14 @@ function openQuote(o){
   // logo need
   if (a.logo === "No — I need one made" || a.logo === "Sort of — needs cleanup"){
     quote.lines.push({desc:"Logo & branding kit", price: Number(s.a_logo), disc:0});
+  }
+  // premium photo display
+  if (a.photodisp && a.photodisp !== "Basic gallery (included)"){
+    quote.lines.push({desc:"Premium photo display — " + a.photodisp, price: Number(s.a_gallery), disc:0});
+  }
+  // extra photo slots beyond 15
+  if (a.photocount === "15\u201330" || a.photocount === "30+"){
+    quote.lines.push({desc:"Extra photo slots (" + a.photocount + " photos, 15 included)", price: Number(s.a_gallery), disc:0});
   }
   // add-on interests
   var upMap = {up_gal:["Extra photo galleries","a_gallery"], up_blog:["News / updates section","a_blog"],
@@ -2177,24 +2453,25 @@ function generateQuotePDF(){
   y += 18;
   if (discTotal > 0){
     doc.setTextColor(206,43,43);
-    doc.text("Total discount", tx, y); doc.text("−"+pdfMoney(discTotal), cAmt, y, {align:"right"});
+    doc.text("Total discount", tx, y); doc.text("-" + pdfMoney(discTotal), cAmt, y, {align:"right"});
     y += 18;
   }
   doc.setDrawColor(206,43,43); doc.setLineWidth(2); doc.line(tx, y-4, cAmt, y-4);
-  y += 12;
+  y += 14;
   if (discTotal > 0){
+    // struck-through original total on its own line, right-aligned (no overlap)
     doc.setFont("helvetica","normal"); doc.setFontSize(11); doc.setTextColor(150,150,150);
     var g = pdfMoney(c.gross);
-    var gx = tx + 92;
-    doc.text(g, gx, y+2, {align:"right"});
+    doc.text(g, cAmt, y, {align:"right"});
     var gw = doc.getTextWidth(g);
-    doc.setDrawColor(150,150,150); doc.setLineWidth(0.9); doc.line(gx-gw, y-2, gx, y-2);
+    doc.setDrawColor(150,150,150); doc.setLineWidth(0.9); doc.line(cAmt-gw, y-3.5, cAmt, y-3.5);
+    y += 18;
   }
   doc.setFont("helvetica","bold"); doc.setFontSize(17); doc.setTextColor(21,24,28);
-  doc.text("Total Due", tx, y+3);
+  doc.text("Total Due", tx, y);
   doc.setTextColor(206,43,43);
-  doc.text(pdfMoney(c.grand), cAmt, y+3, {align:"right"});
-  y += 36;
+  doc.text(pdfMoney(c.grand), cAmt, y, {align:"right"});
+  y += 34;
 
   if (notes){
     doc.setDrawColor(226,229,234); doc.setLineWidth(0.6); doc.line(M, y, W-M, y);
@@ -2218,7 +2495,7 @@ function fallbackPrintQuote(c, biz, meta, notes, discTotal){
     var amt = disc>0 ? "<s style='color:#999'>"+pdfMoney(price)+"</s> <b style='color:#CE2B2B'>"+pdfMoney(net)+"</b>" : pdfMoney(net);
     rows += "<tr><td>"+esc(l.desc||"")+"</td><td class='r'>"+pdfMoney(price)+"</td><td class='r'>"+amt+"</td></tr>";
   });
-  var discRow = discTotal>0 ? "<div class='r2'><span>Total discount</span><span style='color:#CE2B2B'>−"+pdfMoney(discTotal)+"</span></div>" : "";
+  var discRow = discTotal>0 ? "<div class='r2'><span>Total discount</span><span style='color:#CE2B2B'>-"+pdfMoney(discTotal)+"</span></div>" : "";
   var grossStrike = discTotal>0 ? "<s style='color:#999;font-weight:400;font-size:15px;margin-right:8px'>"+pdfMoney(c.gross)+"</s>" : "";
   var css = "body{font-family:Arial,Helvetica,sans-serif;color:#15181C;margin:0;padding:40px}"+
     ".top{display:flex;justify-content:space-between;border-bottom:4px solid #CE2B2B;padding-bottom:16px;margin-bottom:20px}"+
