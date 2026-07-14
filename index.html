@@ -475,6 +475,14 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 #lightbox.on{display:flex}
 #lightbox img{max-width:94vw;max-height:86vh;box-shadow:0 30px 80px rgba(0,0,0,.8);border:4px solid #F2F4F6}
 
+/* ---------- HQ photo manager ---------- */
+.photomgr{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px;margin-top:12px}
+.pmthumb{position:relative;aspect-ratio:1;border:1px solid #2E353D;overflow:hidden;background:#101215}
+.pmthumb img{width:100%;height:100%;object-fit:cover;display:block}
+.pmthumb .pmx{position:absolute;top:4px;right:4px;width:26px;height:26px;background:rgba(16,18,21,.85);
+  border:1px solid var(--red);color:var(--red);cursor:pointer;font-size:13px;line-height:1;display:flex;align-items:center;justify-content:center}
+.pmthumb .pmx:active{background:var(--red);color:#fff}
+
 /* ---------- responsive ---------- */
 @media(max-width:900px){
   .grid3{grid-template-columns:1fr}
@@ -841,7 +849,13 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
         <div><label class="fl">Google Ranking $</label><input class="fi" id="s_a_seo" inputmode="numeric"></div>
         <div><label class="fl">Biz Email $</label><input class="fi" id="s_a_email" inputmode="numeric"></div>
         <div class="full2"><label class="fl">Pricing Page Note</label><textarea class="fi" id="s_note" rows="2"></textarea></div>
-        <div class="full2"><label class="fl">Showcase Photos — image links, one per line (shows a fancy gallery on the home page)</label><textarea class="fi" id="s_photos" rows="4" placeholder="https://…/site-screenshot-1.jpg&#10;https://…/logo-work.png"></textarea></div>
+        <div class="full2">
+          <label class="fl">Showcase Photos — straight from your phone (shows a fancy gallery on the home page)</label>
+          <input type="file" id="photoFile" accept="image/*" multiple style="display:none">
+          <button class="bsm ok" style="margin-top:4px" onclick="document.getElementById('photoFile').click()">+ Add Photos From Phone</button>
+          <span id="photoBusy" style="display:none;margin-left:10px;font-size:12px;letter-spacing:1.5px;color:var(--amber)">COMPRESSING…</span>
+          <div class="photomgr" id="photoMgr"></div>
+        </div>
       </div>
       <div class="wnav">
         <button class="btn btn-red" onclick="saveSettings()">Save Settings <span class="arr">▸</span></button>
@@ -952,7 +966,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 <!-- ============ LIGHTBOX ============ -->
 <div id="lightbox" onclick="this.classList.remove('on')"><img id="lightImg" alt=""></div>
 
-<div class="verbadge" id="verBadge">OC SHOWCASE v5.0</div>
+<div class="verbadge" id="verBadge">OC SHOWCASE v5.1</div>
 <div id="toast"></div>
 
 <!-- Firebase (compat SDK via CDN) -->
@@ -1000,6 +1014,13 @@ function subscribeCloud(){
       snap.forEach(function(d){ store.orders.push(Object.assign({_docId:d.id}, d.data())); });
       try{ localStorage.setItem("ocw_orders_cache", JSON.stringify(store.orders)); }catch(e){}
       if (currentRoute()==="hq" && hqUnlocked) renderOrders();
+    });
+    db.collection("ocw_photos").orderBy("epoch","desc").onSnapshot(function(snap){
+      store.photos = [];
+      snap.forEach(function(d){ store.photos.push({id:d.id, data:d.data().data}); });
+      cachePhotos();
+      renderShowcase();
+      if (currentRoute()==="hq" && hqUnlocked) renderPhotoMgr();
     });
   }catch(e){}
 }
@@ -1566,7 +1587,7 @@ var DEFAULT_SET = {
   t2feat:["Live availability calendar","Trip / appointment request forms","Instant booking confirmations","Google reviews & star ratings","Testimonial showcase","Specials & newsletter tools","Before / after sliders","FAQ section"],
   t3feat:["Client accounts & login","Booking application & approval flow","Owner admin dashboard","Schedule builder","Deposits & payment collection","Automated email/text reminders","Cancellation & reschedule handling","Priority same-week support"],
   note:"◆ Founding-client rate: first builds in each business type get an introductory discount in exchange for a testimonial. Ask when you reach out."};
-var store = {orders:[], settings:{}};
+var store = {orders:[], settings:{}, photos:[]};
 function loadStore(){
   try{
     var s = localStorage.getItem("ocw_settings");
@@ -1576,7 +1597,12 @@ function loadStore(){
     var o = localStorage.getItem("ocw_orders_cache");
     store.orders = o ? JSON.parse(o) : [];
   }catch(e){ store.orders = []; }
+  try{
+    var ph = localStorage.getItem("ocw_photos_cache");
+    store.photos = ph ? JSON.parse(ph) : [];
+  }catch(e){ store.photos = []; }
 }
+function cachePhotos(){ try{ localStorage.setItem("ocw_photos_cache", JSON.stringify(store.photos)); }catch(e){ /* photos too big for local cache — cloud is source of truth */ } }
 function cacheOrders(){ try{ localStorage.setItem("ocw_orders_cache", JSON.stringify(store.orders)); }catch(e){} }
 function cacheSettings(){ try{ localStorage.setItem("ocw_settings", JSON.stringify(store.settings)); }catch(e){} }
 function genCode(){ return "OC-" + Date.now().toString(36).toUpperCase().slice(-5) + Math.floor(Math.random()*90+10); }
@@ -1603,7 +1629,7 @@ function renderShowcase(){
   var sec = document.getElementById("showcaseSec");
   var grid = document.getElementById("showGrid");
   if (!sec || !grid) return;
-  var ph = store.settings.photos || [];
+  var ph = store.photos.map(function(p){ return p.data; }).concat(store.settings.photos || []);
   if (!ph.length){ sec.style.display = "none"; return; }
   sec.style.display = "block";
   grid.innerHTML = "";
@@ -2060,7 +2086,7 @@ function fillSettingsForm(){
     var el = document.getElementById("s_"+k); if (el) el.value = s[k];
   });
   var note = document.getElementById("s_note"); if (note) note.value = s.note;
-  var ph = document.getElementById("s_photos"); if (ph) ph.value = (s.photos||[]).join("\n");
+  renderPhotoMgr();
   renderTierEditor();
 }
 function renderTierEditor(){
@@ -2247,6 +2273,84 @@ function doCopy(txt){
     navigator.clipboard.writeText(txt).then(done, fail);
   } else fail();
 }
+/* ================= PHONE PHOTO UPLOADS ================= */
+function compressImage(file, cb){
+  var img = new Image();
+  var url = URL.createObjectURL(file);
+  img.onload = function(){
+    URL.revokeObjectURL(url);
+    var tries = [{max:1280, q:0.78},{max:1024, q:0.68},{max:800, q:0.6},{max:640, q:0.5}];
+    var out = null;
+    for (var i=0; i<tries.length; i++){
+      var t = tries[i];
+      var scale = Math.min(1, t.max / Math.max(img.width, img.height));
+      var w = Math.max(1, Math.round(img.width * scale));
+      var h = Math.max(1, Math.round(img.height * scale));
+      var cv = document.createElement("canvas");
+      cv.width = w; cv.height = h;
+      cv.getContext("2d").drawImage(img, 0, 0, w, h);
+      out = cv.toDataURL("image/jpeg", t.q);
+      if (out.length < 900000) break;   /* keep each photo well under Firestore's 1MB doc limit */
+    }
+    cb(out);
+  };
+  img.onerror = function(){ URL.revokeObjectURL(url); cb(null); };
+  img.src = url;
+}
+function handlePhotoFiles(files){
+  if (!files || !files.length) return;
+  var busy = document.getElementById("photoBusy");
+  if (busy) busy.style.display = "inline";
+  var remaining = files.length;
+  Array.prototype.forEach.call(files, function(f){
+    compressImage(f, function(dataUrl){
+      remaining--;
+      if (dataUrl){
+        var id = "PH" + Date.now().toString(36) + Math.floor(Math.random()*900+100);
+        var rec = {id:id, data:dataUrl};
+        store.photos.unshift(rec);
+        if (FB_OK){ try{ db.collection("ocw_photos").doc(id).set({data:dataUrl, epoch:Date.now()}); }catch(e){} }
+        cachePhotos();
+        renderPhotoMgr();
+        renderShowcase();
+      } else {
+        toast("Couldn't read one of the photos — try a different one.");
+      }
+      if (remaining <= 0){
+        if (busy) busy.style.display = "none";
+        toast(FB_OK ? "Photos added & synced — live on the home page." : "Photos added on this device.");
+      }
+    });
+  });
+  document.getElementById("photoFile").value = "";
+}
+function renderPhotoMgr(){
+  var wrap = document.getElementById("photoMgr");
+  if (!wrap) return;
+  wrap.innerHTML = "";
+  if (!store.photos.length){
+    wrap.innerHTML = "<p style='color:var(--steel-hi);font-size:13px;grid-column:1/-1'>No photos yet — tap the button above and pick from your camera roll.</p>";
+    return;
+  }
+  store.photos.forEach(function(p){
+    var d = document.createElement("div");
+    d.className = "pmthumb";
+    var img = document.createElement("img");
+    img.src = p.data; img.alt = "Showcase photo";
+    var x = document.createElement("div");
+    x.className = "pmx"; x.textContent = "✕";
+    x.addEventListener("click", function(){ delPhoto(p.id); });
+    d.appendChild(img); d.appendChild(x);
+    wrap.appendChild(d);
+  });
+}
+function delPhoto(id){
+  store.photos = store.photos.filter(function(p){ return p.id !== id; });
+  if (FB_OK){ try{ db.collection("ocw_photos").doc(id).delete(); }catch(e){} }
+  cachePhotos(); renderPhotoMgr(); renderShowcase();
+  toast("Photo removed.");
+}
+
 function saveSettings(){
   var s = store.settings;
   ["t1b","t1y","t2b","t2y","t3b","t3y","a_page","a_gallery","a_blog","a_logo","a_seo","a_email"].forEach(function(k){
@@ -2255,10 +2359,6 @@ function saveSettings(){
   });
   var note = document.getElementById("s_note").value.trim();
   if (note) s.note = note;
-  var phEl = document.getElementById("s_photos");
-  if (phEl){
-    s.photos = phEl.value.split("\n").map(function(x){ return x.trim(); }).filter(function(x){ return /^https?:\/\//i.test(x); });
-  }
   // tier packages
   for (var t=1; t<=3; t++){
     var nm = document.getElementById("tn_"+t);
@@ -2536,6 +2636,7 @@ document.addEventListener("DOMContentLoaded", function(){
   applySettings();
   initFirebase();
   document.getElementById("verBadge").addEventListener("click", function(){ go("hq"); });
+  document.getElementById("photoFile").addEventListener("change", function(){ handlePhotoFiles(this.files); });
   if (!location.hash) history.replaceState(null, "", "#/home");
   renderRoute();
 });
