@@ -414,15 +414,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 .qin:focus{border-color:var(--red)}
 .qsel{width:54px;background:#0C0E11;border:1px solid #2E353D;color:var(--white);font-family:'Oswald';padding:8px 4px;outline:none}
 
-/* ---------- print quote ---------- */
-#quotePrint{display:none}
-@media print{
-  body{background:#fff !important}
-  body > *{visibility:hidden !important}
-  #quotePrint,#quotePrint *{visibility:visible !important}
-  #quotePrint{display:block !important;position:absolute;top:0;left:0;width:100%;padding:0}
-  nav,.verbadge,#toast,#cglow{display:none !important}
-}
+/* ---------- fallback print quote window styles reused inline ---------- */
 .qsheet{font-family:'Oswald',sans-serif;color:#15181C;max-width:760px;margin:0 auto;padding:40px}
 .qsheet .qtop{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:4px solid #CE2B2B;padding-bottom:18px;margin-bottom:22px}
 .qsheet .qbrand{display:flex;align-items:center;gap:12px}
@@ -841,14 +833,15 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
       <button class="bsm no" style="margin-top:10px" onclick="qAddLine('','',0)">+ Add line</button>
 
       <div class="qtotals">
-        <div class="qrow"><span>Subtotal</span><b id="qSub">$0</b></div>
+        <div class="qrow"><span>Subtotal <em style="color:var(--steel-l);font-style:normal">(list price)</em></span><b id="qSub">$0</b></div>
         <div class="qrow">
-          <span>Total discount</span>
+          <span>Extra discount on whole quote <em style="color:var(--steel-l);font-style:normal">(optional)</em></span>
           <span class="qdisc">
             <input class="fi qin" id="qTotDisc" value="0" inputmode="decimal" oninput="qRecalc()">
             <select class="fi qsel" id="qTotDiscType" onchange="qRecalc()"><option value="flat">$</option><option value="pct">%</option></select>
           </span>
         </div>
+        <div class="qrow"><span>Total discount <em style="color:var(--steel-l);font-style:normal">(auto)</em></span><b id="qDiscAmt" style="color:var(--red)">−$0</b></div>
         <div class="qrow"><span>Override final total <em style="color:var(--steel-l);font-style:normal">(optional)</em></span>
           <input class="fi qin" id="qOverride" placeholder="auto" inputmode="decimal" oninput="qRecalc()"></div>
         <div class="qrow grand"><span>Total Due</span><b id="qGrand">$0</b></div>
@@ -858,15 +851,12 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
       <textarea class="fi" id="qNotes" rows="3">50% deposit to start · balance due at launch · annual fee billed yearly · quote valid 30 days</textarea>
 
       <div class="wnav">
-        <button class="btn btn-red" onclick="printQuote()">Save / Print PDF <span class="arr">▸</span></button>
+        <button class="btn btn-red" onclick="generateQuotePDF()">Download PDF Quote <span class="arr">▸</span></button>
         <button class="btn btn-ghost" onclick="closeQuote()">Done</button>
       </div>
     </div>
   </div>
 </div>
-
-<!-- print-only quote sheet -->
-<div id="quotePrint"></div>
 
 <!-- ============ ORDER VIEW MODAL ============ -->
 <div class="modal" id="ordModal">
@@ -882,12 +872,14 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
   </div>
 </div>
 
-<div class="verbadge" id="verBadge">OC SHOWCASE v4.0</div>
+<div class="verbadge" id="verBadge">OC SHOWCASE v4.1</div>
 <div id="toast"></div>
 
 <!-- Firebase (compat SDK via CDN) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<!-- jsPDF (for downloadable quote PDFs) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 "use strict";
 /* ===== Firebase config (Oregon City Custom Websites) ===== */
@@ -2081,56 +2073,177 @@ function qAddLine(desc, price, disc){
   renderQLines(); qRecalc();
 }
 function qCompute(){
-  var sub = 0;
-  quote.lines.forEach(function(l){ sub += Math.max(0, (Number(l.price)||0) - (Number(l.disc)||0)); });
+  var gross = 0, lineDisc = 0;
+  quote.lines.forEach(function(l){
+    var pr = Number(l.price)||0, dc = Number(l.disc)||0;
+    gross += pr;
+    lineDisc += Math.max(0, Math.min(pr, dc));
+  });
+  var afterLine = gross - lineDisc;
   var td = parseFloat(document.getElementById("qTotDisc").value)||0;
   var type = document.getElementById("qTotDiscType").value;
-  var discAmt = type==="pct" ? sub*(td/100) : td;
-  discAmt = Math.max(0, Math.min(discAmt, sub));
-  var grand = sub - discAmt;
+  var extra = type==="pct" ? afterLine*(td/100) : td;
+  extra = Math.max(0, Math.min(extra, afterLine));
+  var totalDisc = lineDisc + extra;   /* auto-calculated */
+  var grand = gross - totalDisc;
   var ov = document.getElementById("qOverride").value.trim();
-  if (ov !== "" && !isNaN(parseFloat(ov))) grand = parseFloat(ov);
-  return {sub:sub, discAmt:discAmt, grand:Math.max(0,grand), td:td, type:type, ov:ov};
+  var overridden = false;
+  if (ov !== "" && !isNaN(parseFloat(ov))){ grand = parseFloat(ov); overridden = true; }
+  grand = Math.max(0, grand);
+  return {gross:gross, lineDisc:lineDisc, extra:extra, totalDisc:totalDisc, grand:grand, overridden:overridden};
 }
 function qRecalc(){
   var c = qCompute();
-  document.getElementById("qSub").textContent = "$" + money(Math.round(c.sub));
+  document.getElementById("qSub").textContent = "$" + money(Math.round(c.gross));
+  document.getElementById("qDiscAmt").textContent = "−$" + money(Math.round(c.overridden ? Math.max(0,c.gross-c.grand) : c.totalDisc));
   document.getElementById("qGrand").textContent = "$" + money(Math.round(c.grand));
 }
-function printQuote(){
+function pdfMoney(n){ return "$" + money(Math.round(Number(n)||0)); }
+function generateQuotePDF(){
   var c = qCompute();
   var biz = document.getElementById("q_biz").value.trim() || "Customer";
   var meta = document.getElementById("q_meta").value;
   var notes = document.getElementById("qNotes").value.trim();
+  var discTotal = c.overridden ? Math.max(0, c.gross - c.grand) : c.totalDisc;
+
+  if (!(window.jspdf && window.jspdf.jsPDF)){ fallbackPrintQuote(c, biz, meta, notes, discTotal); return; }
+  var jsPDF = window.jspdf.jsPDF;
+  var doc = new jsPDF({unit:"pt", format:"letter"});
+  var W = doc.internal.pageSize.getWidth();
+  var M = 48, y = 56;
+
+  // header badge
+  doc.setFillColor(34,38,43); doc.setDrawColor(206,43,43); doc.setLineWidth(2);
+  doc.roundedRect(M, y-20, 44, 44, 6, 6, "FD");
+  doc.setTextColor(242,244,246); doc.setFont("helvetica","bold"); doc.setFontSize(19);
+  doc.text("OC", M+22, y+8, {align:"center"});
+  doc.setTextColor(21,24,28); doc.setFontSize(16); doc.text("OREGON CITY", M+56, y-3);
+  doc.setTextColor(90,107,133); doc.setFont("helvetica","normal"); doc.setFontSize(7.5);
+  doc.text("C U S T O M   W E B S I T E S", M+57, y+9);
+  doc.setTextColor(21,24,28); doc.setFont("helvetica","bold"); doc.setFontSize(26);
+  doc.text("QUOTE", W-M, y, {align:"right"});
+  doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(90,107,133);
+  doc.text(meta, W-M, y+16, {align:"right"});
+  y += 38;
+  doc.setDrawColor(206,43,43); doc.setLineWidth(3); doc.line(M, y, W-M, y);
+  y += 26;
+  doc.setTextColor(90,107,133); doc.setFont("helvetica","normal"); doc.setFontSize(10);
+  doc.text("Prepared for", M, y);
+  doc.setTextColor(21,24,28); doc.setFont("helvetica","bold"); doc.setFontSize(15);
+  doc.text(biz, M, y+16);
+  y += 42;
+
+  // table header
+  var cPrice = W - M - 140, cAmt = W - M - 2;
+  doc.setFillColor(21,24,28); doc.rect(M, y-14, W-2*M, 22, "F");
+  doc.setTextColor(255,255,255); doc.setFont("helvetica","bold"); doc.setFontSize(9);
+  doc.text("DESCRIPTION", M+8, y);
+  doc.text("PRICE", cPrice, y, {align:"right"});
+  doc.text("AMOUNT", cAmt, y, {align:"right"});
+  y += 22;
+
+  doc.setFont("helvetica","normal"); doc.setFontSize(10.5);
+  quote.lines.forEach(function(l){
+    var price = Number(l.price)||0, disc = Math.max(0, Math.min(price, Number(l.disc)||0)), net = price - disc;
+    var descLines = doc.splitTextToSize(l.desc||"", cPrice - (M+8) - 16);
+    var rowH = Math.max(descLines.length*13, 15) + (disc>0 ? 12 : 0);
+    if (y + rowH > 720){ doc.addPage(); y = 60; }
+    doc.setTextColor(21,24,28); doc.setFont("helvetica","normal");
+    doc.text(descLines, M+8, y);
+    doc.setTextColor(90,107,133);
+    doc.text(pdfMoney(price), cPrice, y, {align:"right"});
+    if (disc>0){
+      doc.setTextColor(150,150,150);
+      var lp = pdfMoney(price);
+      doc.text(lp, cAmt, y, {align:"right"});
+      var lw = doc.getTextWidth(lp);
+      doc.setDrawColor(150,150,150); doc.setLineWidth(0.9);
+      doc.line(cAmt-lw, y-3, cAmt, y-3);           // strike-through
+      doc.setTextColor(206,43,43); doc.setFont("helvetica","bold");
+      doc.text(pdfMoney(net), cAmt, y+13, {align:"right"});
+    } else {
+      doc.setTextColor(21,24,28);
+      doc.text(pdfMoney(net), cAmt, y, {align:"right"});
+    }
+    y += rowH + 8;
+    doc.setDrawColor(226,229,234); doc.setLineWidth(0.6); doc.line(M, y-6, W-M, y-6);
+  });
+
+  // totals
+  y += 14;
+  var tx = W - M - 210;
+  doc.setFont("helvetica","normal"); doc.setFontSize(11); doc.setTextColor(21,24,28);
+  doc.text("Subtotal", tx, y); doc.text(pdfMoney(c.gross), cAmt, y, {align:"right"});
+  y += 18;
+  if (discTotal > 0){
+    doc.setTextColor(206,43,43);
+    doc.text("Total discount", tx, y); doc.text("−"+pdfMoney(discTotal), cAmt, y, {align:"right"});
+    y += 18;
+  }
+  doc.setDrawColor(206,43,43); doc.setLineWidth(2); doc.line(tx, y-4, cAmt, y-4);
+  y += 12;
+  if (discTotal > 0){
+    doc.setFont("helvetica","normal"); doc.setFontSize(11); doc.setTextColor(150,150,150);
+    var g = pdfMoney(c.gross);
+    var gx = tx + 92;
+    doc.text(g, gx, y+2, {align:"right"});
+    var gw = doc.getTextWidth(g);
+    doc.setDrawColor(150,150,150); doc.setLineWidth(0.9); doc.line(gx-gw, y-2, gx, y-2);
+  }
+  doc.setFont("helvetica","bold"); doc.setFontSize(17); doc.setTextColor(21,24,28);
+  doc.text("Total Due", tx, y+3);
+  doc.setTextColor(206,43,43);
+  doc.text(pdfMoney(c.grand), cAmt, y+3, {align:"right"});
+  y += 36;
+
+  if (notes){
+    doc.setDrawColor(226,229,234); doc.setLineWidth(0.6); doc.line(M, y, W-M, y);
+    y += 16;
+    doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(90,107,133);
+    doc.text("Terms:", M, y);
+    doc.setFont("helvetica","normal");
+    var tl = doc.splitTextToSize(notes, W-2*M-42);
+    doc.text(tl, M+40, y);
+  }
+  doc.setFontSize(8); doc.setTextColor(138,151,163);
+  doc.text("OREGON CITY CUSTOM WEBSITES   ·   BUILT TOUGH   ·   BUILT LOCAL", W/2, 772, {align:"center"});
+
+  doc.save("OC-Quote-" + biz.replace(/[^a-z0-9]+/gi,"-") + ".pdf");
+  toast("Quote PDF downloaded.");
+}
+function fallbackPrintQuote(c, biz, meta, notes, discTotal){
   var rows = "";
   quote.lines.forEach(function(l){
-    var lt = Math.max(0,(Number(l.price)||0)-(Number(l.disc)||0));
-    rows += "<tr><td>"+esc(l.desc||"")+(l.disc>0?" <span style='color:#CE2B2B'>(−$"+money(l.disc)+")</span>":"")+"</td>"+
-            "<td class='r'>$"+money(Number(l.price)||0)+"</td>"+
-            "<td class='r'>$"+money(lt)+"</td></tr>";
+    var price = Number(l.price)||0, disc = Math.max(0, Math.min(price, Number(l.disc)||0)), net = price - disc;
+    var amt = disc>0 ? "<s style='color:#999'>"+pdfMoney(price)+"</s> <b style='color:#CE2B2B'>"+pdfMoney(net)+"</b>" : pdfMoney(net);
+    rows += "<tr><td>"+esc(l.desc||"")+"</td><td class='r'>"+pdfMoney(price)+"</td><td class='r'>"+amt+"</td></tr>";
   });
-  var discLine = c.discAmt>0 ? "<div class='r2'><span>Discount"+(c.type==="pct"?" ("+c.td+"%)":"")+"</span><span>−$"+money(Math.round(c.discAmt))+"</span></div>" : "";
-  var html =
-    "<div class='qsheet'>"+
-      "<div class='qtop'>"+
-        "<div class='qbrand'>"+
-          "<svg width='46' height='50' viewBox='0 0 100 110'><polygon points='50,4 94,29 94,81 50,106 6,81 6,29' fill='#22262B' stroke='#CE2B2B' stroke-width='7'/><text x='50' y='70' text-anchor='middle' font-family='Anton, sans-serif' font-size='42' fill='#15181C'>OC</text></svg>"+
-          "<div><b>OREGON CITY</b><span>Custom Websites</span></div>"+
-        "</div>"+
-        "<div><h2>Quote</h2><div class='qsub'>"+esc(meta)+"</div></div>"+
-      "</div>"+
-      "<div class='qto'>Prepared for<b>"+esc(biz)+"</b></div>"+
-      "<table><thead><tr><th>Description</th><th class='r'>Price</th><th class='r'>Amount</th></tr></thead><tbody>"+rows+"</tbody></table>"+
-      "<div class='qtot'>"+
-        "<div class='r2'><span>Subtotal</span><span>$"+money(Math.round(c.sub))+"</span></div>"+
-        discLine+
-        "<div class='r2 g'><span>Total Due</span><span>$"+money(Math.round(c.grand))+"</span></div>"+
-      "</div>"+
-      (notes ? "<div class='qterms'><b>Terms:</b> "+esc(notes)+"</div>" : "")+
-      "<div class='qfoot'>Oregon City Custom Websites · Built Tough · Built Local</div>"+
-    "</div>";
-  document.getElementById("quotePrint").innerHTML = html;
-  window.print();
+  var discRow = discTotal>0 ? "<div class='r2'><span>Total discount</span><span style='color:#CE2B2B'>−"+pdfMoney(discTotal)+"</span></div>" : "";
+  var grossStrike = discTotal>0 ? "<s style='color:#999;font-weight:400;font-size:15px;margin-right:8px'>"+pdfMoney(c.gross)+"</s>" : "";
+  var css = "body{font-family:Arial,Helvetica,sans-serif;color:#15181C;margin:0;padding:40px}"+
+    ".top{display:flex;justify-content:space-between;border-bottom:4px solid #CE2B2B;padding-bottom:16px;margin-bottom:20px}"+
+    ".bd b{font-size:20px;display:block}.bd span{font-size:10px;letter-spacing:3px;color:#5A6B85}"+
+    "h2{font-size:28px;margin:0;text-align:right}.sub{font-size:12px;color:#5A6B85;text-align:right}"+
+    ".to{margin-bottom:18px}.to b{font-size:17px;display:block}"+
+    "table{width:100%;border-collapse:collapse;margin-bottom:16px}"+
+    "th{background:#15181C;color:#fff;font-size:11px;letter-spacing:1px;text-align:left;padding:9px 8px}"+
+    "th.r,td.r{text-align:right}td{padding:10px 8px;border-bottom:1px solid #e2e5ea;font-size:13px}"+
+    ".tot{margin-left:auto;width:300px}.r2{display:flex;justify-content:space-between;padding:6px 0;font-size:13px}"+
+    ".r2.g{border-top:3px solid #CE2B2B;margin-top:6px;padding-top:10px;font-size:22px;font-weight:bold}"+
+    ".r2.g span:last-child{color:#CE2B2B}.terms{margin-top:22px;border-top:1px solid #e2e5ea;padding-top:12px;font-size:12px;color:#5A6B85}"+
+    ".foot{margin-top:22px;text-align:center;font-size:10px;letter-spacing:2px;color:#8A97A3}";
+  var html = "<!DOCTYPE html><html><head><meta charset='utf-8'><title>OC Quote — "+esc(biz)+"</title><style>"+css+"</style></head><body>"+
+    "<div class='top'><div class='bd'><b>OREGON CITY</b><span>CUSTOM WEBSITES</span></div><div><h2>QUOTE</h2><div class='sub'>"+esc(meta)+"</div></div></div>"+
+    "<div class='to'>Prepared for<b>"+esc(biz)+"</b></div>"+
+    "<table><thead><tr><th>Description</th><th class='r'>Price</th><th class='r'>Amount</th></tr></thead><tbody>"+rows+"</tbody></table>"+
+    "<div class='tot'><div class='r2'><span>Subtotal</span><span>"+pdfMoney(c.gross)+"</span></div>"+discRow+
+    "<div class='r2 g'><span>Total Due</span><span>"+grossStrike+pdfMoney(c.grand)+"</span></div></div>"+
+    (notes?"<div class='terms'><b>Terms:</b> "+esc(notes)+"</div>":"")+
+    "<div class='foot'>OREGON CITY CUSTOM WEBSITES · BUILT TOUGH · BUILT LOCAL</div>"+
+    "<scr"+"ipt>window.onload=function(){setTimeout(function(){window.print();},250);};</scr"+"ipt></body></html>";
+  var w = window.open("", "_blank");
+  if (!w){ toast("Allow pop-ups to open the printable quote."); return; }
+  w.document.open(); w.document.write(html); w.document.close();
 }
 function clearOrders(){
   if (!store.orders.length){ toast("Nothing to delete."); return; }
