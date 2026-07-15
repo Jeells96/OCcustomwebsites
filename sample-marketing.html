@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evergreen Yardworks — Landscaping & Yard Care, Oregon City</title>
+<meta name="description" content="Full-service landscaping, cleanups, and year-round yard care in Clackamas County. Free estimates.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#2F5D3A; --green-d:#234A2C; --green-l:#EAF2EC; --moss:#7BA184;
+  --ink:#22301F; --mut:#5C6B58; --cream:#FBFAF6; --card:#FFFFFF; --line:#E4E6DE;
+  --amber:#C98A2D;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--ink);line-height:1.65;font-size:16.5px}
+h1,h2,h3{font-family:'Fraunces',serif;line-height:1.15;color:var(--ink)}
+img{max-width:100%}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+.btn{display:inline-block;background:var(--green);color:#fff;font-weight:600;padding:14px 26px;border-radius:8px;text-decoration:none;border:none;font-size:16px;cursor:pointer;transition:.15s}
+.btn:hover{background:var(--green-d);transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--green);border:2px solid var(--green)}
+.btn.ghost:hover{background:var(--green-l)}
+/* nav */
+nav{position:sticky;top:0;background:rgba(251,250,246,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:50}
+nav .bar{display:flex;align-items:center;justify-content:space-between;height:66px}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-weight:700;font-size:20px;color:var(--green);text-decoration:none}
+.logo svg{flex:0 0 auto}
+nav .links{display:flex;gap:26px;align-items:center}
+nav .links a{color:var(--ink);text-decoration:none;font-weight:500;font-size:15px}
+nav .links a:hover{color:var(--green)}
+nav .call{background:var(--green);color:#fff !important;padding:9px 16px;border-radius:8px;font-weight:600}
+.menu-btn{display:none;background:none;border:none;font-size:26px;color:var(--green);cursor:pointer}
+/* hero */
+.hero{background:linear-gradient(160deg,#213D27 0%,#2F5D3A 55%,#3C6E47 100%);color:#fff;padding:84px 0 90px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -8% -46% -8%;height:70%;background:radial-gradient(ellipse at center,rgba(123,161,132,.35),transparent 65%)}
+.hero h1{font-size:clamp(34px,5.4vw,54px);color:#fff;max-width:640px}
+.hero p.sub{margin:18px 0 30px;font-size:19px;color:#DCE8DE;max-width:560px}
+.hero .cta{display:flex;gap:14px;flex-wrap:wrap}
+.trust{display:flex;gap:28px;margin-top:44px;flex-wrap:wrap}
+.trust div{font-size:14px;color:#CFE0D2}
+.trust b{display:block;font-size:24px;color:#fff;font-family:'Fraunces',serif}
+/* seasonal ribbon */
+.ribbon{background:var(--amber);color:#fff;text-align:center;padding:11px 16px;font-weight:600;font-size:15px}
+/* sections */
+section{padding:74px 0}
+.kick{color:var(--green);font-weight:700;letter-spacing:2.5px;text-transform:uppercase;font-size:12.5px;margin-bottom:10px}
+h2{font-size:clamp(26px,3.6vw,38px);margin-bottom:14px}
+.lead{color:var(--mut);max-width:640px;margin-bottom:38px}
+/* services */
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.svc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 24px;transition:.18s}
+.svc:hover{box-shadow:0 14px 34px rgba(34,48,31,.10);transform:translateY(-3px)}
+.svc .ic{width:46px;height:46px;border-radius:10px;background:var(--green-l);display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:22px}
+.svc h3{font-size:19px;margin-bottom:6px}
+.svc p{font-size:14.5px;color:var(--mut);margin-bottom:14px}
+.svc .price{font-weight:700;color:var(--green);font-size:15px}
+/* process */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;counter-reset:step}
+.step{background:var(--green-l);border-radius:14px;padding:26px 24px;position:relative}
+.step::before{counter-increment:step;content:counter(step);position:absolute;top:-16px;left:22px;width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-family:'Fraunces',serif}
+.step h3{font-size:17.5px;margin:8px 0 6px}
+.step p{font-size:14.5px;color:var(--mut)}
+/* gallery */
+.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.tile{border-radius:14px;overflow:hidden;aspect-ratio:4/3;position:relative;display:flex;align-items:flex-end}
+.tile span{position:relative;z-index:2;color:#fff;font-weight:600;font-size:14px;padding:14px 16px;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+.tile::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(20,30,20,.55),transparent 55%)}
+.t1{background:linear-gradient(135deg,#39683F,#7BA184)}
+.t2{background:linear-gradient(135deg,#6B7F4F,#A7B97E)}
+.t3{background:linear-gradient(135deg,#2F4A33,#5F8A66)}
+.t4{background:linear-gradient(135deg,#4E6B3E,#8FAF77)}
+.t5{background:linear-gradient(135deg,#33523B,#6E9877)}
+.t6{background:linear-gradient(135deg,#5A7345,#9DB483)}
+/* reviews */
+.rev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.rev{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px}
+.stars{color:var(--amber);letter-spacing:2px;margin-bottom:10px}
+.rev p{font-size:15px;color:var(--ink)}
+.rev .who{margin-top:14px;font-weight:600;font-size:14px;color:var(--mut)}
+/* faq */
+.faq{max-width:760px}
+.qa{border-bottom:1px solid var(--line)}
+.qa button{width:100%;background:none;border:none;text-align:left;padding:20px 40px 20px 0;font-family:'Inter';font-size:17px;font-weight:600;color:var(--ink);cursor:pointer;position:relative}
+.qa button::after{content:"+";position:absolute;right:4px;top:50%;transform:translateY(-50%);font-size:24px;color:var(--green);transition:.2s}
+.qa.open button::after{transform:translateY(-50%) rotate(45deg)}
+.qa .a{max-height:0;overflow:hidden;transition:max-height .3s ease;color:var(--mut);font-size:15.5px}
+.qa.open .a{max-height:220px;padding-bottom:20px}
+/* quote band */
+.band{background:linear-gradient(150deg,var(--green-d),var(--green));border-radius:20px;color:#fff;padding:54px 40px;display:grid;grid-template-columns:1.1fr 1fr;gap:44px;align-items:start}
+.band h2{color:#fff}
+.band p{color:#D8E6DB;font-size:15.5px}
+.band ul{list-style:none;margin-top:18px}
+.band li{padding:7px 0 7px 28px;position:relative;font-size:15px;color:#EAF3EC}
+.band li::before{content:"✓";position:absolute;left:0;color:var(--amber);font-weight:700}
+.qform{background:#fff;border-radius:14px;padding:26px;color:var(--ink)}
+.qform label{display:block;font-size:12.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mut);margin:14px 0 5px}
+.qform input,.qform select,.qform textarea{width:100%;border:1.5px solid var(--line);border-radius:8px;padding:12px;font-family:'Inter';font-size:15.5px;outline:none;background:#FBFAF6}
+.qform input:focus,.qform select:focus,.qform textarea:focus{border-color:var(--green)}
+.qform .btn{width:100%;margin-top:20px}
+.sent{display:none;text-align:center;padding:34px 8px}
+.sent .big{font-size:44px}
+.sent h3{margin:10px 0 6px}
+.sent p{color:var(--mut) !important}
+/* footer */
+footer{background:#1C2E20;color:#B9CBBD;padding:52px 0 76px;font-size:14.5px}
+footer .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:34px}
+footer h4{color:#fff;font-family:'Fraunces',serif;margin-bottom:12px;font-size:17px}
+footer a{color:#B9CBBD;text-decoration:none}
+footer a:hover{color:#fff}
+/* sticky call (mobile) */
+.stickycall{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--green);color:#fff;text-align:center;padding:15px;font-weight:700;text-decoration:none;z-index:60;font-size:16.5px}
+/* sample badge */
+.samplebadge{position:fixed;top:74px;right:12px;z-index:70;background:#22301F;color:#fff;font-size:10.5px;letter-spacing:1.5px;padding:8px 12px;border-radius:8px;text-decoration:none;opacity:.92}
+.samplebadge b{color:#F3B85C}
+@media(max-width:820px){
+  nav .links{display:none;position:absolute;top:66px;left:0;right:0;background:var(--cream);flex-direction:column;padding:18px 22px;gap:16px;border-bottom:1px solid var(--line)}
+  nav .links.open{display:flex}
+  .menu-btn{display:block}
+  .band{grid-template-columns:1fr;padding:36px 24px}
+  .stickycall{display:block}
+  footer{padding-bottom:110px}
+}
+</style>
+</head>
+<body>
+
+<a class="samplebadge" href="javascript:history.back()">◂ <b>SAMPLE BUILD</b> · OC Custom Websites</a>
+
+<nav>
+  <div class="wrap bar">
+    <a class="logo" href="#top">
+      <svg width="30" height="30" viewBox="0 0 32 32"><path d="M16 2 L28 26 H4 Z" fill="#2F5D3A"/><path d="M16 9 L24 26 H8 Z" fill="#7BA184"/><rect x="14.4" y="24" width="3.2" height="6" fill="#5C4630"/></svg>
+      Evergreen Yardworks
+    </a>
+    <button class="menu-btn" onclick="document.querySelector('nav .links').classList.toggle('open')">☰</button>
+    <div class="links">
+      <a href="#services">Services</a>
+      <a href="#work">Our Work</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">FAQ</a>
+      <a class="call" href="tel:5035550188">☎ (503) 555-0188</a>
+    </div>
+  </div>
+</nav>
+
+<div class="ribbon">🍂 Fall cleanup slots are filling — book by Oct 15 and save 10%</div>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <h1>Your yard, handled.<br>Season after season.</h1>
+    <p class="sub">Full-service landscaping and year-round yard care for Oregon City and Clackamas County. Licensed, insured, and on time — every time.</p>
+    <div class="cta">
+      <a class="btn" href="#quote">Get My Free Estimate</a>
+      <a class="btn ghost" style="color:#fff;border-color:#fff" href="#services">See Services & Prices</a>
+    </div>
+    <div class="trust">
+      <div><b>14 yrs</b>Serving Clackamas Co.</div>
+      <div><b>600+</b>Yards maintained</div>
+      <div><b>4.9★</b>Google rating</div>
+      <div><b>LCB #9921</b>Licensed & insured</div>
+    </div>
+  </div>
+</header>
+
+<section id="services">
+  <div class="wrap">
+    <div class="kick">Services & Honest Prices</div>
+    <h2>Everything your yard needs</h2>
+    <p class="lead">Straightforward pricing, posted up front. Every job starts with a free walk-through so the price you hear is the price you pay.</p>
+    <div class="svc-grid">
+      <div class="svc"><div class="ic">🌱</div><h3>Weekly Mowing & Care</h3><p>Mow, edge, blow — plus seasonal fertilizing and moss control baked in.</p><div class="price">From $45 / visit</div></div>
+      <div class="svc"><div class="ic">🍂</div><h3>Spring & Fall Cleanups</h3><p>Leaves, beds, gutters cleared at ground level, pruning, and haul-away included.</p><div class="price">From $280</div></div>
+      <div class="svc"><div class="ic">🌳</div><h3>Hedge & Tree Pruning</h3><p>Shaping, thinning, and small-tree work done right — no butchered shrubs.</p><div class="price">From $150</div></div>
+      <div class="svc"><div class="ic">🧱</div><h3>Beds, Bark & Rock</h3><p>Bed rebuilds, fresh bark dust, river rock, and clean edging lines.</p><div class="price">From $390</div></div>
+      <div class="svc"><div class="ic">💧</div><h3>Irrigation Tune-Ups</h3><p>Startup, winterization, head repair, and controller programming.</p><div class="price">From $120</div></div>
+      <div class="svc"><div class="ic">🏡</div><h3>Full Yard Renovations</h3><p>Sod, plantings, hardscape touches — a plan, a schedule, and a crew that shows up.</p><div class="price">Free on-site quote</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--green-l)">
+  <div class="wrap">
+    <div class="kick">How It Works</div>
+    <h2>Three steps, zero runaround</h2>
+    <div class="steps" style="margin-top:38px">
+      <div class="step"><h3>Walk the yard</h3><p>We meet you on site (or work from photos), listen, and measure. Takes 20 minutes.</p></div>
+      <div class="step"><h3>One clear price</h3><p>You get a written estimate the same day — line by line, nothing vague, good for 30 days.</p></div>
+      <div class="step"><h3>We handle it</h3><p>Scheduled date, tidy crew, and a text when we're on the way. We leave it cleaner than we found it.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="kick">Recent Work</div>
+    <h2>Yards we're proud of</h2>
+    <p class="lead">A few recent projects around Oregon City, West Linn, and Canby.</p>
+    <div class="gal">
+      <div class="tile t1"><span>Backyard renovation — Oregon City</span></div>
+      <div class="tile t2"><span>Fall cleanup & pruning — West Linn</span></div>
+      <div class="tile t3"><span>New beds & bark — Canby</span></div>
+      <div class="tile t4"><span>Hedge reshaping — Gladstone</span></div>
+      <div class="tile t5"><span>Sod install — Beavercreek</span></div>
+      <div class="tile t6"><span>Weekly care client — Redland</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="reviews" style="background:var(--green-l)">
+  <div class="wrap">
+    <div class="kick">Reviews</div>
+    <h2>What neighbors say</h2>
+    <div class="rev-grid" style="margin-top:34px">
+      <div class="rev"><div class="stars">★★★★★</div><p>"They rebuilt our beds and now handle the yard weekly. Same crew every time, and the yard has never looked better."</p><div class="who">— Karen M., Oregon City</div></div>
+      <div class="rev"><div class="stars">★★★★★</div><p>"Estimate was exactly what we paid. Showed up when they said, hauled everything away, texted before arriving. That's all I ask."</p><div class="who">— Dave & Trish R., West Linn</div></div>
+      <div class="rev"><div class="stars">★★★★★</div><p>"Our hedge was a disaster after another company hacked it. Evergreen brought it back over two seasons. Worth every penny."</p><div class="who">— Linh P., Canby</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="kick">Questions</div>
+    <h2>Before you ask</h2>
+    <div class="faq" style="margin-top:26px">
+      <div class="qa"><button onclick="this.parentNode.classList.toggle('open')">Do I need to be home for the estimate?</button><div class="a"><p>Nope. If we can see the yard, we can quote it — we'll text you the written estimate the same day.</p></div></div>
+      <div class="qa"><button onclick="this.parentNode.classList.toggle('open')">Do you haul away the debris?</button><div class="a"><p>Always. Haul-away and dump fees are included in every cleanup and pruning price — no surprise line items.</p></div></div>
+      <div class="qa"><button onclick="this.parentNode.classList.toggle('open')">Is there a contract for weekly care?</button><div class="a"><p>No contracts. Weekly and biweekly care runs month to month; pause or cancel any time with a week's notice.</p></div></div>
+      <div class="qa"><button onclick="this.parentNode.classList.toggle('open')">What areas do you serve?</button><div class="a"><p>Oregon City, West Linn, Gladstone, Canby, Beavercreek, Redland, and most of Clackamas County. Not sure? Ask — we're flexible for larger projects.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="quote" style="padding-top:20px">
+  <div class="wrap">
+    <div class="band">
+      <div>
+        <h2>Get your free estimate</h2>
+        <p>Tell us what the yard needs and we'll get back to you within one business day — usually faster.</p>
+        <ul>
+          <li>Written estimate, good for 30 days</li>
+          <li>Licensed & insured — LCB #9921</li>
+          <li>No contracts, no pressure</li>
+          <li>Fall promo: 10% off cleanups booked by Oct 15</li>
+        </ul>
+      </div>
+      <div class="qform" id="quoteForm">
+        <div id="formFields">
+          <label>Your name</label><input id="qf_name" placeholder="Sam Rivers">
+          <label>Phone or email</label><input id="qf_contact" placeholder="(503) 555-0142">
+          <label>What do you need?</label>
+          <select id="qf_type"><option>Fall / spring cleanup</option><option>Weekly or biweekly care</option><option>Pruning & hedges</option><option>Beds, bark or rock</option><option>Irrigation</option><option>Full renovation</option><option>Something else</option></select>
+          <label>Anything we should know?</label>
+          <textarea id="qf_notes" rows="3" placeholder="Corner lot, big maple out back, gate code 1234..."></textarea>
+          <button class="btn" onclick="sendQuote()">Send My Request ▸</button>
+        </div>
+        <div class="sent" id="formSent">
+          <div class="big">🌲</div>
+          <h3>Got it — thanks!</h3>
+          <p>We'll text or email your estimate within one business day.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap cols">
+    <div>
+      <h4>Evergreen Yardworks</h4>
+      <p>Family-run since 2012.<br>Licensed · Bonded · Insured<br>LCB #9921</p>
+    </div>
+    <div>
+      <h4>Hours</h4>
+      <p>Mon–Fri · 7 AM – 5 PM<br>Sat · 8 AM – 2 PM<br>Closed Sundays</p>
+    </div>
+    <div>
+      <h4>Service Area</h4>
+      <p>Oregon City · West Linn<br>Gladstone · Canby<br>Beavercreek · Redland</p>
+    </div>
+    <div>
+      <h4>Reach Us</h4>
+      <p><a href="tel:5035550188">(503) 555-0188</a><br><a href="mailto:hello@evergreenyardworks.com">hello@evergreenyardworks.com</a></p>
+    </div>
+  </div>
+</footer>
+
+<a class="stickycall" href="tel:5035550188">☎ Call Evergreen — Free Estimates</a>
+
+<script>
+"use strict";
+function sendQuote(){
+  var n = document.getElementById("qf_name").value.trim();
+  if (!n){ document.getElementById("qf_name").focus(); return; }
+  document.getElementById("formFields").style.display = "none";
+  document.getElementById("formSent").style.display = "block";
+}
+</script>
+</body>
+</html>
