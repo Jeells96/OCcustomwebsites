@@ -1159,6 +1159,26 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
         <div><label class="fl">Google Ranking $</label><input class="fi" id="s_a_seo" inputmode="numeric"></div>
         <div><label class="fl">Biz Email $</label><input class="fi" id="s_a_email" inputmode="numeric"></div>
         <div class="full2"><label class="fl">Pricing Page Note</label><textarea class="fi" id="s_note" rows="2"></textarea></div>
+
+        <div class="full2" style="margin-top:26px;border-top:1px solid #2E353D;padding-top:20px">
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px">
+            <label class="fl" style="margin:0">Email Notifications</label>
+            <span id="ejStatus" class="fbnote" style="margin:0;padding:5px 10px;font-size:11px">Off</span>
+          </div>
+          <p style="color:var(--steel-hi);font-size:12.5px;margin-bottom:12px">Emails you when an order lands, and sends the customer a confirmation from your domain. Paste your EmailJS IDs below.</p>
+          <div class="fgrid" style="max-width:none">
+            <div><label class="fl">Public Key</label><input class="fi" id="s_ej_key" placeholder="aBcD1234EfGh"></div>
+            <div><label class="fl">Service ID</label><input class="fi" id="s_ej_svc" placeholder="service_ab12cde"></div>
+            <div><label class="fl">Template ID — to you</label><input class="fi" id="s_ej_tpl_owner" placeholder="template_owner1"></div>
+            <div><label class="fl">Template ID — to customer</label><input class="fi" id="s_ej_tpl_cust" placeholder="template_cust1"></div>
+            <div><label class="fl">Send order alerts to</label><input class="fi" id="s_ej_to" placeholder="office@oregoncity-customwebsites.com"></div>
+            <div><label class="fl">From name (customers see this)</label><input class="fi" id="s_ej_from" placeholder="OC Custom Websites"></div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;align-items:center">
+            <div class="wcheck" id="ejToggle" onclick="this.classList.toggle('on')" style="max-width:260px"><b></b>Turn email notifications on</div>
+            <button class="bsm ok" onclick="testEmails()">Send Test Emails</button>
+          </div>
+        </div>
         <div class="full2">
           <label class="fl">Showcase Photos — straight from your phone (shows a fancy gallery on the home page)</label>
           <input type="file" id="photoFile" accept="image/*" multiple style="display:none">
@@ -1290,7 +1310,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 <!-- ============ LIGHTBOX ============ -->
 <div id="lightbox" onclick="this.classList.remove('on')"><img id="lightImg" alt=""></div>
 
-<div class="verbadge" id="verBadge">OC SHOWCASE v9.2</div>
+<div class="verbadge" id="verBadge">OC SHOWCASE v9.4</div>
 <div id="toast"></div>
 
 <!-- Firebase (compat SDK via CDN) -->
@@ -1298,6 +1318,8 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <!-- jsPDF (for downloadable quote PDFs) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- EmailJS (order notifications + customer confirmations) -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
 "use strict";
 /* ===== Firebase config (Oregon City Custom Websites) ===== */
@@ -2156,6 +2178,7 @@ function renderSchedule(){
 
 /* ================= STORE (Firebase live + local cache) ================= */
 var DEFAULT_SET = {
+  ej_on:0, ej_key:"", ej_svc:"", ej_tpl_owner:"", ej_tpl_cust:"", ej_to:"office@oregoncity-customwebsites.com", ej_from:"OC Custom Websites",
   t1b:600,t1y:250,t2b:1000,t2y:400,t3b:2000,t3y:700,
   a_page:75,a_gallery:100,a_blog:150,a_logo:200,a_seo:200,a_email:50,
   t1name:"The Storefront", t2name:"The Booking Rig", t3name:"The Command Center",
@@ -3096,6 +3119,7 @@ function wizSubmit(){
   }
   store.orders.unshift(order);
   cacheOrders();
+  sendOrderEmails(order);
   wiz.done = true;
   document.getElementById("wizBar").innerHTML = "";
   document.getElementById("wizUp").classList.remove("on");
@@ -3138,6 +3162,11 @@ function fillSettingsForm(){
     var el = document.getElementById("s_"+k); if (el) el.value = s[k];
   });
   var note = document.getElementById("s_note"); if (note) note.value = s.note;
+  ["ej_key","ej_svc","ej_tpl_owner","ej_tpl_cust","ej_to","ej_from"].forEach(function(k){
+    var el = document.getElementById("s_"+k); if (el) el.value = s[k] || "";
+  });
+  var tg = document.getElementById("ejToggle"); if (tg) tg.classList.toggle("on", !!s.ej_on);
+  updateEjStatus();
   renderPhotoMgr();
   renderBAMgr();
   renderTierEditor();
@@ -3518,6 +3547,12 @@ function saveSettings(){
   });
   var note = document.getElementById("s_note").value.trim();
   if (note) s.note = note;
+  ["ej_key","ej_svc","ej_tpl_owner","ej_tpl_cust","ej_to","ej_from"].forEach(function(k){
+    var el = document.getElementById("s_"+k); if (el) s[k] = el.value.trim();
+  });
+  var tg = document.getElementById("ejToggle");
+  s.ej_on = (tg && tg.classList.contains("on")) ? 1 : 0;
+  updateEjStatus();
   // tier packages
   for (var t=1; t<=3; t++){
     var nm = document.getElementById("tn_"+t);
@@ -3701,6 +3736,115 @@ function estimateBuild(o){
 }
 function hasAnsPage(a, p){ return (a.pages||[]).indexOf(p) >= 0; }
 function fmtK(n){ return n >= 1000 ? (Math.round(n/100)/10) + "K" : String(n); }
+
+/* ================= EMAIL NOTIFICATIONS (EmailJS) ================= */
+function ejReady(){
+  var s = store.settings;
+  return !!(s.ej_on && s.ej_key && s.ej_svc && typeof emailjs !== "undefined");
+}
+function updateEjStatus(){
+  var el = document.getElementById("ejStatus");
+  if (!el) return;
+  var s = store.settings;
+  if (!s.ej_on){ el.textContent = "Off"; el.style.borderColor = "#2E353D"; el.style.color = "var(--steel-hi)"; return; }
+  var missing = [];
+  if (!s.ej_key) missing.push("Public Key");
+  if (!s.ej_svc) missing.push("Service ID");
+  if (!s.ej_tpl_owner && !s.ej_tpl_cust) missing.push("a Template ID");
+  if (!s.ej_to && s.ej_tpl_owner) missing.push("your email");
+  if (typeof emailjs === "undefined") missing.push("EmailJS didn't load — check your connection");
+  if (missing.length){
+    el.textContent = "⚠ Needs: " + missing.join(", ");
+    el.style.borderColor = "var(--amber)"; el.style.color = "var(--amber)";
+  } else {
+    el.textContent = "✓ On — alerts + customer confirmations live";
+    el.style.borderColor = "var(--green)"; el.style.color = "var(--green)";
+  }
+}
+function ejInit(){
+  var s = store.settings;
+  if (typeof emailjs === "undefined" || !s.ej_key) return false;
+  try{ emailjs.init({publicKey: s.ej_key}); return true; }catch(e){ return false; }
+}
+function ejParams(o){
+  var s = store.settings, a = o.ans || {};
+  var flags = (o.flags||[]);
+  return {
+    order_code: o.code || "",
+    submitted: new Date(o.ts).toLocaleString(),
+    tier: tierLabel(o.tier),
+    build_type: a.buildtype || "Website",
+    biz_name: a.biz || "—",
+    biz_type: a.btype || "—",
+    owner_name: a.owner || "—",
+    first_name: (a.owner || "there").split(" ")[0],
+    phone: a.phone || "—",
+    email: a.email || "",
+    goal: a.goal || "—",
+    action: a.action || "—",
+    pages: (a.pages||[]).join(", ") || "—",
+    flag_count: String(flags.length),
+    flags: flags.length ? flags.map(function(f){ return "• " + f; }).join("\n") : "None",
+    full_brief: orderBrief(o),
+    from_name: s.ej_from || "OC Custom Websites",
+    to_email: s.ej_to || ""
+  };
+}
+function sendOrderEmails(o){
+  if (!ejReady()) return;
+  if (!ejInit()) return;
+  var s = store.settings;
+  var p = ejParams(o);
+  // 1) alert to the owner
+  if (s.ej_tpl_owner && s.ej_to){
+    try{
+      emailjs.send(s.ej_svc, s.ej_tpl_owner, p).catch(function(err){
+        console.warn("Owner alert failed:", err);
+      });
+    }catch(e){}
+  }
+  // 2) confirmation to the customer — only if they actually gave an email
+  if (s.ej_tpl_cust && p.email && /@/.test(p.email)){
+    try{
+      emailjs.send(s.ej_svc, s.ej_tpl_cust, p).catch(function(err){
+        console.warn("Customer confirmation failed:", err);
+      });
+    }catch(e){}
+  }
+}
+function testEmails(){
+  saveSettings();
+  var s = store.settings;
+  if (!s.ej_on){ toast("Flip the toggle on first."); return; }
+  if (typeof emailjs === "undefined"){ toast("EmailJS didn't load — check your connection."); return; }
+  if (!s.ej_key || !s.ej_svc){ toast("Public Key and Service ID are required."); return; }
+  if (!ejInit()){ toast("That Public Key didn't take — double-check it."); return; }
+  var fake = {
+    code: "OC-TEST01", ts: new Date().toISOString(), tier: 2, flags: ["Needs a domain registered — buy it and bill it through (example.com)"],
+    ans: {biz:"Test Business LLC", btype:"Contractor / Construction", owner:"Test Customer",
+          phone:"(503) 555-0100", email: s.ej_to || "", goal:"More phone calls", action:"Call me",
+          pages:["Home","About","Contact"], buildtype:"A website — so customers can find, trust & book you"}
+  };
+  var sent = 0, tried = 0;
+  function done(label, ok, err){
+    if (ok){ sent++; toast("✓ " + label + " sent — check your inbox."); }
+    else { toast("✕ " + label + " failed: " + (err && err.text ? err.text : "check your IDs")); }
+  }
+  if (s.ej_tpl_owner && s.ej_to){
+    tried++;
+    emailjs.send(s.ej_svc, s.ej_tpl_owner, ejParams(fake))
+      .then(function(){ done("Owner alert", true); })
+      .catch(function(e){ done("Owner alert", false, e); });
+  }
+  if (s.ej_tpl_cust && s.ej_to){
+    tried++;
+    emailjs.send(s.ej_svc, s.ej_tpl_cust, ejParams(fake))
+      .then(function(){ done("Customer confirmation", true); })
+      .catch(function(e){ done("Customer confirmation", false, e); });
+  }
+  if (!tried) toast("Add at least one Template ID and your email first.");
+  else toast("Sending test emails…");
+}
 
 /* ================= QUOTE GENERATOR ================= */
 var quote = { code:"", biz:"", lines:[] };
