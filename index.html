@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Oregon City Custom Websites — Industrial-Grade Web</title>
-<meta name="description" content="Custom websites built tough for local businesses. Flat pricing, real features, zero templates. Oregon City, OR.">
+<meta name="description" content="Custom websites built tough for local businesses. Honest pricing, real features, zero templates. Oregon City, OR.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -409,6 +409,15 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 .featrow button{width:40px;flex:0 0 auto;background:none;border:1px solid var(--steel);color:var(--steel-hi);cursor:pointer;font-size:15px}
 .featrow button:hover{border-color:var(--red);color:var(--red)}
 
+/* ---------- build effort strip ---------- */
+.qeffort{margin-top:18px;background:#101215;border:1px solid #2E353D;border-left:5px solid var(--amber);padding:13px 15px}
+.qeffort .qeh{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+.qeffort .qenums{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:8px}
+.qeffort .qenums b{font-family:'Anton';font-size:22px;color:var(--white);display:block;letter-spacing:.5px}
+.qeffort .qenums span{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--steel-hi)}
+.qeffort .qedrv{font-size:12px;color:var(--steel-hi);line-height:1.7}
+.qeffort .qedrv em{font-style:normal;color:var(--offw)}
+
 /* ---------- quote generator ---------- */
 .qline{display:grid;grid-template-columns:1fr 92px 92px 30px;gap:8px;align-items:center;margin-bottom:8px}
 .qline input{background:#101215;border:1px solid #2E353D;color:var(--white);font-family:'Oswald';font-size:14.5px;padding:10px 10px;outline:none;width:100%}
@@ -551,6 +560,21 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 #lightbox.on{display:flex}
 #lightbox img{max-width:94vw;max-height:86vh;box-shadow:0 30px 80px rgba(0,0,0,.8);border:4px solid #F2F4F6}
 
+/* ---------- sample build cards ---------- */
+.samplegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.samplecard{display:block;background:var(--gun);border:1px solid #2E353D;text-decoration:none;transition:.18s;overflow:hidden}
+.samplecard:hover{transform:translateY(-4px);border-color:var(--red);box-shadow:0 18px 44px rgba(206,43,43,.16)}
+.sc-swatch{height:118px;display:flex;align-items:flex-end;padding:14px 18px}
+.sc-swatch span{font-family:'Anton';letter-spacing:2px;font-size:15px;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.55)}
+.sw-mkt{background:linear-gradient(135deg,#2F5D3A,#7BA184)}
+.sw-sw{background:linear-gradient(135deg,#1D3050,#3E7BFA)}
+.sw-hyb{background:linear-gradient(135deg,#14343B,#E8A33D)}
+.sc-bd{padding:20px 18px 22px}
+.sc-type{font-size:10.5px;letter-spacing:2.5px;color:var(--red);font-weight:700;margin-bottom:8px}
+.sc-bd h3{font-family:'Anton';font-size:20px;letter-spacing:1px;color:var(--white);margin-bottom:8px;font-weight:400}
+.sc-bd p{font-size:14px;color:var(--steel-hi);line-height:1.6;margin-bottom:14px}
+.sc-go{font-size:12.5px;letter-spacing:1.5px;font-weight:700;color:var(--red);text-transform:uppercase}
+
 /* ---------- showcase display stage ---------- */
 .showtabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
 .showtab{padding:9px 16px;font-family:'Oswald';font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;
@@ -592,6 +616,15 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 .popimg.bye{transition:opacity .8s ease, transform .8s ease;opacity:0;transform:scale(.7) !important}
 @keyframes popIn{from{opacity:0;transform:scale(.3) rotate(0deg)}to{opacity:1}}
 @media(max-width:700px){.showstage{min-height:340px}.slidewrap{padding:22px 48px 52px}}
+
+/* ---------- services repeater ---------- */
+.svchead{display:grid;grid-template-columns:1fr 84px 84px 34px;gap:6px;margin-bottom:5px}
+.svchead span{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--steel-hi)}
+.svcrow{display:grid;grid-template-columns:1fr 84px 84px 34px;gap:6px;margin-bottom:6px}
+.svcrow input{background:#101215;border:1px solid #2E353D;color:var(--white);font-family:'Oswald';font-size:14.5px;padding:10px;outline:none;width:100%;-webkit-appearance:none;border-radius:0}
+.svcrow input:focus{border-color:var(--red)}
+.svc-x{background:none;border:1px solid var(--steel);color:var(--steel-hi);cursor:pointer}
+.svc-x:hover{border-color:var(--red);color:var(--red)}
 
 /* ---------- HQ photo manager ---------- */
 .photomgr{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px;margin-top:12px}
@@ -656,9 +689,9 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
       <span class="eyebrow"><i></i> Oregon City, OR &nbsp;·&nbsp; Serving All Trades</span>
       <h1>Websites<br>Built <span class="rl">Tough.</span></h1>
       <div class="weld"></div>
-      <p class="sub">Custom-fabricated websites for guides, contractors, shops, and every local business in between. No templates. No fine print. Flat pricing, heavy-duty results.</p>
+      <p class="sub">Custom-fabricated websites for guides, contractors, shops, and every local business in between. No templates. No fine print. Honest pricing, heavy-duty results.</p>
       <div class="cta-row">
-        <a class="btn btn-red" href="#/pricing">See Flat Pricing <span class="arr">▸</span></a>
+        <a class="btn btn-red" href="#/pricing">See Honest Pricing <span class="arr">▸</span></a>
         <a class="btn btn-ghost" href="#/demos">Test The Demos <span class="arr">▸</span></a>
       </div>
     </div>
@@ -677,14 +710,14 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
     <div class="stats reveal" id="statRow">
       <div class="stat"><b data-count="100" data-suf="%">0</b><span>Custom Built</span></div>
       <div class="stat"><b data-count="24" data-suf="/7">0</b><span>Site Uptime Watch</span></div>
-      <div class="stat"><b data-count="3" data-suf="">0</b><span>Flat-Price Tiers</span></div>
+      <div class="stat"><b data-count="3" data-suf="">0</b><span>Honest Tiers</span></div>
       <div class="stat"><b data-count="0" data-suf="">0</b><span>Templates Used. Ever.</span></div>
     </div>
   </div>
 
   <div class="wrap sect" style="padding-top:0">
     <div class="tagplate reveal"><h2>Three Tiers. Zero Guesswork.</h2></div>
-    <p class="sect-sub reveal">Every build is priced flat before work starts. Pick the tier that fits the job — upgrade any time.</p>
+    <p class="sect-sub reveal">Every build gets an honest, upfront quote — no games, no gotchas. Pick the tier that fits the job and upgrade any time.</p>
     <div class="grid3">
       <div class="card reveal"><span class="cnum">T-1</span><h3 data-tname="1">The Storefront</h3><div class="redline"></div>
         <p style="font-size:14.5px;color:var(--steel-hi)">Your business, front and center. Built to get you found and get you called.</p>
@@ -701,6 +734,40 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
         <ul id="home-feat-3"></ul>
         <a class="btn btn-ghost" style="margin-top:16px;width:100%;justify-content:center" href="#/pricing">From $<span data-p="t3b">2,000</span></a>
       </div>
+    </div>
+  </div>
+
+  <div class="wrap sect" style="padding-top:0">
+    <div class="tagplate reveal"><h2>Three Builds. Three Jobs.</h2></div>
+    <p class="sect-sub reveal">We don't just build websites — we build the software that runs your business, or both in one. These are three complete sample builds. Open them, tap around, break things.</p>
+    <div class="samplegrid">
+      <a class="samplecard reveal" href="sample-marketing.html">
+        <div class="sc-swatch sw-mkt"><span>EVERGREEN YARDWORKS</span></div>
+        <div class="sc-bd">
+          <div class="sc-type">MARKETING WEBSITE</div>
+          <h3>Get found. Get called.</h3>
+          <p>A landscaper's site built to turn visitors into phone calls — services with honest prices, reviews, FAQ, and a quote form front and center.</p>
+          <span class="sc-go">Open the full sample ▸</span>
+        </div>
+      </a>
+      <a class="samplecard reveal" href="sample-software.html">
+        <div class="sc-swatch sw-sw"><span>CREWBOARD</span></div>
+        <div class="sc-bd">
+          <div class="sc-type">BUSINESS SOFTWARE</div>
+          <h3>Run the whole operation.</h3>
+          <p>A plumber's private job tracker — job board, week schedule, customers, invoices, and payroll. No public site at all. Every tab works.</p>
+          <span class="sc-go">Open the full sample ▸</span>
+        </div>
+      </a>
+      <a class="samplecard reveal" href="sample-hybrid.html">
+        <div class="sc-swatch sw-hyb"><span>RIVERBEND GUIDE CO.</span></div>
+        <div class="sc-bd">
+          <div class="sc-type">WEBSITE + SOFTWARE</div>
+          <h3>Two faces, one machine.</h3>
+          <p>A guide's public booking site with a PIN-locked captain's dashboard behind it (demo PIN 1234). Send a request, then approve it yourself.</p>
+          <span class="sc-go">Open the full sample ▸</span>
+        </div>
+      </a>
     </div>
   </div>
 
@@ -758,7 +825,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 <!-- ============ PAGE: PRICING ============ -->
 <section class="page" id="pg-pricing">
   <div class="wrap sect">
-    <div class="tagplate"><h2>Flat. Posted. Standard.</h2></div>
+    <div class="tagplate"><h2>Honest. Upfront. No Games.</h2></div>
     <p class="sect-sub">One build fee. One yearly fee that covers your domain, updates, and support. No hourly surprises, no hostage fees.</p>
     <div class="grid3">
       <div class="card"><span class="cnum">T-1</span><h3 data-tname="1">The Storefront</h3>
@@ -854,35 +921,48 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
     <div class="demobox">
       <div class="dhead"><span class="lamp"></span><h3>Demo 03 — Trip Request Form</h3><span class="dtag">Tier 2</span></div>
       <div class="dbody">
-        <div class="steps"><i id="st1" class="done"></i><i id="st2"></i><i id="st3"></i></div>
-        <div id="fstep1">
-          <div class="fgrid">
-            <div><label class="fl">Your Name</label><input class="fi" id="fName" placeholder="Sam Rivers"></div>
-            <div><label class="fl">Phone or Email</label><input class="fi" id="fContact" placeholder="(503) 555-0142"></div>
-          </div>
-          <button class="btn btn-red" style="margin-top:20px" onclick="formNext(2)">Next <span class="arr">▸</span></button>
-        </div>
-        <div id="fstep2" style="display:none">
-          <div class="fgrid">
-            <div><label class="fl">Service Type</label>
-              <select class="fi" id="fType">
-                <option>Guided Fishing Trip</option><option>Contractor Estimate</option>
-                <option>Salon Appointment</option><option>Photo Session</option><option>Other</option>
-              </select>
+        <p style="margin-bottom:6px;color:var(--steel-hi);font-size:14.5px">Watch a lead travel. We already filled the form out for you — <b style="color:var(--white)">just keep tapping NEXT</b>, send it, and watch it land in the owner's inbox on the right.</p>
+        <p style="margin-bottom:18px;color:var(--amber);font-size:12.5px;letter-spacing:1px">⚠ NOTHING HERE SAVES — reset every visit, send as many as you want.</p>
+        <div class="split">
+          <div class="spane">
+            <div class="sphead cust"><span>CUSTOMER SIDE</span><i>the request form</i></div>
+            <div class="steps"><i id="st1" class="done"></i><i id="st2"></i><i id="st3"></i></div>
+            <div id="fstep1">
+              <div class="fgrid" style="grid-template-columns:1fr">
+                <div><label class="fl">Your Name</label><input class="fi" id="fName" placeholder="Sam Rivers"></div>
+                <div><label class="fl">Phone or Email</label><input class="fi" id="fContact" placeholder="(503) 555-0142"></div>
+              </div>
+              <button class="btn btn-red" style="margin-top:16px" onclick="formNext(2)">Next <span class="arr">▸</span></button>
             </div>
-            <div><label class="fl">Party Size</label>
-              <select class="fi" id="fSize"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5+</option></select>
+            <div id="fstep2" style="display:none">
+              <div class="fgrid" style="grid-template-columns:1fr">
+                <div><label class="fl">Service Type</label>
+                  <select class="fi" id="fType">
+                    <option>Guided Fishing Trip</option><option>Contractor Estimate</option>
+                    <option>Salon Appointment</option><option>Photo Session</option><option>Other</option>
+                  </select>
+                </div>
+                <div><label class="fl">Party Size</label>
+                  <select class="fi" id="fSize"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5+</option></select>
+                </div>
+                <div class="full"><label class="fl">Anything We Should Know?</label><textarea class="fi" id="fNotes" rows="3" placeholder="First-timers welcome aboard..."></textarea></div>
+              </div>
+              <button class="btn btn-red" style="margin-top:16px" onclick="formNext(3)">Next <span class="arr">▸</span></button>
             </div>
-            <div class="full"><label class="fl">Anything We Should Know?</label><textarea class="fi" id="fNotes" rows="3" placeholder="First-timers welcome aboard..."></textarea></div>
+            <div id="fstep3" style="display:none">
+              <div style="background:#101215;border:1px solid #2E353D;border-left:5px solid var(--red);padding:16px">
+                <p style="font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--steel-hi);margin-bottom:10px">Confirm Request</p>
+                <p id="fReview" style="font-size:15px;line-height:1.7"></p>
+              </div>
+              <button class="btn btn-red" style="margin-top:16px" onclick="formSubmit()">Send Request <span class="arr">▸</span></button>
+            </div>
           </div>
-          <button class="btn btn-red" style="margin-top:20px" onclick="formNext(3)">Review <span class="arr">▸</span></button>
-        </div>
-        <div id="fstep3" style="display:none">
-          <div style="background:#101215;border:1px solid #2E353D;border-left:5px solid var(--red);padding:20px;max-width:640px">
-            <p style="font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--steel-hi);margin-bottom:10px">Confirm Request</p>
-            <p id="fReview" style="font-size:16px;line-height:1.7"></p>
+          <div class="sdivider" id="formDiv"><span>⇄</span><b>SYNC</b></div>
+          <div class="spane">
+            <div class="sphead own"><span>🔒 OWNER SIDE</span><i>your inbox</i></div>
+            <p class="spnote">New requests land here the second they're sent — with everything you need to say yes:</p>
+            <div id="formInbox"><p class="spempty">Inbox empty — send the form ◂</p></div>
           </div>
-          <button class="btn btn-red" style="margin-top:20px" onclick="formSubmit()">Send Request <span class="arr">▸</span></button>
         </div>
       </div>
     </div>
@@ -1086,6 +1166,8 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
         <div><label class="fl">Quote # / Date</label><input class="fi" id="q_meta" readonly></div>
       </div>
 
+      <div class="qeffort" id="qEffort"></div>
+
       <p style="font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--steel-hi);margin:22px 0 8px">Line Items</p>
       <div id="qLines"></div>
       <button class="bsm no" style="margin-top:10px" onclick="qAddLine('','',0)">+ Add line</button>
@@ -1141,7 +1223,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 <!-- ============ LIGHTBOX ============ -->
 <div id="lightbox" onclick="this.classList.remove('on')"><img id="lightImg" alt=""></div>
 
-<div class="verbadge" id="verBadge">OC SHOWCASE v7.0</div>
+<div class="verbadge" id="verBadge">OC SHOWCASE v9.0</div>
 <div id="toast"></div>
 
 <!-- Firebase (compat SDK via CDN) -->
@@ -1222,10 +1304,16 @@ function renderRoute(){
     a.classList.toggle("active", a.getAttribute("data-r")===r);
   });
   closeMenu();
+  // browser back/forward while a modal is open — close it so nobody gets stranded
+  ["wizModal","quoteModal","ordModal","dayModal"].forEach(function(id){
+    var m = document.getElementById(id);
+    if (m) m.classList.remove("on");
+  });
+  document.body.style.overflow = "";
   window.scrollTo(0,0);
   requestAnimationFrame(bindReveals);
   if (r==="home"){ renderShowcase(); } else { stopShowcase(); stopModeTimers(); }
-  if (r==="demos"){ initCalendar(); renderBADemo(); initSplit(); }
+  if (r==="demos"){ initCalendar(); renderBADemo(); initSplit(); initFormDemo(); }
   if (r==="admin") renderAdmin();
   if (r==="hq") renderHQ();
 }
@@ -1622,7 +1710,35 @@ function bookIt(){
   document.getElementById("bookBtn").style.display = "none";
 }
 
-/* ================= DEMO 2: MULTI-STEP FORM ================= */
+/* ================= DEMO 2: MULTI-STEP FORM (split view, prefilled, ephemeral) ================= */
+var formInboxN = 0;
+function initFormDemo(){
+  // fresh + pre-filled every visit — visitor just taps NEXT
+  formInboxN = 0;
+  var inbox = document.getElementById("formInbox");
+  if (inbox) inbox.innerHTML = "<p class='spempty'>Inbox empty — send the form ◂</p>";
+  prefillForm();
+  formNext(1);
+  var s2 = document.getElementById("st2"), s3 = document.getElementById("st3");
+  if (s2) s2.classList.remove("done");
+  if (s3) s3.classList.remove("done");
+}
+function prefillForm(){
+  var names = ["Sam Rivers","Jordan Pace","Casey Marsh","Riley Boone"];
+  var notes = [
+    "Two first-timers aboard — chasing spring chinook.",
+    "Anniversary trip — she outfishes me every year.",
+    "Company crew of 3, one early exit at 2 PM.",
+    "Kid's first trip — bring the patience."
+  ];
+  var i = formInboxN % names.length;
+  var f = function(id, v){ var el = document.getElementById(id); if (el) el.value = v; };
+  f("fName", names[i]);
+  f("fContact", "(503) 555-01" + (17 + i*9));
+  f("fNotes", notes[i]);
+  var t = document.getElementById("fType"); if (t) t.selectedIndex = 0;
+  var s = document.getElementById("fSize"); if (s) s.value = "3";
+}
 function formNext(step){
   if (step === 2){
     var n = document.getElementById("fName").value.trim();
@@ -1643,22 +1759,49 @@ function formNext(step){
       "<br>" + esc(ty) + " — party of " + esc(sz);
   }
 }
-function esc(s){ return String(s).replace(/[<>&"]/g, function(c){ return {"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]; }); }
+function esc(s){ return String(s).replace(/[<>&"']/g, function(c){ return {"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;","'":"&#39;"}[c]; }); }
 function formSubmit(){
   var nm = document.getElementById("fName").value.trim() || "Guest";
   var ct = document.getElementById("fContact").value.trim() || "—";
+  var ty = document.getElementById("fType").value;
+  var sz = document.getElementById("fSize").value;
+  var nt = document.getElementById("fNotes").value.trim();
+  // still feeds the full Admin page demo too
   state.requests.unshift({
     id: state.nextId++,
-    name: nm, contact: ct,
-    type: document.getElementById("fType").value,
-    size: document.getElementById("fSize").value,
+    name: nm, contact: ct, type: ty, size: sz,
     when: "Requested via form",
     status: "pending"
   });
-  toast("Request received, " + nm.split(" ")[0] + "! Check the Admin page.");
-  document.getElementById("fName").value = "";
-  document.getElementById("fContact").value = "";
-  document.getElementById("fNotes").value = "";
+  // land it in the owner inbox on the right, with the sync zap
+  var d = document.getElementById("formDiv");
+  if (d){ d.classList.remove("zap"); void d.offsetWidth; d.classList.add("zap"); setTimeout(function(){ d.classList.remove("zap"); }, 700); }
+  var inbox = document.getElementById("formInbox");
+  if (inbox){
+    var emp = inbox.querySelector(".spempty");
+    if (emp) emp.remove();
+    var card = document.createElement("div");
+    card.className = "sreq";
+    card.style.borderLeftColor = "var(--amber)";
+    card.innerHTML = "<div><b>" + esc(nm) + "</b> · " + esc(ct) +
+      "<br><span style='color:var(--steel-hi)'>" + esc(ty) + " · party of " + esc(sz) + "</span>" +
+      (nt ? "<br><span style='color:var(--steel-l);font-size:11px'>\u201c" + esc(nt) + "\u201d</span>" : "") + "</div>";
+    var badge = document.createElement("span");
+    badge.className = "badge p"; badge.textContent = "New";
+    var ok = mkBtn("Approve", "bsm ok", function(){
+      badge.className = "badge a"; badge.textContent = "✓ Booked";
+      ok.remove();
+      card.style.borderLeftColor = "var(--green)";
+      toast("Approved — " + nm.split(" ")[0] + " gets an automatic confirmation.");
+    });
+    card.appendChild(ok);
+    card.appendChild(badge);
+    inbox.insertBefore(card, inbox.firstChild);
+  }
+  toast("Sent! Watch it land on the owner side ▸");
+  formInboxN++;
+  // reset + re-prefill so they can immediately run it again
+  prefillForm();
   formNext(1);
   document.getElementById("st2").classList.remove("done");
   document.getElementById("st3").classList.remove("done");
@@ -2205,107 +2348,267 @@ function renderTiers(){
 }
 
 /* ================= INTAKE WIZARD ================= */
+/* ================= ADAPTIVE INTERVIEW ENGINE =================
+   Steps & fields carry optional when(a) predicates. The whole tree is
+   rebuilt after every answer, so the path forks like 20 questions:
+   answer differently, get different follow-ups.
+============================================================= */
+function BT(a){ return (a.btype||"").toLowerCase(); }
+function wantsSite(a){ return !a.buildtype || a.buildtype.indexOf("A business tool") !== 0; }
+function wantsTool(a){ return !!a.buildtype && a.buildtype.indexOf("A website —") !== 0; }
+function isGuide(a){ return BT(a).indexOf("guide") === 0; }
+function isTrade(a){ return /contractor|landscap|cleaning/.test(BT(a)); }
+function isChair(a){ return /salon|barber|spa|fitness/.test(BT(a)); }
+function isFood(a){ return /restaurant|food/.test(BT(a)); }
+function isShop(a){ return /retail|auto/.test(BT(a)); }
+function isShooter(a){ return /photog/.test(BT(a)); }
+function sellsOnline(a){ return a.goal === "Sell products online" || a.action === "Buy something"; }
+function wantsBooking(a){ return a.action === "Request a booking" || a.goal === "More bookings"; }
+function hasPage(a, p){ return (a.pages||[]).indexOf(p) >= 0; }
+
 function wizQDef(tier){
-  var s = store.settings;
   var inc = tierPages(tier);
   var incTxt = inc===0 ? "all the pages you need" : inc + " pages";
-  var steps = [];
+  var S = [];
 
-  // STEP 1 — the basics
-  steps.push({t:"Your Business", f:[
+  /* ---------- 1. WHO YOU ARE ---------- */
+  S.push({t:"Your Business", f:[
+    {k:"buildtype", l:"First things first — what are we building for you?", ty:"select", def:"A website — so customers can find, trust & book you", opts:[
+      "A website — so customers can find, trust & book you",
+      "A business tool — an app for you & your crew to run things (job tracking, scheduling, invoicing…)",
+      "Both — a customer-facing website with your private business tool behind it"]},
     {k:"biz", l:"Business name", ty:"text", req:1, ph:"Riverside Guide Co."},
-    {k:"btype", l:"Business type", ty:"select", other:1, opts:[
+    {k:"btype", l:"Business type", ty:"select", other:1, def:"Guide Service (fishing / hunting)", opts:[
       "Guide Service (fishing / hunting)","Contractor / Construction","Landscaping / Yard Care",
       "Salon / Barber / Spa","Auto / Mechanic","Restaurant / Food","Photography / Video",
       "Real Estate","Fitness / Coaching","Cleaning Service","Retail Shop","Other"]},
     {k:"does", l:"In your own words, what do you do?", ty:"textarea", ph:"Guided salmon & steelhead trips on the Willamette, plus gear rental..."},
-    {k:"years", l:"How long have you been in business?", ty:"text", ph:"12 years"},
+    {k:"years", l:"How long have you been in business?", ty:"select", def:"5–15 years", opts:["Just starting out","Under 2 years","2–5 years","5–15 years","15+ years"]},
+    {k:"solo", l:"Is it just you, or do you have a crew?", ty:"select", def:"Just me", other:1, opts:["Just me","Me + 1 helper","Small crew (2–5)","Bigger team (6+)","Other"]},
     {k:"area", l:"Where are you / who do you serve?", ty:"text", ph:"Clackamas County & the Willamette River"},
+    {k:"addr", l:"Do customers come to a physical address?", ty:"select", def:"No — I go to them / meet on site", opts:["Yes — I have a shop/office to list","No — I go to them / meet on site","Both"]},
+    {k:"addrline", l:"What's the address to show?", ty:"text", ph:"123 Main St, Oregon City, OR", when:function(a){ return a.addr && a.addr.indexOf("Yes") === 0 || a.addr === "Both"; }},
+    {k:"hours", l:"Your hours", ty:"text", ph:"Wed–Sun 5 AM – 5 PM · closed Feb"},
+    {k:"lic", l:"License #, certifications, or insurance to display", ty:"text", ph:"CCB #123456 / USCG licensed"},
     {k:"owner", l:"Your name", ty:"text", req:1},
     {k:"phone", l:"Best phone number", ty:"text", ph:"(503) 555-0142"},
     {k:"email", l:"Best email", ty:"text", ph:"you@business.com"}
   ]});
 
-  // STEP 2 — what the site should DO (functionality + goals)
-  steps.push({t:"What The Site Should Do", intro:"This is the important part — tell us how you want the site to work for you.", f:[
-    {k:"action", l:"When someone lands on your site, the #1 thing you want them to do is…", ty:"select", other:1, opts:[
+  /* ---------- 2. WHAT THE SITE SHOULD DO (drives everything after) ---------- */
+  S.push({t:"What The Site Should Do", intro:"This is the important part — your answers here change which questions you get next.", f:[
+    {k:"action", l:"When someone lands on your site, the #1 thing you want them to do is…", ty:"select", other:1, def:"Call me", when:wantsSite, opts:[
       "Call me","Text me","Request a booking","Send me a message / inquiry","Buy something",
       "Find my hours & location","Just learn about what I do","Something else"]},
-    {k:"goal", l:"The #1 thing you want to GET OUT of this website is…", ty:"select", other:1, opts:[
+    {k:"goal", l:"The #1 thing you want to GET OUT of this website is…", ty:"select", other:1, def:"More phone calls", when:wantsSite, opts:[
       "More phone calls","More bookings","Look more professional / legit","Beat my competitors' websites",
       "Stop answering the same questions over and over","Sell products online","Show off my work","Something else"]},
-    {k:"reach", l:"Right now, how do customers usually find and reach you?", ty:"textarea", ph:"Word of mouth, Facebook, a few Google searches..."},
-    {k:"faq", l:"What's the question customers ask you the most?", ty:"textarea", ph:"'Do you provide the gear?' — great for an FAQ"},
-    {k:"pain", l:"What's frustrating about your current site (or not having one)?", ty:"textarea", ph:"Old one looks dated, can't update it, nobody finds it..."},
-    {k:"features", l:"Any specific features you're picturing?", ty:"textarea", ph:"A photo gallery of catches, a map of where I run trips, a price list..."}
+    {k:"social", l:"Do you have social pages we should build in?", ty:"checks", when:wantsSite, opts:[
+      "Facebook","Instagram","YouTube","TikTok","None of these"]},
+    {k:"socialhandle", l:"Your handle(s) — we'll link them and can pull your feed onto the site", ty:"text", ph:"@riverbendguides",
+      when:function(a){ var s = a.social||[]; return s.length && s.indexOf("None of these") < 0; }},
+    {k:"socialfeed", l:"Show your latest posts right on the site, or just link out?", ty:"select", def:"Just link to my pages", opts:[
+      "Show my latest posts on the site","Just link to my pages"],
+      when:function(a){ var s = a.social||[]; return s.indexOf("Facebook") >= 0 || s.indexOf("Instagram") >= 0; }},
+    {k:"faq", l:"What's the question customers ask you the most?", ty:"textarea", ph:"'Do you provide the gear?'"},
+    {k:"faq2", l:"Give us 2–3 more common questions — we'll build an FAQ that answers them for you", ty:"textarea",
+      when:function(a){ return a.goal === "Stop answering the same questions over and over" || hasPage(a,"FAQ"); }},
+    {k:"pain", l:"What's frustrating about your current site (or not having one)?", ty:"textarea", ph:"Old one looks dated, can't update it..."},
+    {k:"features", l:"Any specific features you're picturing?", ty:"textarea", ph:"A map of where I run trips, a price list..."}
   ]});
 
-  // STEP 3 — what makes them different (personalization)
-  steps.push({t:"What Makes You, You", intro:"The more we know about your style, the more the site will feel like yours — not a template.", f:[
+  /* ---------- 3. INDUSTRY BRANCH ---------- */
+  S.push({t:"Your Line Of Work", intro:"Questions built for your trade.", when:function(a){ return !!a.btype; }, f:[
+    // guide
+    {k:"g_species", l:"What are you targeting / running trips for?", ty:"text", ph:"Spring chinook, steelhead, sturgeon", when:isGuide},
+    {k:"g_season", l:"Your season — when are you slammed, when are you dead?", ty:"textarea", ph:"Mar–May packed, Jul slow, closed Feb", when:isGuide},
+    {k:"g_gear", l:"What's included vs. what do they bring?", ty:"textarea", ph:"All gear & bait provided; they bring license + lunch", when:isGuide},
+    {k:"g_lic", l:"Do customers need their own license/tags? (we'll link it)", ty:"select", def:"Yes — link ODFW", opts:["Yes — link ODFW","Yes — I'll explain in text","No"], when:isGuide},
+    {k:"g_meet", l:"Where do you launch / meet?", ty:"text", ph:"Meldrum Bar boat ramp, 5:30 AM", when:isGuide},
+    // trades
+    {k:"t_jobs", l:"What jobs do you take most?", ty:"textarea", ph:"Deck rebuilds, siding, fence repair", when:isTrade},
+    {k:"t_est", l:"How do estimates work? (pick all that apply)", ty:"checks", def:["Free on-site estimate"], opts:["Free on-site estimate","Free phone/photo estimate","Paid estimate credited to the job","Quotes off a price list","Other"], when:isTrade},
+    {k:"t_emerg", l:"Do you do emergency / same-day calls?", ty:"select", def:"No", opts:["Yes — put it front and center","Sometimes","No"], when:isTrade},
+    {k:"t_warranty", l:"Warranty or guarantee worth bragging about?", ty:"text", ph:"5-year workmanship warranty", when:isTrade},
+    // chair-based
+    {k:"c_staff", l:"Who takes appointments — just you, or several people?", ty:"select", def:"Just me", opts:["Just me","2–3 of us","4+ — customers pick who"], when:isChair},
+    {k:"c_svc", l:"Your most-booked services", ty:"textarea", ph:"Cut & style, color, beard trim", when:isChair},
+    {k:"c_walk", l:"Walk-ins or appointment only?", ty:"select", def:"Both", opts:["Appointment only","Walk-ins welcome","Both"], when:isChair},
+    // food
+    {k:"f_menu", l:"Should the site show a full menu?", ty:"select", def:"Yes — full menu", opts:["Yes — full menu","Just highlights","No menu — daily specials only"], when:isFood},
+    {k:"f_order", l:"How do people order? (pick all that apply)", ty:"checks", def:["Call to order"], opts:["Call to order","Order ahead for pickup","Delivery","Dine in / walk up"], when:isFood},
+    // shop
+    {k:"s_what", l:"What do you sell / service most?", ty:"textarea", when:isShop},
+    {k:"s_inv", l:"Show live inventory, or just categories?", ty:"select", def:"Just categories", opts:["Just categories","Featured items","Full live inventory"], when:isShop},
+    // photographer
+    {k:"p_types", l:"What kind of shoots?", ty:"text", ph:"Weddings, seniors, family", when:isShooter},
+    {k:"p_deliver", l:"How do clients get their photos? (pick all that apply)", ty:"checks", def:["Private online gallery"], opts:["Private online gallery","Download link","USB / prints","Other"], when:isShooter}
+  ]});
+
+
+  /* ---------- 3B. THE BUSINESS TOOL ---------- */
+  S.push({t:"Your Business Tool", intro:"Let's design the app side — the thing you and your crew actually run the business on. All of it private, behind your PIN.", when:wantsTool, f:[
+    {k:"tool_jobs", l:"What should it handle? (pick all that apply)", ty:"checks", opts:[
+      "Job / project tracking","Scheduling & calendar","Customer records","Invoices & payments","Quotes / estimates","Inventory / equipment","Timesheets / crew hours","Photos & job documentation","Other"]},
+    {k:"tool_day", l:"Walk us through a normal day — what happens from first call to paid?", ty:"textarea",
+      ph:"Customer calls → I scribble it in a notebook → drive out → estimate on paper → text them a price → hope I remember to invoice..."},
+    {k:"tool_now", l:"What are you using today?", ty:"checks", def:["Paper / notebook"], opts:[
+      "Paper / notebook","Spreadsheets","Texts & phone memory","QuickBooks","An app that isn't cutting it","Nothing — winging it","Other"]},
+    {k:"tool_appname", l:"Which app, and what's it not doing for you?", ty:"textarea",
+      when:function(a){ return (a.tool_now||[]).indexOf("An app that isn't cutting it") >= 0; }},
+    {k:"tool_users", l:"Who uses it?", ty:"select", def:"Just me", opts:[
+      "Just me","Me + the crew (everyone sees the same thing)","Me + crew with different access (they see jobs, I see money)","Office person too"]},
+    {k:"tool_devices", l:"Where does it get used? (pick all that apply)", ty:"checks", def:["My phone, out in the field"], opts:[
+      "My phone, out in the field","Crew phones","A computer at the office / home","A tablet"]},
+    {k:"tool_offline", l:"Do you work anywhere with bad or no service?", ty:"select", def:"Sometimes — it should handle spotty service", opts:[
+      "All the time — needs to work offline","Sometimes — it should handle spotty service","No — always have signal"]},
+    {k:"tool_must", l:"The ONE thing that, if it worked perfectly, would save you the most time?", ty:"textarea",
+      ph:"Never losing track of who owes me money"}
+  ]});
+
+  /* ---------- 4. SERVICES & PRICING ---------- */
+  S.push({t:"Services & Prices", intro:"This becomes your services page. Add as many as you want — leave price blank if you'd rather quote it.", when:wantsSite, f:[
+    {k:"showprice", l:"Do you want prices shown on the site?", ty:"select", def:"Yes — show my prices", opts:[
+      "Yes — show my prices","Show 'starting at' prices","No — make them contact me for a quote"]},
+    {k:"services", l:"Your services", ty:"repeat", when:function(a){ return a.showprice !== "No — make them contact me for a quote"; }},
+    {k:"svclist", l:"List your services (no prices — we'll route them to a quote form)", ty:"textarea", ph:"Full-day trip\nHalf-day trip\nGear rental",
+      when:function(a){ return a.showprice === "No — make them contact me for a quote"; }},
+    {k:"deals", l:"Any package deals, discounts or specials to feature?", ty:"text", ph:"3rd trip free · 10% off for vets"}
+  ]});
+
+
+  /* ---------- 4B. THE MONEY SIDE ---------- */
+  S.push({t:"The Money Side", intro:"Websites we build can also run your back office — all of it locked behind YOUR owner PIN, invisible to customers.", f:[
+    {k:"fin", l:"How big a part of this website is managing money?", ty:"select", def:"Built-in extra — nice to have alongside the site", opts:[
+      "The main point — I want it running my back office",
+      "Built-in extra — nice to have alongside the site",
+      "Not interested — just the website"]},
+    {k:"fin_main", l:"Walk us through it — what money headaches should this take off your plate?", ty:"textarea",
+      ph:"Chasing invoices, payroll every other Friday, never knowing what a job actually made me...",
+      when:function(a){ return a.fin === "The main point — I want it running my back office"; }},
+    {k:"fintools", l:"Which money tools do you want built in? (pick all that apply)", ty:"checks", opts:[
+      "Invoices & who's paid","Quote generator for customers","Income & expense tracking","Payroll helper","Job costing (what each job made you)","Mileage / receipts log","Other"],
+      when:function(a){ return a.fin !== "Not interested — just the website"; }},
+    {k:"fin_inv", l:"How do you invoice today?", ty:"select", def:"Text or email, by hand", other:1, opts:[
+      "Paper","Text or email, by hand","QuickBooks","Square","Wave / other app","I don't invoice yet","Other"],
+      when:function(a){ return (a.fintools||[]).indexOf("Invoices & who's paid") >= 0; }},
+    {k:"fin_quote", l:"What goes into one of your quotes? (line items, hourly, materials...)", ty:"textarea",
+      ph:"Labor by the hour, materials at cost +10%, travel past 20 miles",
+      when:function(a){ return (a.fintools||[]).indexOf("Quote generator for customers") >= 0; }},
+    {k:"fin_paysched", l:"How often do you run payroll?", ty:"select", def:"Every other week", opts:[
+      "Weekly","Every other week","Twice a month","Monthly"],
+      when:function(a){ return (a.fintools||[]).indexOf("Payroll helper") >= 0; }},
+    {k:"fin_sync", l:"Keep the numbers in the site, or do you also use something else?", ty:"select", def:"Keep it all in the site", other:1, opts:[
+      "Keep it all in the site","I also use QuickBooks","I also use spreadsheets","My accountant handles it","Other"],
+      when:function(a){ return (a.fintools||[]).indexOf("Income & expense tracking") >= 0 || (a.fintools||[]).indexOf("Job costing (what each job made you)") >= 0; }}
+  ]});
+
+  /* ---------- 5. ONLINE SALES BRANCH ---------- */
+  S.push({t:"Selling Online", intro:"You said you want to sell — let's scope it.", when:sellsOnline, f:[
+    {k:"e_what", l:"What are you selling online?", ty:"textarea", ph:"Gift cards, branded hats, gear bundles"},
+    {k:"e_count", l:"Roughly how many products?", ty:"select", def:"Under 10", opts:["Just 1–2","Under 10","10–50","50+"]},
+    {k:"e_ship", l:"How do customers get their stuff? (pick all that apply)", ty:"checks", def:["Local pickup"], opts:["Local pickup","Shipping","Digital / gift cards"]},
+    {k:"e_pay", l:"How do you take payments today? (pick all that apply)", ty:"checks", def:["No card payments yet — need help"], opts:[
+      "Square","Stripe","PayPal","Venmo / Cash App","Cash & check","No card payments yet — need help","Other"]}
+  ]});
+
+  /* ---------- 6. PAGES ---------- */
+  S.push({t:"Pages & Content", intro:"Your tier includes " + incTxt + ". Pick what you want — we'll quote any extras.", when:wantsSite, f:[
+    {k:"pages", l:"Which pages do you want?", ty:"checks", opts:[
+      "Home","About","Services / Pricing","Photo Gallery","Reviews","Contact","FAQ","News / Updates","Specials / Deals","Other"]},
+    {k:"wording", l:"The written words on your site — who's providing them?", ty:"select", def:"A bit of both", opts:[
+      "I'll write and send the wording","Write it for me based on my answers here","A bit of both"]},
+    {k:"about", l:"Since we're writing it — tell us your story in a few sentences. Anything you'd tell a customer on the boat.", ty:"textarea",
+      ph:"Started guiding with my dad in '04, went full-time after the mill closed...",
+      when:function(a){ return a.wording !== "I'll write and send the wording"; }},
+    {k:"reviews", l:"Paste a couple of reviews we can feature (or say where they live)", ty:"textarea", ph:"Google / Facebook — feel free to pull them",
+      when:function(a){ return hasPage(a,"Reviews") || a.goal === "Look more professional / legit"; }},
+    {k:"photos", l:"Do you have photos ready to use?", ty:"select", def:"Some — might need more", opts:["Plenty — I'll send them","Some — might need more","Not yet — need help there"]},
+    {k:"photoself", l:"Want to be able to add/swap photos yourself later, right from your phone?", ty:"select", def:"Yes — build that in", opts:["Yes — build that in","No — you handle it"]},
+    {k:"photodisp", l:"How should your photos be displayed? (pick all that apply)", ty:"checks", def:["Basic gallery (included)"], opts:["Basic gallery (included)","Background photo shuffle","Small slideshow"]},
+    {k:"photocount", l:"Roughly how many photos? (15 included)", ty:"select", def:"Under 15 (included)", opts:["Under 15 (included)","15–30","30+","Not sure yet"]},
+    {k:"must", l:"Anything that MUST be on the site?", ty:"textarea", ph:"A specific photo, a memorial note, my dad's boat..."}
+  ]});
+
+  /* ---------- 7. THE LOOK ---------- */
+  S.push({t:"What Makes You, You", intro:"So the site feels like yours — not a template.", f:[
     {k:"diff", l:"Why do customers pick you over the competition?", ty:"textarea", ph:"20 years on this river, family-run, we put you on fish..."},
     {k:"feel", l:"How should your site FEEL? (pick any)", ty:"checks", opts:[
       "Rugged / tough","Clean / professional","Friendly / local","High-end / premium","Fun / energetic","Calm / trustworthy","Outdoorsy","Modern / techy","Other"]},
-    {k:"customer", l:"Who's your typical customer?", ty:"textarea", ph:"Weekend anglers, out-of-towners, corporate groups..."},
-    {k:"slogan", l:"Any slogan or phrase you already use?", ty:"text", ph:"'Put your line where the fish are.'"}
-  ]});
-
-  // STEP 4 — the look
-  steps.push({t:"The Look", f:[
+    {k:"customer", l:"Who's your typical customer?", ty:"textarea", ph:"Weekend anglers, out-of-towners, corporate groups"},
+    {k:"slogan", l:"Any slogan or phrase you already use?", ty:"text", ph:"'Put your line where the fish are.'"},
     {k:"colors", l:"Colors you'd like", ty:"text", ph:"Dark green, black, a little silver"},
     {k:"avoid", l:"Colors or styles to stay away from", ty:"text", ph:"Nothing pink or cartoony"},
-    {k:"logo", l:"Do you have a logo?", ty:"select", opts:["Yes — I'll send it","Sort of — needs cleanup","No — I need one made"]},
-    {k:"likesites", l:"Any websites whose look you like? (drop links + what you like)", ty:"textarea", ph:"riverguides.com — love the big photos and dark header"},
-    {k:"hatesites", l:"Anything on other sites that drives you nuts?", ty:"textarea", ph:"Pop-ups, tiny text, autoplay video..."}
+    {k:"logo", l:"Do you have a logo?", ty:"select", def:"Yes — I'll send it", opts:["Yes — I'll send it","Sort of — needs cleanup","No — I need one made"]},
+    {k:"logoideas", l:"Any ideas for the logo? Colors, symbols, feel?", ty:"textarea", ph:"A steelhead silhouette, tough and simple",
+      when:function(a){ return a.logo === "No — I need one made" || a.logo === "Sort of — needs cleanup"; }},
+    {k:"likesites", l:"Any websites whose look you like? (links + what you like)", ty:"textarea"},
+    {k:"hatesites", l:"Anything on other sites that drives you nuts?", ty:"text", ph:"Pop-ups, tiny text, autoplay video"}
   ]});
 
-  // STEP 5 — pages & content
-  steps.push({t:"Pages & Content", intro:"Your tier includes " + incTxt + ". Pick whatever you want — we'll flag any extras in your quote.", f:[
-    {k:"pages", l:"Which pages do you want?", ty:"checks", opts:[
-      "Home","About","Services / Pricing","Photo Gallery","Reviews","Contact","FAQ","News / Updates","Specials / Deals","Other"]},
-    {k:"photos", l:"Do you have photos ready to use?", ty:"select", opts:["Plenty — I'll send them","Some — might need more","Not yet — need help there"]},
-    {k:"photodisp", l:"How should your photos be displayed?", ty:"select", opts:["Basic gallery (included)","Background photo shuffle","Small slideshow","Mix of these"]},
-    {k:"photocount", l:"Roughly how many photos? (15 included)", ty:"select", opts:["Under 15 (included)","15–30","30+","Not sure yet"]},
-    {k:"wording", l:"The written words on your site (about you, service descriptions) — who's providing them?", ty:"select", opts:[
-      "I'll write and send the wording","Write it for me based on my answers here","A bit of both"]},
-    {k:"reviews", l:"Got any reviews or testimonials we can feature?", ty:"textarea", ph:"Paste a couple, or say where they live (Google, Facebook)"},
-    {k:"must", l:"Anything that MUST be on the site?", ty:"textarea", ph:"License #, certifications, a specific photo, insurance info..."}
+  /* ---------- 8. DOMAIN ---------- */
+  S.push({t:"Your Web Address", intro:"The address people type in to find you. We register and set it up for you — it's part of the build, so you never touch a registrar.", when:wantsSite, f:[
+    {k:"dom", l:"Do you already have a web address for the business?", ty:"select", def:"No — set one up for me", opts:["No — set one up for me","Yes — I already have one"]},
+    {k:"domname", l:"What is it?", ty:"text", ph:"riverbendguides.com", when:function(a){ return a.dom === "Yes — I already have one"; }},
+    {k:"domwho", l:"Any idea who set it up or where it lives? (we'll take it from here)", ty:"select", def:"Not sure — you figure it out", other:1, opts:[
+      "GoDaddy","Namecheap","Squarespace / Google","Wix","Bluehost","My old web guy has it","Not sure — you figure it out","Other"],
+      when:function(a){ return a.dom === "Yes — I already have one"; }},
+    {k:"domwant", l:"What address would you like? We'll lock it in for you.", ty:"text", ph:"riverbendguides.com", when:function(a){ return a.dom !== "Yes — I already have one"; }},
+    {k:"domalt", l:"A backup name or two, in case your first pick is already taken", ty:"text", ph:"riverbendguideco.com, fishriverbend.com", when:function(a){ return a.dom !== "Yes — I already have one"; }},
+    {k:"email_pro", l:"Want a matching professional email? (you@yourbusiness.com)", ty:"select", def:"Yes — quote it", opts:["Yes — quote it","Already have one","No thanks"]}
   ]});
 
-  // TIER-SPECIFIC
+  /* ---------- 9A. TIER 1 CONTACT ---------- */
   if (tier === 1){
-    steps.push({t:"Getting In Touch", f:[
+    S.push({t:"Getting In Touch", f:[
       {k:"contact", l:"How should customers be able to reach you? (pick any)", ty:"checks", opts:[
         "Tap-to-call button","Tap-to-text button","Contact form to your inbox","Map & directions","Business hours","Other"]},
-      {k:"social", l:"Social pages to link", ty:"text", ph:"Facebook, Instagram, YouTube..."}
+      {k:"where", l:"Where should contact-form messages go?", ty:"text", ph:"same email as above",
+        when:function(a){ return (a.contact||[]).indexOf("Contact form to your inbox") >= 0; }},
+      {k:"social_extra", l:"Anything else to link? (YouTube channel, Google listing…)", ty:"text"}
     ]});
   }
+
+  /* ---------- 9B. TIER 2 BOOKING ---------- */
   if (tier === 2){
-    steps.push({t:"How Booking Should Work", intro:"Walk us through how you want customers to book you.", f:[
-      {k:"bookwhat", l:"What exactly can customers book?", ty:"textarea", req:1, ph:"Full-day trip (up to 3 people), half-day trip, gear-only rental"},
+    S.push({t:"How Booking Should Work", intro:"Walk us through how you want customers to book you.", f:[
+      {k:"bookwhat", l:"What exactly can customers book?", ty:"textarea", req:1, ph:"Full-day trip (up to 3 people), half-day trip, gear rental"},
       {k:"lengths", l:"How long are they, and what start times?", ty:"text", ph:"Full day 6 AM, half day 1 PM"},
+      {k:"cap", l:"How many bookings can you take at once?", ty:"select", def:"One at a time", other:1, opts:["One at a time","2 at a time","3+ at a time","Depends on the job","Other"]},
       {k:"bookdays", l:"What days and hours do you take bookings?", ty:"text", ph:"Wed–Sun, first light to 4 PM"},
-      {k:"season", l:"Busy season or dates you're usually booked/closed?", ty:"text", ph:"Spring chinook Mar–May is packed; closed in Feb"},
-      {k:"confirm", l:"When a request comes in, do you want it to…", ty:"select", opts:[
+      {k:"lead", l:"How far ahead should people book?", ty:"select", def:"At least 24 hours", opts:["Same day is fine","At least 24 hours","At least 3 days","A week or more"]},
+      {k:"season", l:"Busy season or dates you're usually booked/closed?", ty:"text", ph:"Spring chinook Mar–May packed; closed Feb"},
+      {k:"confirm", l:"When a request comes in, do you want it to…", ty:"select", def:"Wait for me to approve each one first", opts:[
         "Auto-confirm any open slot","Wait for me to approve each one first"]},
-      {k:"collect", l:"What info do you need from someone booking?", ty:"textarea", ph:"Party size, experience level, target fish, any kids aboard"},
+      {k:"collect", l:"What info do you need from someone booking?", ty:"textarea", ph:"Party size, experience level, any kids aboard"},
+      {k:"notify", l:"How should you get told about a new request?", ty:"checks", opts:["Email me","Text me","Just show it on the site","Other"]},
       {k:"contact", l:"Contact buttons too? (pick any)", ty:"checks", opts:[
         "Tap-to-call button","Tap-to-text button","Contact form","Map & directions","Business hours","Other"]}
     ]});
   }
+
+  /* ---------- 9C. TIER 3 COMMAND CENTER ---------- */
   if (tier === 3){
-    steps.push({t:"Your Command Center", intro:"Tier 3 gives you an owner dashboard. Tell us how you want to run it.", f:[
+    S.push({t:"Your Command Center", intro:"Tier 3 gives you an owner dashboard. Tell us how you want to run it.", f:[
       {k:"bookwhat", l:"What can customers book or apply for?", ty:"textarea", req:1},
       {k:"lengths", l:"Lengths and start times", ty:"text"},
+      {k:"cap", l:"How many bookings can you take at once?", ty:"select", def:"One at a time", other:1, opts:["One at a time","2 at a time","3+ at a time","Depends on the job","Other"]},
       {k:"applyinfo", l:"What must a customer provide to apply / request?", ty:"textarea", ph:"Party size, experience, license status, preferred dates"},
-      {k:"deposit", l:"Do you take a deposit to hold a date? How much?", ty:"text", ph:"$100 deposit to lock the date"},
+      {k:"accounts", l:"Should customers get logins to see their own bookings?", ty:"select", def:"Yes — accounts with history", opts:[
+        "Yes — accounts with history","No — just a request form","Only for repeat customers"]},
+      {k:"deposit", l:"Do you take a deposit to hold a date?", ty:"select", def:"Yes — flat amount", opts:["Yes — flat amount","Yes — a percentage","No deposit"]},
+      {k:"depamt", l:"How much?", ty:"text", ph:"$100 to lock the date", when:function(a){ return a.deposit && a.deposit.indexOf("Yes") === 0; }},
+      {k:"payproc", l:"How do you take payments today? (pick all that apply)", ty:"checks", def:["No card payments yet — need help"], opts:[
+        "Square","Stripe","PayPal","Venmo / Cash App","Cash & check","No card payments yet — need help","Other"],
+        when:function(a){ return a.deposit && a.deposit.indexOf("Yes") === 0; }},
       {k:"reminders", l:"Automatic reminders to send customers", ty:"checks", opts:["Email reminders","Text reminders","Other"]},
-      {k:"staff", l:"Is it just you, or do you have staff/guides to schedule?", ty:"text", ph:"Me plus one deckhand"},
-      {k:"rules", l:"Your booking, cancellation & approval rules", ty:"textarea", ph:"48-hr cancel notice, no-shows forfeit deposit, I approve all first-timers"},
-      {k:"manage", l:"Anything specific you want to manage from your dashboard?", ty:"textarea", ph:"Block off hunting season, see the week at a glance, export a customer list"}
+      {k:"staff", l:"Anyone else's schedule to manage?", ty:"text", ph:"Me plus one deckhand", when:function(a){ return a.solo !== "Just me"; }},
+      {k:"rules", l:"Your booking, cancellation & approval rules", ty:"textarea", ph:"48-hr cancel notice, no-shows forfeit deposit"},
+      {k:"manage", l:"Anything else you want to run from your dashboard?", ty:"textarea", ph:"Block off hunting season, export a customer list"}
     ]});
   }
 
-  // BOLT-ONS (plain language)
+  /* ---------- 10. BOLT-ONS ---------- */
   var ups = [];
   if (tier === 1){
     ups.push({k:"up_cal", l:"Live booking calendar (customers book online)", tag:"TIER 2"});
@@ -2321,19 +2624,32 @@ function wizQDef(tier){
   ups.push({k:"up_logo", l:"Logo & branding kit", tag:"QUOTE"});
   ups.push({k:"up_seo", l:"Show up higher on Google", tag:"QUOTE"});
   ups.push({k:"up_email", l:"Professional email (you@yourbusiness.com)", tag:"QUOTE"});
-  steps.push({t:"Optional Extras", intro:"Want any of these on the build? We'll price them into your quote — nothing's locked in.", f:[
+  S.push({t:"Optional Extras", intro:"Want any of these on the build? We'll price them into your quote — nothing's locked in.", f:[
     {k:"upsells", l:"", ty:"upchecks", opts:ups}
   ]});
 
-  steps.push({t:"Review & Send", f:[
+  S.push({t:"Review & Send", f:[
+    {k:"deadline", l:"Any deadline we should know about?", ty:"select", def:"No rush", other:1, opts:["No rush","Within a month","Before my season starts","ASAP","Other"]},
     {k:"extra", l:"Anything else we should know before we build?", ty:"textarea"}
   ], review:true});
-  return steps;
-}
 
+  /* ---------- prune by when(), fill defaults ---------- */
+  var out = [];
+  S.forEach(function(st){
+    if (st.when && !st.when(wiz.ans)) return;
+    var fields = st.f.filter(function(f){ return !f.when || f.when(wiz.ans); });
+    if (!fields.length) return;
+    fields.forEach(function(f){
+      if (f.def !== undefined && wiz.ans[f.k] === undefined) wiz.ans[f.k] = f.def;
+    });
+    out.push({t:st.t, intro:st.intro, review:st.review, f:fields});
+  });
+  return out;
+}
 var wiz = {tier:0, step:0, steps:[], ans:{}, done:false};
 function openWizard(tier){
-  wiz = {tier:tier, step:0, steps:wizQDef(tier), ans:{}, done:false};
+  wiz = {tier:tier, step:0, steps:[], ans:{}, done:false};
+  wiz.steps = wizQDef(tier);          // seeds default answers as it builds
   document.getElementById("wizTitle").textContent = tierLabel(tier);
   document.getElementById("wizModal").classList.add("on");
   document.body.style.overflow = "hidden";
@@ -2342,6 +2658,50 @@ function openWizard(tier){
 function closeWizard(){
   document.getElementById("wizModal").classList.remove("on");
   document.body.style.overflow = "";
+}
+/* ----- services & prices repeater ----- */
+function svcSuggest(){
+  var a = wiz.ans;
+  if (isGuide(a)) return [["Full-day trip",""],["Half-day trip",""]];
+  if (isTrade(a)) return [["",""],["",""]];
+  if (isChair(a)) return [["",""],["",""]];
+  return [["",""],["",""]];
+}
+function svcRowEl(s){
+  var row = document.createElement("div");
+  row.className = "svcrow";
+  var n = document.createElement("input"); n.className="svc-n"; n.placeholder="Full-day guided trip"; n.value = s.n||"";
+  var p = document.createElement("input"); p.className="svc-p"; p.placeholder="$450"; p.value = s.p||"";
+  var d = document.createElement("input"); d.className="svc-d"; d.placeholder="8 hrs"; d.value = s.d||"";
+  var x = document.createElement("button"); x.type="button"; x.className="svc-x"; x.textContent="✕";
+  x.addEventListener("click", function(){ row.remove(); });
+  row.appendChild(n); row.appendChild(p); row.appendChild(d); row.appendChild(x);
+  return row;
+}
+function paintSvcRows(){
+  var wrap = document.getElementById("svcRows");
+  if (!wrap) return;
+  wrap.innerHTML = "";
+  var list = wiz.ans.services;
+  if (!list || !list.length){
+    list = svcSuggest().map(function(p){ return {n:p[0], p:"", d:""}; });
+  }
+  list.forEach(function(s){ wrap.appendChild(svcRowEl(s)); });
+}
+function addSvcRow(){
+  var wrap = document.getElementById("svcRows");
+  if (wrap) wrap.appendChild(svcRowEl({}));
+}
+function collectSvcRows(){
+  var wrap = document.getElementById("svcRows");
+  if (!wrap) return null;
+  var out = [];
+  wrap.querySelectorAll(".svcrow").forEach(function(r){
+    var n = r.querySelector(".svc-n").value.trim();
+    if (!n) return;
+    out.push({n:n, p:r.querySelector(".svc-p").value.trim(), d:r.querySelector(".svc-d").value.trim()});
+  });
+  return out;
 }
 function isOtherVal(v){ return v === "Other" || v === "Something else"; }
 function chkOtherToggle(k, node){
@@ -2354,6 +2714,11 @@ function wizCollect(){
   if (!stepDef) return true;
   var ok = true;
   stepDef.f.forEach(function(f){
+    if (f.ty === "repeat"){
+      var sv = collectSvcRows();
+      if (sv) wiz.ans[f.k] = sv;
+      return;
+    }
     if (f.ty === "checks" || f.ty === "upchecks"){
       var vals = [];
       var otherOn = false;
@@ -2397,11 +2762,55 @@ function otherToggle(k, val){
   var box = document.getElementById("w_"+k+"_other");
   if (box) box.style.display = isOtherVal(val) ? "block" : "none";
 }
+/* a select/checkbox may open or close follow-up questions — refresh the step in place */
+function wizLive(){
+  var body = document.getElementById("wizBody");
+  var y = body ? body.scrollTop : 0;
+  var before = JSON.stringify(wiz.steps.map(function(s){ return s.t + ":" + s.f.map(function(f){ return f.k; }).join(","); }));
+  wizSoftCollect();
+  wizRebuild();
+  var after = JSON.stringify(wiz.steps.map(function(s){ return s.t + ":" + s.f.map(function(f){ return f.k; }).join(","); }));
+  if (before === after){ wizUpNote(); return; }   // nothing branched — leave the DOM alone
+  wizRender();
+  if (body) body.scrollTop = y;
+}
+/* like wizCollect but never blocks or nags — used for live branch updates */
+function wizSoftCollect(){
+  var stepDef = wiz.steps[wiz.step];
+  if (!stepDef) return;
+  stepDef.f.forEach(function(f){
+    if (f.ty === "repeat"){ var sv = collectSvcRows(); if (sv) wiz.ans[f.k] = sv; return; }
+    if (f.ty === "checks" || f.ty === "upchecks"){
+      var vals = [], otherOn = false;
+      document.querySelectorAll('[data-wk="'+f.k+'"] .wcheck.on').forEach(function(c){
+        if (c.getAttribute("data-other")) otherOn = true; else vals.push(c.getAttribute("data-v"));
+      });
+      if (f.ty === "checks" && otherOn){
+        var oth = document.getElementById("w_"+f.k+"_other");
+        if (oth && oth.value.trim()) oth.value.trim().split(",").forEach(function(x){ x=x.trim(); if(x) vals.push(x); });
+        else vals.push("Other");
+      }
+      wiz.ans[f.k] = vals;
+    } else if (f.ty === "select"){
+      var el = document.getElementById("w_"+f.k);
+      if (!el) return;
+      var v = el.value;
+      if (f.other && isOtherVal(v)){
+        var o = document.getElementById("w_"+f.k+"_other");
+        wiz.ans[f.k] = (o && o.value.trim()) ? o.value.trim() + " (custom)" : v;
+      } else wiz.ans[f.k] = v;
+    } else {
+      var e2 = document.getElementById("w_"+f.k);
+      if (e2) wiz.ans[f.k] = e2.value.trim();
+    }
+  });
+}
 function wizSkip(){
   // skip should not force required Other — just move on, dropping unfilled Other
   var stepDef = wiz.steps[wiz.step];
   if (stepDef){
     stepDef.f.forEach(function(f){
+      if (f.ty === "repeat"){ var sv = collectSvcRows(); if (sv) wiz.ans[f.k] = sv; return; }
       if (f.ty === "checks"){
         var vals = [];
         document.querySelectorAll('[data-wk="'+f.k+'"] .wcheck.on').forEach(function(c){
@@ -2426,23 +2835,60 @@ function wizNav(dir){
   if (dir > 0 && !wizCollect()){ toast("Fill the required field first."); return; }
   if (dir < 0) wizCollect();
   if (wiz.done){ closeWizard(); return; }
+  var wasLast = wiz.step === wiz.steps.length - 1;
+  wizRebuild();                       // answers may have opened/closed branches
   var last = wiz.steps.length - 1;
-  if (dir > 0 && wiz.step === last){ wizSubmit(); return; }
+  if (dir > 0 && wasLast && wiz.step >= last){ wizSubmit(); return; }
   wiz.step = Math.max(0, Math.min(last, wiz.step + dir));
   wizRender();
+}
+function wizRebuild(){
+  var curTitle = wiz.steps[wiz.step] ? wiz.steps[wiz.step].t : null;
+  wiz.steps = wizQDef(wiz.tier);
+  if (curTitle){                      // stay on the same step even if the tree shifted
+    for (var i=0; i<wiz.steps.length; i++){
+      if (wiz.steps[i].t === curTitle){ wiz.step = i; break; }
+    }
+  }
+  wiz.step = Math.max(0, Math.min(wiz.steps.length - 1, wiz.step));
 }
 function upFlags(){
   var flags = [];
   var a = wiz.ans;
+  if (a.buildtype && a.buildtype.indexOf("A business tool") === 0){
+    flags.push("🛠 SOFTWARE-ONLY BUILD — no public website. The tiers don't map; scope the app and quote it custom.");
+  }
+  if (a.buildtype && a.buildtype.indexOf("Both") === 0){
+    flags.push("🛠 WEBSITE + BUSINESS TOOL — two builds in one. Quote the site tier plus the app scope on top.");
+  }
+  if ((a.tool_now||[]).indexOf("QuickBooks") >= 0) flags.push("Runs QuickBooks today — discuss sync vs side-by-side before promising anything");
+  if (a.tool_offline === "All the time — needs to work offline") flags.push("Needs OFFLINE-capable app — real architecture decision, scope it early");
+  if (a.tool_users === "Me + crew with different access (they see jobs, I see money)") flags.push("Wants role-based access (crew vs owner) — auth & permissions work");
   var inc = tierPages(wiz.tier);
   var np = (a.pages||[]).length;
   if (inc > 0 && np > inc){
     flags.push("Wants " + np + " pages — " + (np-inc) + " over the " + inc + "-page tier (quote the extras or pitch an upgrade)");
   }
   if ((a.pages||[]).indexOf("News / Updates") >= 0) flags.push("Wants a News/Updates page — add-on to quote");
-  if (a.photodisp && a.photodisp !== "Basic gallery (included)") flags.push("Wants premium photo display: " + a.photodisp + " — add-on to quote");
-  if (a.photocount === "15–30" || a.photocount === "30+") flags.push("Wants " + a.photocount + " photos — extra photo slots beyond the 15 included (quote it)");
+  var pd = (a.photodisp||[]).filter(function(x){ return x !== "Basic gallery (included)"; });
+  if (wantsSite(a) && pd.length) flags.push("Wants premium photo display: " + pd.join(" + ") + " — add-on to quote");
+  if (wantsSite(a) && (a.photocount === "15–30" || a.photocount === "30+")) flags.push("Wants " + a.photocount + " photos — extra photo slots beyond the 15 included (quote it)");
   if (a.logo === "No — I need one made" || a.logo === "Sort of — needs cleanup") flags.push("Needs logo work — Logo & Branding kit to quote");
+  if (wantsSite(a) && a.dom !== "Yes — I already have one") flags.push("Needs a domain registered — buy it and bill it through (" + (a.domwant || "name TBD") + ")");
+  if (a.dom === "Yes — I already have one" && (a.domwho === "Not sure — you figure it out" || a.domwho === "My old web guy has it")) flags.push("Existing domain, access unclear (" + a.domwho + ") — chase down DNS before promising a launch date");
+  if (a.socialfeed === "Show my latest posts on the site") flags.push("Wants a live social feed embedded — extra integration work");
+  if (wantsSite(a) && a.email_pro === "Yes — quote it") flags.push("Wants professional email — add-on to quote");
+  if (wantsSite(a) && a.photoself === "Yes — build that in") flags.push("Wants self-serve photo uploads — build the uploader in");
+  if (sellsOnline(a)) flags.push("Wants to sell online (" + (a.e_count||"?") + " products, " + (a.e_ship||"?") + ") — e-commerce is beyond the standard tiers, scope & quote separately");
+  if ((a.e_pay||[]).indexOf("No card payments yet — need help") >= 0 || (a.payproc||[]).indexOf("No card payments yet — need help") >= 0) flags.push("No card processor yet — needs Square/Stripe setup before deposits or sales work");
+  if (a.fin === "The main point — I want it running my back office") flags.push("💰 MONEY MANAGEMENT IS THE MAIN POINT — this is a back-office build, scope it like one and quote beyond standard tiers");
+  (a.fintools||[]).forEach(function(t){ if (t !== "Other") flags.push("Built-in money tool: " + t); });
+  if (a.fin_sync === "I also use QuickBooks") flags.push("Uses QuickBooks — discuss whether they expect syncing (integration work) or side-by-side");
+  if (a.accounts && a.accounts.indexOf("Yes") === 0) flags.push("Wants customer logins/accounts — real auth work, confirm scope");
+  if (a.cap && a.cap !== "One at a time") flags.push("Multi-booking capacity (" + a.cap + ") — calendar must handle overlapping slots");
+  if (a.solo && a.solo !== "Just me" && wiz.tier === 3) flags.push("Has a crew (" + a.solo + ") — multi-person scheduling");
+  if (a.deadline === "ASAP" || a.deadline === "Before my season starts") flags.push("⏱ Deadline pressure: " + a.deadline);
+  if (a.t_emerg === "Yes — put it front and center") flags.push("Emergency/same-day work — needs a loud call button + fast-path design");
   if (a.photos === "Not yet — need help there") flags.push("Has no photos yet — may need a photo plan");
   if (a.confirm === "Wait for me to approve each one first" && wiz.tier === 2) flags.push("Wants to approve each booking — that's a Tier 3 feature (upgrade pitch)");
   var upNames = {
@@ -2463,7 +2909,9 @@ function wizRender(){
   });
   var stepDef = wiz.steps[wiz.step];
   var body = document.getElementById("wizBody");
-  var h = "<div class='wstep-t'>Step " + (wiz.step+1) + " of " + wiz.steps.length + "</div>";
+  var pct = Math.round((wiz.step / Math.max(1, wiz.steps.length - 1)) * 100);
+  var h = "<div class='wstep-t'>Step " + (wiz.step+1) + " of " + wiz.steps.length +
+          " <span style='color:var(--red);margin-left:8px'>" + pct + "% complete</span></div>";
   h += "<div class='wstep-h'>" + stepDef.t + "</div>";
   if (stepDef.intro) h += "<p style='color:var(--steel-hi);font-size:14px;margin:-8px 0 16px'>" + stepDef.intro + "</p>";
   if (stepDef.review){
@@ -2478,7 +2926,7 @@ function wizRender(){
     } else if (f.ty === "select"){
       var isOtherCustom = f.other && v && f.opts.indexOf(v) < 0; // stored custom value
       h += "<div class='wf'><label class='fl'>" + f.l + "</label><select class='fi' id='w_"+f.k+"'" +
-           (f.other ? " onchange='otherToggle(\""+f.k+"\", this.value)'" : "") + ">";
+           " onchange='" + (f.other ? "otherToggle(\""+f.k+"\", this.value);" : "") + "wizLive()'>";
       f.opts.forEach(function(o){
         var sel = (v===o) || (isOtherCustom && isOtherVal(o));
         h += "<option"+(sel?" selected":"")+">"+o+"</option>";
@@ -2497,7 +2945,7 @@ function wizRender(){
         if (o === "Other"){
           h += "<div class='wcheck"+(on?" on":"")+"' data-v='Other' data-other='1' onclick='chkOtherToggle(\""+f.k+"\", this)'><b></b>Other (add your own)</div>";
         } else {
-          h += "<div class='wcheck"+(on?" on":"")+"' data-v='"+esc(o)+"' onclick='this.classList.toggle(\"on\");wizUpNote()'><b></b>"+o+"</div>";
+          h += "<div class='wcheck"+(on?" on":"")+"' data-v='"+esc(o)+"' onclick='this.classList.toggle(\"on\");wizLive()'><b></b>"+o+"</div>";
         }
       });
       h += "</div>";
@@ -2506,6 +2954,11 @@ function wizRender(){
       var hasOther = (v||[]).indexOf("Other") >= 0 || customVals.length > 0;
       h += "<input class='fi' id='w_"+f.k+"_other' placeholder='Type what you want (separate multiple with commas)' value='"+esc(customVals.join(", "))+"' style='margin-top:8px;display:"+(hasOther?"block":"none")+"'>";
       h += "</div>";
+    } else if (f.ty === "repeat"){
+      h += "<div class='wf'>"+(f.l?"<label class='fl'>"+f.l+"</label>":"")+
+           "<div class='svchead'><span>Service / job</span><span>Price</span><span>How long</span><span></span></div>"+
+           "<div id='svcRows'></div>"+
+           "<button type='button' class='bsm no' style='margin-top:8px' onclick='addSvcRow()'>+ Add another</button></div>";
     } else if (f.ty === "upchecks"){
       h += "<div class='wf'><div class='wchecks' data-wk='"+f.k+"' style='grid-template-columns:1fr'>";
       f.opts.forEach(function(o){
@@ -2516,6 +2969,7 @@ function wizRender(){
     }
   });
   body.innerHTML = h;
+  if (document.getElementById("svcRows")) paintSvcRows();
   document.getElementById("wizBack").style.visibility = wiz.step === 0 ? "hidden" : "visible";
   document.getElementById("wizNext").innerHTML = (wiz.step === wiz.steps.length-1) ? "Send My Build Order <span class='arr'>▸</span>" : "Next <span class='arr'>▸</span>";
   // skip affordance (not on step 1 or the final review step)
@@ -2540,10 +2994,16 @@ function wizUpNote(){
 }
 function reviewHTML(){
   var a = wiz.ans;
-  var h = "<b>" + esc(a.biz||"Your business") + "</b> · " + esc(a.btype||"") +
+  var h = "<span style='color:var(--red);font-size:12px;letter-spacing:2px;text-transform:uppercase'>" + esc((a.buildtype||"").split(" — ")[0]) + "</span><br>" +
+    "<b>" + esc(a.biz||"Your business") + "</b> · " + esc(a.btype||"") +
     "<br>" + esc(a.owner||"") + " · " + esc(a.phone||"") + " " + esc(a.email||"") +
     "<br>Goal: " + esc(a.goal||"—") + "<br>Main action wanted: " + esc(a.action||"—") +
     "<br>Pages: " + esc((a.pages||[]).join(", ") || "—");
+  if (a.services && a.services.length){
+    h += "<br>Services: " + esc(a.services.map(function(s){ return s.n + (s.p ? " " + s.p : ""); }).join(" · "));
+  }
+  var domTxt = a.dom === "Yes — I own one" ? (a.domname||"owns one") : (a.domwant ? "wants " + a.domwant : "needs one");
+  h += "<br>Web address: " + esc(domTxt);
   var flags = upFlags();
   if (flags.length){
     h += "<br><br><span class='rvup'>⬆ On the quote sheet:</span>";
@@ -2577,7 +3037,7 @@ function wizSubmit(){
     "<div style='text-align:center;padding:14px 0'>" +
     "<svg class='done-hex' viewBox='0 0 100 110'><polygon points='50,4 94,29 94,81 50,106 6,81 6,29' fill='#22262B' stroke='#3FA35B' stroke-width='7'/><text x='50' y='68' text-anchor='middle' font-family='Anton, sans-serif' font-size='40' fill='#F2F4F6'>✓</text></svg>" +
     "<div class='wstep-h'>Order Received</div>" +
-    "<p style='color:var(--offw);max-width:440px;margin:0 auto;line-height:1.7'>Thanks, " + esc((a.owner||"").split(" ")[0] || "friend") + " — your build sheet for <b style='color:var(--white)'>" + esc(a.biz||"your business") + "</b> is in the shop. We'll reach out within 1 business day with your flat quote.</p></div>";
+    "<p style='color:var(--offw);max-width:440px;margin:0 auto;line-height:1.7'>Thanks, " + esc((a.owner||"").split(" ")[0] || "friend") + " — your build sheet for <b style='color:var(--white)'>" + esc(a.biz||"your business") + "</b> is in the shop. We'll reach out within 1 business day with your honest quote.</p></div>";
   document.getElementById("wizBack").style.visibility = "hidden";
   document.getElementById("wizNext").innerHTML = "Close <span class='arr'>▸</span>";
 }
@@ -2712,22 +3172,114 @@ function orderBrief(o){
   L.push("=== OC CUSTOM WEBSITES — BUILD ORDER " + (o.code||"") + " ===");
   L.push("Tier: " + tierLabel(o.tier) + " ($" + money(s["t"+o.tier+"b"]) + " build + $" + money(s["t"+o.tier+"y"]) + "/yr)");
   L.push("Submitted: " + new Date(o.ts).toLocaleString());
+  ln(L,"BUILD TYPE", a.buildtype);
   L.push("");
   L.push("— BUSINESS —");
   ln(L,"Business name", a.biz);
   ln(L,"Business type", a.btype);
   ln(L,"What they do", a.does);
   ln(L,"Years in business", a.years);
+  ln(L,"Crew size", a.solo);
   ln(L,"Service area", a.area);
+  ln(L,"Physical address?", a.addr);
+  if (a.addrline) ln(L,"Address to show", a.addrline);
+  ln(L,"Hours", a.hours);
+  ln(L,"License / certs to display", a.lic);
   L.push("Owner: " + (a.owner||"—") + " | Phone: " + (a.phone||"—") + " | Email: " + (a.email||"—"));
   L.push("");
   L.push("— WHAT THE SITE SHOULD DO —");
   ln(L,"#1 action for visitors", a.action);
   ln(L,"#1 goal for the business", a.goal);
-  ln(L,"How customers find them now", a.reach);
+  ln(L,"Social pages to build in", (a.social||[]).join(", "));
+  if (a.socialhandle) ln(L,"Social handle(s)", a.socialhandle);
+  if (a.socialfeed) ln(L,"Social feed", a.socialfeed);
   ln(L,"Most common customer question", a.faq);
+  if (a.faq2) ln(L,"More FAQ material", a.faq2);
   ln(L,"Current site frustration", a.pain);
   ln(L,"Features they're picturing", a.features);
+  if (a.deadline) ln(L,"Deadline", a.deadline);
+
+  // ----- industry-specific branch answers -----
+  var IND = [
+    ["g_species","Targeting / trip types"],["g_season","Season notes"],["g_gear","Gear: included vs bring"],
+    ["g_lic","Customer license needed"],["g_meet","Launch / meet spot"],
+    ["t_jobs","Most common jobs"],["t_est","How estimates work"],["t_emerg","Emergency / same-day"],["t_warranty","Warranty"],
+    ["c_staff","Who takes appointments"],["c_svc","Most-booked services"],["c_walk","Walk-ins vs appointment"],
+    ["f_menu","Menu display"],["f_order","Online ordering"],
+    ["s_what","What they sell/service"],["s_inv","Inventory display"],
+    ["p_types","Shoot types"],["p_deliver","Photo delivery"]
+  ];
+  var indLines = [];
+  IND.forEach(function(p){ if (a[p[0]]) indLines.push(p[1] + ": " + a[p[0]]); });
+  if (indLines.length){
+    L.push("");
+    L.push("— TRADE-SPECIFIC —");
+    indLines.forEach(function(x){ L.push(x); });
+  }
+
+  // ----- services & pricing (site builds) -----
+  var site = !a.buildtype || a.buildtype.indexOf("A business tool") !== 0;
+  if (site){
+    L.push("");
+    L.push("— SERVICES & PRICING —");
+    ln(L,"Show prices publicly?", a.showprice);
+    if (a.services && a.services.length){
+      a.services.forEach(function(sv){
+        L.push("  • " + sv.n + (sv.p ? " — " + sv.p : "") + (sv.d ? " (" + sv.d + ")" : ""));
+      });
+    }
+    if (a.svclist) ln(L,"Services (quote-only)", a.svclist);
+    if (a.deals) ln(L,"Deals / specials", a.deals);
+  }
+
+  // ----- the business tool -----
+  if (a.tool_jobs || a.tool_day){
+    L.push("");
+    L.push("— THE BUSINESS TOOL (private, behind owner PIN) —");
+    ln(L,"Should handle", (a.tool_jobs||[]).join(", "));
+    ln(L,"Their day, in their words", a.tool_day);
+    ln(L,"Using today", (a.tool_now||[]).join(", "));
+    if (a.tool_appname) ln(L,"Current app & its failures", a.tool_appname);
+    ln(L,"Who uses it", a.tool_users);
+    ln(L,"Devices", (a.tool_devices||[]).join(", "));
+    ln(L,"Offline needs", a.tool_offline);
+    ln(L,"The one thing that must work", a.tool_must);
+  }
+
+  // ----- the money side -----
+  if (a.fin && a.fin !== "Not interested — just the website"){
+    L.push("");
+    L.push("— MONEY SIDE (all behind owner PIN) —");
+    ln(L,"How central is money management", a.fin);
+    if (a.fin_main) ln(L,"Their money headaches", a.fin_main);
+    ln(L,"Tools wanted", (a.fintools||[]).join(", "));
+    if (a.fin_inv) ln(L,"Invoicing today", a.fin_inv);
+    if (a.fin_quote) ln(L,"What goes in their quotes", a.fin_quote);
+    if (a.fin_paysched) ln(L,"Payroll cadence", a.fin_paysched);
+    if (a.fin_sync) ln(L,"Books live where", a.fin_sync);
+  }
+
+  // ----- selling online branch -----
+  if (a.e_what || a.e_count){
+    L.push("");
+    L.push("— SELLING ONLINE —");
+    ln(L,"What they're selling", a.e_what);
+    ln(L,"How many products", a.e_count);
+    ln(L,"Fulfillment", (a.e_ship||[]).join(", "));
+    ln(L,"Payments today", (a.e_pay||[]).join(", "));
+  }
+
+  // ----- domain (site builds) -----
+  if (site){
+    L.push("");
+    L.push("— DOMAIN & EMAIL —");
+    ln(L,"Owns a domain?", a.dom);
+    if (a.domname) ln(L,"Their domain", a.domname);
+    if (a.domwho) ln(L,"Registrar / who has login", a.domwho);
+    if (a.domwant) ln(L,"Wants this address", a.domwant);
+    if (a.domalt) ln(L,"Backup names", a.domalt);
+    ln(L,"Professional email", a.email_pro);
+  }
   L.push("");
   L.push("— PERSONALITY / STYLE —");
   ln(L,"Why customers pick them", a.diff);
@@ -2739,20 +3291,30 @@ function orderBrief(o){
   ln(L,"Colors wanted", a.colors);
   ln(L,"Colors/styles to avoid", a.avoid);
   ln(L,"Logo status", a.logo);
+  if (a.logoideas) ln(L,"Logo ideas", a.logoideas);
   ln(L,"Sites they like (+why)", a.likesites);
   ln(L,"Things they hate on sites", a.hatesites);
+  if (site){
   L.push("");
   L.push("— PAGES & CONTENT —");
   ln(L,"Pages wanted", (a.pages||[]).join(", "));
   ln(L,"Photos ready", a.photos);
+  ln(L,"Wants to upload photos themselves later", a.photoself);
+  ln(L,"Photo display style", (a.photodisp||[]).join(", "));
+  ln(L,"Photo count", a.photocount);
   ln(L,"Who provides the wording", a.wording);
+  if (a.about) ln(L,"THEIR STORY (for the About copy)", a.about);
   ln(L,"Reviews/testimonials", a.reviews);
   ln(L,"Must be on the site", a.must);
+  }
   if (o.tier >= 2){
     L.push("");
     L.push("— BOOKING SETUP —");
     ln(L,"What customers book", a.bookwhat);
     ln(L,"Lengths & start times", a.lengths);
+    if (a.cap) ln(L,"Capacity at once", a.cap);
+    if (a.lead) ln(L,"Lead time required", a.lead);
+    if (a.notify) ln(L,"Notify owner via", (a.notify||[]).join(", "));
     if (a.bookdays) ln(L,"Booking days/hours", a.bookdays);
     if (a.season) ln(L,"Season / blackout notes", a.season);
     if (a.confirm) ln(L,"Confirmation style", a.confirm);
@@ -2760,14 +3322,18 @@ function orderBrief(o){
   }
   if (o.tier === 3){
     ln(L,"Application must collect", a.applyinfo);
+    ln(L,"Customer logins/accounts", a.accounts);
     ln(L,"Deposits", a.deposit);
+    if (a.depamt) ln(L,"Deposit amount", a.depamt);
+    if (a.payproc) ln(L,"Payments today", (a.payproc||[]).join(", "));
     ln(L,"Reminders", (a.reminders||[]).join(", "));
     ln(L,"Staff to schedule", a.staff);
     ln(L,"Booking/cancel/approval rules", a.rules);
     ln(L,"Wants to manage from dashboard", a.manage);
   }
   if (a.contact && a.contact.length) ln(L,"Contact methods", a.contact.join(", "));
-  if (a.social) ln(L,"Social links", a.social);
+  if (a.where) ln(L,"Contact form goes to", a.where);
+  if (a.social_extra) ln(L,"Other links", a.social_extra);
   L.push("");
   L.push("— UPSELL / ADD-ON FLAGS —");
   if (o.flags.length) o.flags.forEach(function(f){ L.push("• " + f); });
@@ -3011,6 +3577,64 @@ function renderBADemo(){
   }
 }
 
+/* ================= BUILD EFFORT ESTIMATOR =================
+   Heuristic: estimates the size of the finished build from the order's
+   answers, so quoting reflects real effort. Rough by nature — planning
+   numbers, not promises. */
+function estimateBuild(o){
+  var a = o.ans || {};
+  var drivers = [];
+  var lines;
+  var toolOnly = a.buildtype && a.buildtype.indexOf("A business tool") === 0;
+  var both = a.buildtype && a.buildtype.indexOf("Both") === 0;
+  if (toolOnly){ lines = 3000; drivers.push(["Business tool (app core)", 3000]); }
+  else {
+    lines = o.tier === 1 ? 1400 : o.tier === 2 ? 2600 : 4200;
+    drivers.push(["Tier " + o.tier + " site base", lines]);
+    if (both){ lines += 1800; drivers.push(["+ private business tool", 1800]); }
+  }
+  function add(n, label){ lines += n; drivers.push([label, n]); }
+  // pages over tier
+  var inc = tierPages(o.tier), np = (a.pages||[]).length;
+  if (!toolOnly && inc > 0 && np > inc) add((np-inc)*90, "Extra pages ×" + (np-inc));
+  // site features
+  var pd = (a.photodisp||[]).filter(function(x){ return x !== "Basic gallery (included)"; });
+  if (!toolOnly && pd.length) add(250, "Premium photo display");
+  if (!toolOnly && a.photoself === "Yes — build that in") add(220, "Self-serve photo uploader");
+  if (a.socialfeed === "Show my latest posts on the site") add(260, "Live social feed embed");
+  if (!toolOnly && hasAnsPage(a,"News / Updates")) add(300, "News/updates CMS");
+  if (!toolOnly && hasAnsPage(a,"FAQ")) add(120, "FAQ section");
+  if (!toolOnly && hasAnsPage(a,"Reviews")) add(140, "Reviews section");
+  // commerce
+  if (a.e_what || a.e_count){
+    add(900, "E-commerce core");
+    if ((a.e_ship||[]).indexOf("Shipping") >= 0) add(300, "Shipping flow");
+  }
+  // tier 3 / accounts / money
+  if (a.accounts && a.accounts.indexOf("Yes") === 0) add(600, "Customer accounts & login");
+  if (a.deposit && a.deposit.indexOf("Yes") === 0) add(450, "Deposits & payment flow");
+  if ((a.reminders||[]).length && (a.reminders||[]).indexOf("Other") < 0) add(200, "Automated reminders");
+  if (a.cap && a.cap !== "One at a time") add(260, "Multi-slot capacity calendar");
+  var moneyMap = {"Invoices & who's paid":450, "Quote generator for customers":500, "Income & expense tracking":420,
+                  "Payroll helper":350, "Job costing (what each job made you)":380, "Mileage / receipts log":250};
+  (a.fintools||[]).forEach(function(t){ if (moneyMap[t]) add(moneyMap[t], t); });
+  // tool specifics
+  (a.tool_jobs||[]).forEach(function(t){
+    var m = {"Job / project tracking":0,"Scheduling & calendar":300,"Customer records":260,"Invoices & payments":420,
+             "Quotes / estimates":420,"Inventory / equipment":350,"Timesheets / crew hours":300,"Photos & job documentation":320};
+    if (m[t]) add(m[t], "Tool: " + t);
+  });
+  if (a.tool_users === "Me + crew with different access (they see jobs, I see money)") add(400, "Role-based access (crew vs owner)");
+  var mult = 1;
+  if (a.tool_offline === "All the time — needs to work offline"){ mult = 1.25; drivers.push(["Offline-first architecture", "×1.25"]); }
+  lines = Math.round(lines * mult);
+  var tokens = lines * 12;                     // dense HTML/JS ≈ 12 tokens/line
+  var passes = Math.max(1, Math.ceil(lines / 2200));  // ~one long Claude response ≈ 2,200 lines
+  return {lines:lines, tokens:tokens, passes:passes, drivers:drivers};
+}
+function hasAnsPage(a, p){ return (a.pages||[]).indexOf(p) >= 0; }
+function fmtK(n){ return n >= 1000 ? (Math.round(n/100)/10) + "K" : String(n); }
+
 /* ================= QUOTE GENERATOR ================= */
 var quote = { code:"", biz:"", lines:[] };
 function openQuote(o){
@@ -3032,9 +3656,14 @@ function openQuote(o){
     quote.lines.push({desc:"Logo & branding kit", price: Number(s.a_logo), disc:0});
   }
   // premium photo display
-  if (a.photodisp && a.photodisp !== "Basic gallery (included)"){
-    quote.lines.push({desc:"Premium photo display — " + a.photodisp, price: Number(s.a_gallery), disc:0});
+  var pdq = (a.photodisp||[]).filter(function(x){ return x !== "Basic gallery (included)"; });
+  if (pdq.length){
+    quote.lines.push({desc:"Premium photo display — " + pdq.join(" + "), price: Number(s.a_gallery), disc:0});
   }
+  // built-in money tools
+  (a.fintools||[]).forEach(function(t){
+    if (t !== "Other") quote.lines.push({desc:"Built-in money tool — " + t, price: 0, disc:0});
+  });
   // extra photo slots beyond 15
   if (a.photocount === "15\u201330" || a.photocount === "30+"){
     quote.lines.push({desc:"Extra photo slots (" + a.photocount + " photos, 15 included)", price: Number(s.a_gallery), disc:0});
@@ -3056,9 +3685,27 @@ function openQuote(o){
   document.getElementById("qTotDiscType").value = "flat";
   document.getElementById("qOverride").value = "";
   document.getElementById("quoteTitle").textContent = "Quote — " + (quote.biz || o.code);
+  renderEffort(o);
   renderQLines();
   qRecalc();
   document.getElementById("quoteModal").classList.add("on");
+}
+function renderEffort(o){
+  var el = document.getElementById("qEffort");
+  if (!el) return;
+  var e = estimateBuild(o);
+  var lo = Math.round(e.lines * 0.8 / 100) * 100, hi = Math.round(e.lines * 1.2 / 100) * 100;
+  var drv = e.drivers.slice(0, 8).map(function(d){
+    return "<em>" + esc(d[0]) + "</em>" + (typeof d[1] === "number" ? " ~" + d[1] : " " + d[1]);
+  }).join(" · ");
+  el.innerHTML =
+    "<div class='qeh'>⚙ Build Effort Estimate — owner eyes only · never shown to customers or on the PDF</div>" +
+    "<div class='qenums'>" +
+      "<div><b>" + fmtK(lo) + "–" + fmtK(hi) + "</b><span>lines of code</span></div>" +
+      "<div><b>~" + fmtK(e.tokens) + "</b><span>Claude tokens</span></div>" +
+      "<div><b>" + e.passes + "</b><span>build pass" + (e.passes>1?"es":"") + "</span></div>" +
+    "</div>" +
+    "<div class='qedrv'>What drives it: " + drv + "</div>";
 }
 function closeQuote(){ document.getElementById("quoteModal").classList.remove("on"); }
 function renderQLines(){
