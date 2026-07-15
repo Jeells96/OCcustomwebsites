@@ -574,6 +574,11 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 #lightbox.on{display:flex}
 #lightbox img{max-width:94vw;max-height:86vh;box-shadow:0 30px 80px rgba(0,0,0,.8);border:4px solid #F2F4F6}
 
+/* ---------- pickable checklist ---------- */
+.chk.pickable div{cursor:pointer;transition:.14s}
+.chk.pickable div:hover{border-color:var(--red);background:#1F252B;transform:translateX(3px)}
+.chk.pickable div::after{content:"▸";float:right;color:var(--red);font-weight:700}
+
 /* ---------- sample build cards ---------- */
 .samplegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
 .samplecard{display:block;background:var(--gun);border:1px solid #2E353D;text-decoration:none;transition:.18s;overflow:hidden}
@@ -1040,12 +1045,12 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
       </a>
     </div>
 
-    <div class="tierhead" style="margin-top:56px"><h3>Which One Are You?</h3></div>
-    <div class="chk" id="which-chk">
-      <div>Customers need to find you, trust you, and call you → <b style="color:var(--white)">Marketing website</b></div>
-      <div>You're drowning in notebooks, texts and spreadsheets → <b style="color:var(--white)">Business software</b></div>
-      <div>You need both, and you need them talking to each other → <b style="color:var(--white)">Website + software</b></div>
-      <div>Not sure? Start the questionnaire — the first question sorts it out.</div>
+    <div class="tierhead" style="margin-top:56px"><h3>Which One Are You?</h3><span class="tp" style="font-size:15px">Tap one — it starts your build</span></div>
+    <div class="chk pickable" id="which-chk">
+      <div onclick="startBuild('site')">Customers need to find you, trust you, and call you → <b style="color:var(--white)">Marketing website</b></div>
+      <div onclick="startBuild('tool')">You're drowning in notebooks, texts and spreadsheets → <b style="color:var(--white)">Business software</b></div>
+      <div onclick="startBuild('both')">You need both, and you need them talking to each other → <b style="color:var(--white)">Website + software</b></div>
+      <div onclick="startBuild('')">Not sure? Start the questionnaire — the first question sorts it out.</div>
     </div>
 
     <div class="tagplate reveal" style="margin-top:56px"><h2>Built For Yours, Not Borrowed</h2></div>
@@ -1310,7 +1315,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 <!-- ============ LIGHTBOX ============ -->
 <div id="lightbox" onclick="this.classList.remove('on')"><img id="lightImg" alt=""></div>
 
-<div class="verbadge" id="verBadge">OC SHOWCASE v9.5</div>
+<div class="verbadge" id="verBadge">OC SHOWCASE v9.6</div>
 <div id="toast"></div>
 
 <!-- Firebase (compat SDK via CDN) -->
@@ -2463,20 +2468,20 @@ function wizQDef(tier){
 
   /* ---------- 1. WHO YOU ARE ---------- */
   S.push({t:"Your Business", f:[
-    {k:"buildtype", l:"First things first — what are we building for you?", ty:"select", def:"A website — so customers can find, trust & book you", opts:[
+    {k:"buildtype", l:"First things first — what are we building for you?", ty:"select", opts:[
       "A website — so customers can find, trust & book you",
       "A business tool — an app for you & your crew to run things (job tracking, scheduling, invoicing…)",
       "Both — a customer-facing website with your private business tool behind it"]},
     {k:"biz", l:"Business name", ty:"text", req:1, ph:"Riverside Guide Co."},
-    {k:"btype", l:"Business type", ty:"select", other:1, def:"Guide Service (fishing / hunting)", opts:[
+    {k:"btype", l:"Business type", ty:"select", other:1, opts:[
       "Guide Service (fishing / hunting)","Contractor / Construction","Landscaping / Yard Care",
       "Salon / Barber / Spa","Auto / Mechanic","Restaurant / Food","Photography / Video",
       "Real Estate","Fitness / Coaching","Cleaning Service","Retail Shop","Other"]},
     {k:"does", l:"In your own words, what do you do?", ty:"textarea", ph:"Guided salmon & steelhead trips on the Willamette, plus gear rental..."},
-    {k:"years", l:"How long have you been in business?", ty:"select", def:"5–15 years", opts:["Just starting out","Under 2 years","2–5 years","5–15 years","15+ years"]},
-    {k:"solo", l:"Is it just you, or do you have a crew?", ty:"select", def:"Just me", other:1, opts:["Just me","Me + 1 helper","Small crew (2–5)","Bigger team (6+)","Other"]},
+    {k:"years", l:"How long have you been in business?", ty:"select", opts:["Just starting out","Under 2 years","2–5 years","5–15 years","15+ years"]},
+    {k:"solo", l:"Is it just you, or do you have a crew?", ty:"select", other:1, opts:["Just me","Me + 1 helper","Small crew (2–5)","Bigger team (6+)","Other"]},
     {k:"area", l:"Where are you / who do you serve?", ty:"text", ph:"Clackamas County & the Willamette River"},
-    {k:"addr", l:"Do customers come to a physical address?", ty:"select", def:"No — I go to them / meet on site", opts:["Yes — I have a shop/office to list","No — I go to them / meet on site","Both"]},
+    {k:"addr", l:"Do customers come to a physical address?", ty:"select", opts:["Yes — I have a shop/office to list","No — I go to them / meet on site","Both"]},
     {k:"addrline", l:"What's the address to show?", ty:"text", ph:"123 Main St, Oregon City, OR", when:function(a){ return a.addr && a.addr.indexOf("Yes") === 0 || a.addr === "Both"; }},
     {k:"hours", l:"Your hours", ty:"text", ph:"Wed–Sun 5 AM – 5 PM · closed Feb"},
     {k:"lic", l:"License #, certifications, or insurance to display", ty:"text", ph:"CCB #123456 / USCG licensed"},
@@ -2487,17 +2492,17 @@ function wizQDef(tier){
 
   /* ---------- 2. WHAT THE SITE SHOULD DO (drives everything after) ---------- */
   S.push({t:"What The Site Should Do", intro:"This is the important part — your answers here change which questions you get next.", f:[
-    {k:"action", l:"When someone lands on your site, the #1 thing you want them to do is…", ty:"select", other:1, def:"Call me", when:wantsSite, opts:[
+    {k:"action", l:"When someone lands on your site, the #1 thing you want them to do is…", ty:"select", other:1, when:wantsSite, opts:[
       "Call me","Text me","Request a booking","Send me a message / inquiry","Buy something",
       "Find my hours & location","Just learn about what I do","Something else"]},
-    {k:"goal", l:"The #1 thing you want to GET OUT of this website is…", ty:"select", other:1, def:"More phone calls", when:wantsSite, opts:[
+    {k:"goal", l:"The #1 thing you want to GET OUT of this website is…", ty:"select", other:1, when:wantsSite, opts:[
       "More phone calls","More bookings","Look more professional / legit","Beat my competitors' websites",
       "Stop answering the same questions over and over","Sell products online","Show off my work","Something else"]},
     {k:"social", l:"Do you have social pages we should build in?", ty:"checks", when:wantsSite, opts:[
       "Facebook","Instagram","YouTube","TikTok","None of these"]},
     {k:"socialhandle", l:"Your handle(s) — we'll link them and can pull your feed onto the site", ty:"text", ph:"@riverbendguides",
       when:function(a){ var s = a.social||[]; return s.length && s.indexOf("None of these") < 0; }},
-    {k:"socialfeed", l:"Show your latest posts right on the site, or just link out?", ty:"select", def:"Just link to my pages", opts:[
+    {k:"socialfeed", l:"Show your latest posts right on the site, or just link out?", ty:"select", opts:[
       "Show my latest posts on the site","Just link to my pages"],
       when:function(a){ var s = a.social||[]; return s.indexOf("Facebook") >= 0 || s.indexOf("Instagram") >= 0; }},
     {k:"faq", l:"What's the question customers ask you the most?", ty:"textarea", ph:"'Do you provide the gear?'"},
@@ -2513,26 +2518,26 @@ function wizQDef(tier){
     {k:"g_species", l:"What are you targeting / running trips for?", ty:"text", ph:"Spring chinook, steelhead, sturgeon", when:isGuide},
     {k:"g_season", l:"Your season — when are you slammed, when are you dead?", ty:"textarea", ph:"Mar–May packed, Jul slow, closed Feb", when:isGuide},
     {k:"g_gear", l:"What's included vs. what do they bring?", ty:"textarea", ph:"All gear & bait provided; they bring license + lunch", when:isGuide},
-    {k:"g_lic", l:"Do customers need their own license/tags? (we'll link it)", ty:"select", def:"Yes — link ODFW", opts:["Yes — link ODFW","Yes — I'll explain in text","No"], when:isGuide},
+    {k:"g_lic", l:"Do customers need their own license/tags? (we'll link it)", ty:"select", opts:["Yes — link ODFW","Yes — I'll explain in text","No"], when:isGuide},
     {k:"g_meet", l:"Where do you launch / meet?", ty:"text", ph:"Meldrum Bar boat ramp, 5:30 AM", when:isGuide},
     // trades
     {k:"t_jobs", l:"What jobs do you take most?", ty:"textarea", ph:"Deck rebuilds, siding, fence repair", when:isTrade},
-    {k:"t_est", l:"How do estimates work? (pick all that apply)", ty:"checks", def:["Free on-site estimate"], opts:["Free on-site estimate","Free phone/photo estimate","Paid estimate credited to the job","Quotes off a price list","Other"], when:isTrade},
-    {k:"t_emerg", l:"Do you do emergency / same-day calls?", ty:"select", def:"No", opts:["Yes — put it front and center","Sometimes","No"], when:isTrade},
+    {k:"t_est", l:"How do estimates work? (pick all that apply)", ty:"checks", opts:["Free on-site estimate","Free phone/photo estimate","Paid estimate credited to the job","Quotes off a price list","Other"], when:isTrade},
+    {k:"t_emerg", l:"Do you do emergency / same-day calls?", ty:"select", opts:["Yes — put it front and center","Sometimes","No"], when:isTrade},
     {k:"t_warranty", l:"Warranty or guarantee worth bragging about?", ty:"text", ph:"5-year workmanship warranty", when:isTrade},
     // chair-based
-    {k:"c_staff", l:"Who takes appointments — just you, or several people?", ty:"select", def:"Just me", opts:["Just me","2–3 of us","4+ — customers pick who"], when:isChair},
+    {k:"c_staff", l:"Who takes appointments — just you, or several people?", ty:"select", opts:["Just me","2–3 of us","4+ — customers pick who"], when:isChair},
     {k:"c_svc", l:"Your most-booked services", ty:"textarea", ph:"Cut & style, color, beard trim", when:isChair},
-    {k:"c_walk", l:"Walk-ins or appointment only?", ty:"select", def:"Both", opts:["Appointment only","Walk-ins welcome","Both"], when:isChair},
+    {k:"c_walk", l:"Walk-ins or appointment only?", ty:"select", opts:["Appointment only","Walk-ins welcome","Both"], when:isChair},
     // food
-    {k:"f_menu", l:"Should the site show a full menu?", ty:"select", def:"Yes — full menu", opts:["Yes — full menu","Just highlights","No menu — daily specials only"], when:isFood},
-    {k:"f_order", l:"How do people order? (pick all that apply)", ty:"checks", def:["Call to order"], opts:["Call to order","Order ahead for pickup","Delivery","Dine in / walk up"], when:isFood},
+    {k:"f_menu", l:"Should the site show a full menu?", ty:"select", opts:["Yes — full menu","Just highlights","No menu — daily specials only"], when:isFood},
+    {k:"f_order", l:"How do people order? (pick all that apply)", ty:"checks", opts:["Call to order","Order ahead for pickup","Delivery","Dine in / walk up"], when:isFood},
     // shop
     {k:"s_what", l:"What do you sell / service most?", ty:"textarea", when:isShop},
-    {k:"s_inv", l:"Show live inventory, or just categories?", ty:"select", def:"Just categories", opts:["Just categories","Featured items","Full live inventory"], when:isShop},
+    {k:"s_inv", l:"Show live inventory, or just categories?", ty:"select", opts:["Just categories","Featured items","Full live inventory"], when:isShop},
     // photographer
     {k:"p_types", l:"What kind of shoots?", ty:"text", ph:"Weddings, seniors, family", when:isShooter},
-    {k:"p_deliver", l:"How do clients get their photos? (pick all that apply)", ty:"checks", def:["Private online gallery"], opts:["Private online gallery","Download link","USB / prints","Other"], when:isShooter}
+    {k:"p_deliver", l:"How do clients get their photos? (pick all that apply)", ty:"checks", opts:["Private online gallery","Download link","USB / prints","Other"], when:isShooter}
   ]});
 
 
@@ -2542,15 +2547,15 @@ function wizQDef(tier){
       "Job / project tracking","Scheduling & calendar","Customer records","Invoices & payments","Quotes / estimates","Inventory / equipment","Timesheets / crew hours","Photos & job documentation","Other"]},
     {k:"tool_day", l:"Walk us through a normal day — what happens from first call to paid?", ty:"textarea",
       ph:"Customer calls → I scribble it in a notebook → drive out → estimate on paper → text them a price → hope I remember to invoice..."},
-    {k:"tool_now", l:"What are you using today?", ty:"checks", def:["Paper / notebook"], opts:[
+    {k:"tool_now", l:"What are you using today?", ty:"checks", opts:[
       "Paper / notebook","Spreadsheets","Texts & phone memory","QuickBooks","An app that isn't cutting it","Nothing — winging it","Other"]},
     {k:"tool_appname", l:"Which app, and what's it not doing for you?", ty:"textarea",
       when:function(a){ return (a.tool_now||[]).indexOf("An app that isn't cutting it") >= 0; }},
-    {k:"tool_users", l:"Who uses it?", ty:"select", def:"Just me", opts:[
+    {k:"tool_users", l:"Who uses it?", ty:"select", opts:[
       "Just me","Me + the crew (everyone sees the same thing)","Me + crew with different access (they see jobs, I see money)","Office person too"]},
-    {k:"tool_devices", l:"Where does it get used? (pick all that apply)", ty:"checks", def:["My phone, out in the field"], opts:[
+    {k:"tool_devices", l:"Where does it get used? (pick all that apply)", ty:"checks", opts:[
       "My phone, out in the field","Crew phones","A computer at the office / home","A tablet"]},
-    {k:"tool_offline", l:"Do you work anywhere with bad or no service?", ty:"select", def:"Sometimes — it should handle spotty service", opts:[
+    {k:"tool_offline", l:"Do you work anywhere with bad or no service?", ty:"select", opts:[
       "All the time — needs to work offline","Sometimes — it should handle spotty service","No — always have signal"]},
     {k:"tool_must", l:"The ONE thing that, if it worked perfectly, would save you the most time?", ty:"textarea",
       ph:"Never losing track of who owes me money"}
@@ -2558,7 +2563,7 @@ function wizQDef(tier){
 
   /* ---------- 4. SERVICES & PRICING ---------- */
   S.push({t:"Services & Prices", intro:"This becomes your services page. Add as many as you want — leave price blank if you'd rather quote it.", when:wantsSite, f:[
-    {k:"showprice", l:"Do you want prices shown on the site?", ty:"select", def:"Yes — show my prices", opts:[
+    {k:"showprice", l:"Do you want prices shown on the site?", ty:"select", opts:[
       "Yes — show my prices","Show 'starting at' prices","No — make them contact me for a quote"]},
     {k:"services", l:"Your services", ty:"repeat", when:function(a){ return a.showprice !== "No — make them contact me for a quote"; }},
     {k:"svclist", l:"List your services (no prices — we'll route them to a quote form)", ty:"textarea", ph:"Full-day trip\nHalf-day trip\nGear rental",
@@ -2569,7 +2574,7 @@ function wizQDef(tier){
 
   /* ---------- 4B. THE MONEY SIDE ---------- */
   S.push({t:"The Money Side", intro:"Websites we build can also run your back office — all of it locked behind YOUR owner PIN, invisible to customers.", f:[
-    {k:"fin", l:"How big a part of this website is managing money?", ty:"select", def:"Built-in extra — nice to have alongside the site", opts:[
+    {k:"fin", l:"How big a part of this website is managing money?", ty:"select", opts:[
       "The main point — I want it running my back office",
       "Built-in extra — nice to have alongside the site",
       "Not interested — just the website"]},
@@ -2579,16 +2584,16 @@ function wizQDef(tier){
     {k:"fintools", l:"Which money tools do you want built in? (pick all that apply)", ty:"checks", opts:[
       "Invoices & who's paid","Quote generator for customers","Income & expense tracking","Payroll helper","Job costing (what each job made you)","Mileage / receipts log","Other"],
       when:function(a){ return a.fin !== "Not interested — just the website"; }},
-    {k:"fin_inv", l:"How do you invoice today?", ty:"select", def:"Text or email, by hand", other:1, opts:[
+    {k:"fin_inv", l:"How do you invoice today?", ty:"select", other:1, opts:[
       "Paper","Text or email, by hand","QuickBooks","Square","Wave / other app","I don't invoice yet","Other"],
       when:function(a){ return (a.fintools||[]).indexOf("Invoices & who's paid") >= 0; }},
     {k:"fin_quote", l:"What goes into one of your quotes? (line items, hourly, materials...)", ty:"textarea",
       ph:"Labor by the hour, materials at cost +10%, travel past 20 miles",
       when:function(a){ return (a.fintools||[]).indexOf("Quote generator for customers") >= 0; }},
-    {k:"fin_paysched", l:"How often do you run payroll?", ty:"select", def:"Every other week", opts:[
+    {k:"fin_paysched", l:"How often do you run payroll?", ty:"select", opts:[
       "Weekly","Every other week","Twice a month","Monthly"],
       when:function(a){ return (a.fintools||[]).indexOf("Payroll helper") >= 0; }},
-    {k:"fin_sync", l:"Keep the numbers in the site, or do you also use something else?", ty:"select", def:"Keep it all in the site", other:1, opts:[
+    {k:"fin_sync", l:"Keep the numbers in the site, or do you also use something else?", ty:"select", other:1, opts:[
       "Keep it all in the site","I also use QuickBooks","I also use spreadsheets","My accountant handles it","Other"],
       when:function(a){ return (a.fintools||[]).indexOf("Income & expense tracking") >= 0 || (a.fintools||[]).indexOf("Job costing (what each job made you)") >= 0; }}
   ]});
@@ -2596,9 +2601,9 @@ function wizQDef(tier){
   /* ---------- 5. ONLINE SALES BRANCH ---------- */
   S.push({t:"Selling Online", intro:"You said you want to sell — let's scope it.", when:sellsOnline, f:[
     {k:"e_what", l:"What are you selling online?", ty:"textarea", ph:"Gift cards, branded hats, gear bundles"},
-    {k:"e_count", l:"Roughly how many products?", ty:"select", def:"Under 10", opts:["Just 1–2","Under 10","10–50","50+"]},
-    {k:"e_ship", l:"How do customers get their stuff? (pick all that apply)", ty:"checks", def:["Local pickup"], opts:["Local pickup","Shipping","Digital / gift cards"]},
-    {k:"e_pay", l:"How do you take payments today? (pick all that apply)", ty:"checks", def:["No card payments yet — need help"], opts:[
+    {k:"e_count", l:"Roughly how many products?", ty:"select", opts:["Just 1–2","Under 10","10–50","50+"]},
+    {k:"e_ship", l:"How do customers get their stuff? (pick all that apply)", ty:"checks", opts:["Local pickup","Shipping","Digital / gift cards"]},
+    {k:"e_pay", l:"How do you take payments today? (pick all that apply)", ty:"checks", opts:[
       "Square","Stripe","PayPal","Venmo / Cash App","Cash & check","No card payments yet — need help","Other"]}
   ]});
 
@@ -2606,17 +2611,17 @@ function wizQDef(tier){
   S.push({t:"Pages & Content", intro:"Your tier includes " + incTxt + ". Pick what you want — we'll quote any extras.", when:wantsSite, f:[
     {k:"pages", l:"Which pages do you want?", ty:"checks", opts:[
       "Home","About","Services / Pricing","Photo Gallery","Reviews","Contact","FAQ","News / Updates","Specials / Deals","Other"]},
-    {k:"wording", l:"The written words on your site — who's providing them?", ty:"select", def:"A bit of both", opts:[
+    {k:"wording", l:"The written words on your site — who's providing them?", ty:"select", opts:[
       "I'll write and send the wording","Write it for me based on my answers here","A bit of both"]},
     {k:"about", l:"Since we're writing it — tell us your story in a few sentences. Anything you'd tell a customer on the boat.", ty:"textarea",
       ph:"Started guiding with my dad in '04, went full-time after the mill closed...",
       when:function(a){ return a.wording !== "I'll write and send the wording"; }},
     {k:"reviews", l:"Paste a couple of reviews we can feature (or say where they live)", ty:"textarea", ph:"Google / Facebook — feel free to pull them",
       when:function(a){ return hasPage(a,"Reviews") || a.goal === "Look more professional / legit"; }},
-    {k:"photos", l:"Do you have photos ready to use?", ty:"select", def:"Some — might need more", opts:["Plenty — I'll send them","Some — might need more","Not yet — need help there"]},
-    {k:"photoself", l:"Want to be able to add/swap photos yourself later, right from your phone?", ty:"select", def:"Yes — build that in", opts:["Yes — build that in","No — you handle it"]},
-    {k:"photodisp", l:"How should your photos be displayed? (pick all that apply)", ty:"checks", def:["Basic gallery (included)"], opts:["Basic gallery (included)","Background photo shuffle","Small slideshow"]},
-    {k:"photocount", l:"Roughly how many photos? (15 included)", ty:"select", def:"Under 15 (included)", opts:["Under 15 (included)","15–30","30+","Not sure yet"]},
+    {k:"photos", l:"Do you have photos ready to use?", ty:"select", opts:["Plenty — I'll send them","Some — might need more","Not yet — need help there"]},
+    {k:"photoself", l:"Want to be able to add/swap photos yourself later, right from your phone?", ty:"select", opts:["Yes — build that in","No — you handle it"]},
+    {k:"photodisp", l:"How should your photos be displayed? (pick all that apply)", ty:"checks", opts:["Basic gallery (included)","Background photo shuffle","Small slideshow"]},
+    {k:"photocount", l:"Roughly how many photos? (15 included)", ty:"select", opts:["Under 15 (included)","15–30","30+","Not sure yet"]},
     {k:"must", l:"Anything that MUST be on the site?", ty:"textarea", ph:"A specific photo, a memorial note, my dad's boat..."}
   ]});
 
@@ -2629,7 +2634,7 @@ function wizQDef(tier){
     {k:"slogan", l:"Any slogan or phrase you already use?", ty:"text", ph:"'Put your line where the fish are.'"},
     {k:"colors", l:"Colors you'd like", ty:"text", ph:"Dark green, black, a little silver"},
     {k:"avoid", l:"Colors or styles to stay away from", ty:"text", ph:"Nothing pink or cartoony"},
-    {k:"logo", l:"Do you have a logo?", ty:"select", def:"Yes — I'll send it", opts:["Yes — I'll send it","Sort of — needs cleanup","No — I need one made"]},
+    {k:"logo", l:"Do you have a logo?", ty:"select", opts:["Yes — I'll send it","Sort of — needs cleanup","No — I need one made"]},
     {k:"logoideas", l:"Any ideas for the logo? Colors, symbols, feel?", ty:"textarea", ph:"A steelhead silhouette, tough and simple",
       when:function(a){ return a.logo === "No — I need one made" || a.logo === "Sort of — needs cleanup"; }},
     {k:"likesites", l:"Any websites whose look you like? (links + what you like)", ty:"textarea"},
@@ -2638,14 +2643,14 @@ function wizQDef(tier){
 
   /* ---------- 8. DOMAIN ---------- */
   S.push({t:"Your Web Address", intro:"The address people type in to find you. We register and set it up for you — it's part of the build, so you never touch a registrar.", when:wantsSite, f:[
-    {k:"dom", l:"Do you already have a web address for the business?", ty:"select", def:"No — set one up for me", opts:["No — set one up for me","Yes — I already have one"]},
+    {k:"dom", l:"Do you already have a web address for the business?", ty:"select", opts:["No — set one up for me","Yes — I already have one"]},
     {k:"domname", l:"What is it?", ty:"text", ph:"riverbendguides.com", when:function(a){ return a.dom === "Yes — I already have one"; }},
-    {k:"domwho", l:"Any idea who set it up or where it lives? (we'll take it from here)", ty:"select", def:"Not sure — you figure it out", other:1, opts:[
+    {k:"domwho", l:"Any idea who set it up or where it lives? (we'll take it from here)", ty:"select", other:1, opts:[
       "GoDaddy","Namecheap","Squarespace / Google","Wix","Bluehost","My old web guy has it","Not sure — you figure it out","Other"],
       when:function(a){ return a.dom === "Yes — I already have one"; }},
     {k:"domwant", l:"What address would you like? We'll lock it in for you.", ty:"text", ph:"riverbendguides.com", when:function(a){ return a.dom !== "Yes — I already have one"; }},
     {k:"domalt", l:"A backup name or two, in case your first pick is already taken", ty:"text", ph:"riverbendguideco.com, fishriverbend.com", when:function(a){ return a.dom !== "Yes — I already have one"; }},
-    {k:"email_pro", l:"Want a matching professional email? (you@yourbusiness.com)", ty:"select", def:"Yes — quote it", opts:["Yes — quote it","Already have one","No thanks"]}
+    {k:"email_pro", l:"Want a matching professional email? (you@yourbusiness.com)", ty:"select", opts:["Yes — quote it","Already have one","No thanks"]}
   ]});
 
   /* ---------- 9A. TIER 1 CONTACT ---------- */
@@ -2664,11 +2669,11 @@ function wizQDef(tier){
     S.push({t:"How Booking Should Work", intro:"Walk us through how you want customers to book you.", f:[
       {k:"bookwhat", l:"What exactly can customers book?", ty:"textarea", req:1, ph:"Full-day trip (up to 3 people), half-day trip, gear rental"},
       {k:"lengths", l:"How long are they, and what start times?", ty:"text", ph:"Full day 6 AM, half day 1 PM"},
-      {k:"cap", l:"How many bookings can you take at once?", ty:"select", def:"One at a time", other:1, opts:["One at a time","2 at a time","3+ at a time","Depends on the job","Other"]},
+      {k:"cap", l:"How many bookings can you take at once?", ty:"select", other:1, opts:["One at a time","2 at a time","3+ at a time","Depends on the job","Other"]},
       {k:"bookdays", l:"What days and hours do you take bookings?", ty:"text", ph:"Wed–Sun, first light to 4 PM"},
-      {k:"lead", l:"How far ahead should people book?", ty:"select", def:"At least 24 hours", opts:["Same day is fine","At least 24 hours","At least 3 days","A week or more"]},
+      {k:"lead", l:"How far ahead should people book?", ty:"select", opts:["Same day is fine","At least 24 hours","At least 3 days","A week or more"]},
       {k:"season", l:"Busy season or dates you're usually booked/closed?", ty:"text", ph:"Spring chinook Mar–May packed; closed Feb"},
-      {k:"confirm", l:"When a request comes in, do you want it to…", ty:"select", def:"Wait for me to approve each one first", opts:[
+      {k:"confirm", l:"When a request comes in, do you want it to…", ty:"select", opts:[
         "Auto-confirm any open slot","Wait for me to approve each one first"]},
       {k:"collect", l:"What info do you need from someone booking?", ty:"textarea", ph:"Party size, experience level, any kids aboard"},
       {k:"notify", l:"How should you get told about a new request?", ty:"checks", opts:["Email me","Text me","Just show it on the site","Other"]},
@@ -2682,13 +2687,13 @@ function wizQDef(tier){
     S.push({t:"Your Command Center", intro:"Tier 3 gives you an owner dashboard. Tell us how you want to run it.", f:[
       {k:"bookwhat", l:"What can customers book or apply for?", ty:"textarea", req:1},
       {k:"lengths", l:"Lengths and start times", ty:"text"},
-      {k:"cap", l:"How many bookings can you take at once?", ty:"select", def:"One at a time", other:1, opts:["One at a time","2 at a time","3+ at a time","Depends on the job","Other"]},
+      {k:"cap", l:"How many bookings can you take at once?", ty:"select", other:1, opts:["One at a time","2 at a time","3+ at a time","Depends on the job","Other"]},
       {k:"applyinfo", l:"What must a customer provide to apply / request?", ty:"textarea", ph:"Party size, experience, license status, preferred dates"},
-      {k:"accounts", l:"Should customers get logins to see their own bookings?", ty:"select", def:"Yes — accounts with history", opts:[
+      {k:"accounts", l:"Should customers get logins to see their own bookings?", ty:"select", opts:[
         "Yes — accounts with history","No — just a request form","Only for repeat customers"]},
-      {k:"deposit", l:"Do you take a deposit to hold a date?", ty:"select", def:"Yes — flat amount", opts:["Yes — flat amount","Yes — a percentage","No deposit"]},
+      {k:"deposit", l:"Do you take a deposit to hold a date?", ty:"select", opts:["Yes — flat amount","Yes — a percentage","No deposit"]},
       {k:"depamt", l:"How much?", ty:"text", ph:"$100 to lock the date", when:function(a){ return a.deposit && a.deposit.indexOf("Yes") === 0; }},
-      {k:"payproc", l:"How do you take payments today? (pick all that apply)", ty:"checks", def:["No card payments yet — need help"], opts:[
+      {k:"payproc", l:"How do you take payments today? (pick all that apply)", ty:"checks", opts:[
         "Square","Stripe","PayPal","Venmo / Cash App","Cash & check","No card payments yet — need help","Other"],
         when:function(a){ return a.deposit && a.deposit.indexOf("Yes") === 0; }},
       {k:"reminders", l:"Automatic reminders to send customers", ty:"checks", opts:["Email reminders","Text reminders","Other"]},
@@ -2719,7 +2724,7 @@ function wizQDef(tier){
   ]});
 
   S.push({t:"Review & Send", f:[
-    {k:"deadline", l:"Any deadline we should know about?", ty:"select", def:"No rush", other:1, opts:["No rush","Within a month","Before my season starts","ASAP","Other"]},
+    {k:"deadline", l:"Any deadline we should know about?", ty:"select", other:1, opts:["No rush","Within a month","Before my season starts","ASAP","Other"]},
     {k:"extra", l:"Anything else we should know before we build?", ty:"textarea"}
   ], review:true});
 
@@ -2737,6 +2742,21 @@ function wizQDef(tier){
   return out;
 }
 var wiz = {tier:0, step:0, steps:[], ans:{}, done:false};
+var BUILD_MAP = {
+  site: "A website — so customers can find, trust & book you",
+  tool: "A business tool — an app for you & your crew to run things (job tracking, scheduling, invoicing…)",
+  both: "Both — a customer-facing website with your private business tool behind it"
+};
+/* from the "Which One Are You?" list — opens the questionnaire with their pick answered */
+function startBuild(kind){
+  var tier = kind === "tool" || kind === "both" ? 3 : 1;
+  openWizard(tier);
+  if (kind && BUILD_MAP[kind]){
+    wiz.ans.buildtype = BUILD_MAP[kind];
+    wizRebuild();
+    wizRender();
+  }
+}
 function openWizard(tier){
   wiz = {tier:tier, step:0, steps:[], ans:{}, done:false};
   wiz.steps = wizQDef(tier);          // seeds default answers as it builds
@@ -2750,13 +2770,7 @@ function closeWizard(){
   document.body.style.overflow = "";
 }
 /* ----- services & prices repeater ----- */
-function svcSuggest(){
-  var a = wiz.ans;
-  if (isGuide(a)) return [["Full-day trip",""],["Half-day trip",""]];
-  if (isTrade(a)) return [["",""],["",""]];
-  if (isChair(a)) return [["",""],["",""]];
-  return [["",""],["",""]];
-}
+function svcSuggest(){ return [["",""],["",""]]; }
 function svcRowEl(s){
   var row = document.createElement("div");
   row.className = "svcrow";
@@ -3014,9 +3028,10 @@ function wizRender(){
     } else if (f.ty === "textarea"){
       h += "<div class='wf'><label class='fl'>" + f.l + "</label><textarea class='fi' id='w_"+f.k+"' rows='3' placeholder='"+(f.ph||"")+"'>"+esc(v||"")+"</textarea></div>";
     } else if (f.ty === "select"){
-      var isOtherCustom = f.other && v && f.opts.indexOf(v) < 0; // stored custom value
+      var isOtherCustom = f.other && v && v !== "" && f.opts.indexOf(v) < 0; // stored custom value
       h += "<div class='wf'><label class='fl'>" + f.l + "</label><select class='fi' id='w_"+f.k+"'" +
            " onchange='" + (f.other ? "otherToggle(\""+f.k+"\", this.value);" : "") + "wizLive()'>";
+      h += "<option value=''" + (v ? "" : " selected") + ">— pick one —</option>";
       f.opts.forEach(function(o){
         var sel = (v===o) || (isOtherCustom && isOtherVal(o));
         h += "<option"+(sel?" selected":"")+">"+o+"</option>";
@@ -3128,7 +3143,7 @@ function wizSubmit(){
     "<div style='text-align:center;padding:14px 0'>" +
     "<svg class='done-hex' viewBox='0 0 100 110'><polygon points='50,4 94,29 94,81 50,106 6,81 6,29' fill='#22262B' stroke='#3FA35B' stroke-width='7'/><text x='50' y='68' text-anchor='middle' font-family='Anton, sans-serif' font-size='40' fill='#F2F4F6'>✓</text></svg>" +
     "<div class='wstep-h'>Order Received</div>" +
-    "<p style='color:var(--offw);max-width:440px;margin:0 auto;line-height:1.7'>Thanks, " + esc((a.owner||"").split(" ")[0] || "friend") + " — your build sheet for <b style='color:var(--white)'>" + esc(a.biz||"your business") + "</b> is in the shop. We'll reach out within 1 business day with your honest quote.</p></div>";
+    "<p style='color:var(--offw);max-width:440px;margin:0 auto;line-height:1.7'>Thanks, " + esc((a.owner||"").split(" ")[0] || "friend") + " — your build sheet for <b style='color:var(--white)'>" + esc(a.biz||"your business") + "</b> is in the shop. We'll go through your answers and get back to you within seven days with an honest quote.</p></div>";
   document.getElementById("wizBack").style.visibility = "hidden";
   document.getElementById("wizNext").innerHTML = "Close <span class='arr'>▸</span>";
 }
@@ -3233,7 +3248,8 @@ function renderOrders(){
                   "<span class='badge a'>Delivered</span>";
     div.innerHTML =
       "<div class='who'><b>" + esc(o.code||"—") + "</b><span>" + esc(o.ans.biz||"—") + " · " + d.toLocaleDateString() + "</span></div>" +
-      "<div class='meta'>" + esc(tierLabel(o.tier)) + " · " + esc(o.ans.btype||"") + (o.flags.length ? " · <em>" + o.flags.length + " flag" + (o.flags.length>1?"s":"") + "</em>" : "") + "</div>" +
+      "<div class='meta'>" + esc(tierLabel(o.tier)) + " · " + esc(o.ans.btype||"") + (o.flags.length ? " · <em>" + o.flags.length + " flag" + (o.flags.length>1?"s":"") + "</em>" : "") +
+        (o.mail ? "<br><span style='color:" + (o.mail.indexOf("✕")>=0 ? "var(--red)" : "var(--green)") + "'>✉ " + esc(o.mail) + "</span>" : "") + "</div>" +
       "<div class='acts'></div>";
     var acts = div.querySelector(".acts");
     acts.appendChild(mkBtn("Quote", "bsm ok", function(){ openQuote(o); }));
@@ -3790,27 +3806,45 @@ function ejParams(o){
     to_email: s.ej_to || ""
   };
 }
+function noteMail(o, txt){
+  o.mail = (o.mail ? o.mail + " · " : "") + txt;
+  cacheOrders();
+  if (FB_OK && o.code){ try{ db.collection("ocw_orders").doc(o.code).update({mail:o.mail}); }catch(e){} }
+  if (currentRoute()==="hq" && hqUnlocked) renderOrders();
+}
 function sendOrderEmails(o){
-  if (!ejReady()) return;
-  if (!ejInit()) return;
   var s = store.settings;
+  if (!s.ej_on){ noteMail(o, "email off"); return; }
+  if (typeof emailjs === "undefined"){ noteMail(o, "✕ EmailJS didn't load"); return; }
+  if (!s.ej_key || !s.ej_svc){ noteMail(o, "✕ missing key/service"); return; }
+  if (!ejInit()){ noteMail(o, "✕ bad public key"); return; }
   var p = ejParams(o);
   // 1) alert to the owner
   if (s.ej_tpl_owner && s.ej_to){
     try{
-      emailjs.send(s.ej_svc, s.ej_tpl_owner, p).catch(function(err){
-        console.warn("Owner alert failed:", err);
-      });
-    }catch(e){}
+      emailjs.send(s.ej_svc, s.ej_tpl_owner, p)
+        .then(function(){ noteMail(o, "✓ alert sent"); })
+        .catch(function(err){ noteMail(o, "✕ alert: " + ejErr(err)); });
+    }catch(e){ noteMail(o, "✕ alert threw"); }
+  } else {
+    noteMail(o, "✕ no owner template/email");
   }
   // 2) confirmation to the customer — only if they actually gave an email
   if (s.ej_tpl_cust && p.email && /@/.test(p.email)){
     try{
-      emailjs.send(s.ej_svc, s.ej_tpl_cust, p).catch(function(err){
-        console.warn("Customer confirmation failed:", err);
-      });
-    }catch(e){}
+      emailjs.send(s.ej_svc, s.ej_tpl_cust, p)
+        .then(function(){ noteMail(o, "✓ customer confirmed"); })
+        .catch(function(err){ noteMail(o, "✕ customer: " + ejErr(err)); });
+    }catch(e){ noteMail(o, "✕ customer threw"); }
+  } else if (s.ej_tpl_cust && !p.email){
+    noteMail(o, "no customer email given");
   }
+}
+function ejErr(err){
+  if (!err) return "unknown";
+  if (err.text) return err.text;
+  if (err.status) return "HTTP " + err.status;
+  return String(err.message || err).slice(0, 60);
 }
 function testEmails(){
   saveSettings();
