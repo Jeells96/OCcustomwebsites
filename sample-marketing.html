@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Evergreen Yardworks — Landscaping & Yard Care, Oregon City</title>
 <meta name="description" content="Full-service landscaping, cleanups, and year-round yard care in Clackamas County. Free estimates.">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -34,7 +37,7 @@ nav .links a:hover{color:var(--green)}
 nav .call{background:var(--green);color:#fff !important;padding:9px 16px;border-radius:8px;font-weight:600}
 .menu-btn{display:none;background:none;border:none;font-size:26px;color:var(--green);cursor:pointer}
 /* hero */
-.hero{background:linear-gradient(160deg,#213D27 0%,#2F5D3A 55%,#3C6E47 100%);color:#fff;padding:84px 0 90px;position:relative;overflow:hidden}
+.hero{background:linear-gradient(160deg,rgba(23,42,27,.88) 0%,rgba(37,72,45,.86) 55%,rgba(46,84,54,.84) 100%),url("https://images.unsplash.com/photo-1668120089662-42642838cfef?auto=format&fit=crop&q=70&w=1600") center/cover no-repeat,linear-gradient(160deg,#213D27,#2F5D3A);color:#fff;padding:84px 0 90px;position:relative;overflow:hidden}
 .hero::after{content:"";position:absolute;inset:auto -8% -46% -8%;height:70%;background:radial-gradient(ellipse at center,rgba(123,161,132,.35),transparent 65%)}
 .hero h1{font-size:clamp(34px,5.4vw,54px);color:#fff;max-width:640px}
 .hero p.sub{margin:18px 0 30px;font-size:19px;color:#DCE8DE;max-width:560px}
@@ -68,12 +71,12 @@ h2{font-size:clamp(26px,3.6vw,38px);margin-bottom:14px}
 .tile{border-radius:14px;overflow:hidden;aspect-ratio:4/3;position:relative;display:flex;align-items:flex-end}
 .tile span{position:relative;z-index:2;color:#fff;font-weight:600;font-size:14px;padding:14px 16px;text-shadow:0 2px 8px rgba(0,0,0,.5)}
 .tile::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(20,30,20,.55),transparent 55%)}
-.t1{background:linear-gradient(135deg,#39683F,#7BA184)}
-.t2{background:linear-gradient(135deg,#6B7F4F,#A7B97E)}
-.t3{background:linear-gradient(135deg,#2F4A33,#5F8A66)}
-.t4{background:linear-gradient(135deg,#4E6B3E,#8FAF77)}
-.t5{background:linear-gradient(135deg,#33523B,#6E9877)}
-.t6{background:linear-gradient(135deg,#5A7345,#9DB483)}
+.t1{background:url("https://images.unsplash.com/photo-1700689807667-82630348b301?auto=format&fit=crop&q=70&w=800") center/cover no-repeat,linear-gradient(135deg,#39683F,#7BA184)}
+.t2{background:url("https://images.unsplash.com/photo-1689728222087-6984f72460c4?auto=format&fit=crop&q=70&w=800") center/cover no-repeat,linear-gradient(135deg,#6B7F4F,#A7B97E)}
+.t3{background:url("https://images.unsplash.com/photo-1663185777390-d44a6f4724b9?auto=format&fit=crop&q=70&w=800") center/cover no-repeat,linear-gradient(135deg,#2F4A33,#5F8A66)}
+.t4{background:url("https://images.unsplash.com/photo-1734079692160-fcbe4be6ab96?auto=format&fit=crop&q=70&w=800") center/cover no-repeat,linear-gradient(135deg,#4E6B3E,#8FAF77)}
+.t5{background:url("https://images.unsplash.com/photo-1592595896616-c37162298647?auto=format&fit=crop&q=70&w=800") center/cover no-repeat,linear-gradient(135deg,#33523B,#6E9877)}
+.t6{background:url("https://images.unsplash.com/photo-1597201278257-3687be27d954?auto=format&fit=crop&q=70&w=800") center/cover no-repeat,linear-gradient(135deg,#5A7345,#9DB483)}
 /* reviews */
 .rev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
 .rev{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px}
