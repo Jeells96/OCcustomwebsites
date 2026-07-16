@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Riverbend Guide Co. — Willamette River Fishing Trips (Sample Hybrid Build)</title>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -35,6 +38,8 @@ nav .links a:hover{color:var(--ink)}
 /* hero */
 .hero{padding:88px 0 80px;background:
   radial-gradient(ellipse 90% 60% at 70% -10%, rgba(232,163,61,.14), transparent),
+  linear-gradient(170deg, rgba(14,34,40,.86) 0%, rgba(14,34,38,.92) 60%),
+  url("https://images.unsplash.com/photo-1532015917327-c7c46aa1d930?auto=format&fit=crop&q=70&w=1600") center/cover no-repeat,
   linear-gradient(170deg, #10282D 0%, #0E2226 60%);position:relative;overflow:hidden}
 .hero::before{content:"";position:absolute;left:0;right:0;bottom:0;height:120px;
   background:repeating-linear-gradient(-2deg, transparent 0 34px, rgba(36,80,89,.35) 34px 36px);opacity:.5}
@@ -53,7 +58,7 @@ h2{font-size:clamp(25px,3.4vw,36px);margin-bottom:12px}
 .trip{background:var(--pine);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:.18s}
 .trip:hover{transform:translateY(-3px);border-color:var(--amber)}
 .trip .ph{height:130px;display:flex;align-items:flex-end;padding:12px 16px;font-weight:700;font-family:'Bitter',serif;font-size:17px;text-shadow:0 2px 10px rgba(0,0,0,.6)}
-.ph.a{background:linear-gradient(135deg,#1E4E5A,#3B7D8A)} .ph.b{background:linear-gradient(135deg,#204B3C,#3F8465)} .ph.c{background:linear-gradient(135deg,#4A3B21,#8A6E3B)}
+.ph.a{background:linear-gradient(to top,rgba(10,25,30,.72),rgba(10,25,30,.12)),url("https://images.unsplash.com/photo-1725030807946-007ae882dd56?auto=format&fit=crop&q=70&w=800") center/cover no-repeat,linear-gradient(135deg,#1E4E5A,#3B7D8A)} .ph.b{background:linear-gradient(to top,rgba(10,25,30,.72),rgba(10,25,30,.12)),url("https://images.unsplash.com/photo-1573956869478-7f1f3bed8d14?auto=format&fit=crop&q=70&w=800") center/cover no-repeat,linear-gradient(135deg,#204B3C,#3F8465)} .ph.c{background:linear-gradient(to top,rgba(10,25,30,.72),rgba(10,25,30,.12)),url("https://images.unsplash.com/photo-1673284498219-70170a4a69ae?auto=format&fit=crop&q=70&w=800") center/cover no-repeat,linear-gradient(135deg,#4A3B21,#8A6E3B)}
 .trip .bd{padding:18px}
 .trip .bd p{color:var(--mut);font-size:14px;margin-bottom:14px}
 .trip .row{display:flex;align-items:baseline;justify-content:space-between}
