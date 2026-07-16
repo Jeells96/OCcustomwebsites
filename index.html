@@ -69,7 +69,7 @@ nav{
   border-bottom:1px solid #2A3038;
   transition:height .3s ease, box-shadow .3s ease;
 }
-nav.shrunk{height:56px;box-shadow:0 6px 24px rgba(0,0,0,.55)}
+nav.shrunk{height:calc(56px + var(--safe-t));box-shadow:0 6px 24px rgba(0,0,0,.55)}
 .brand{display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none}
 .hexlogo{width:44px;height:48px;flex:0 0 auto;filter:drop-shadow(0 2px 6px rgba(0,0,0,.6));transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
 .brand:hover .hexlogo{transform:rotate(-8deg) scale(1.06)}
@@ -106,6 +106,13 @@ nav.shrunk{height:56px;box-shadow:0 6px 24px rgba(0,0,0,.55)}
 
 /* ---------- page shell / transitions ---------- */
 .page{display:none;padding-top:calc(var(--nav-h) + var(--safe-t));min-height:100vh}
+.page.entering{animation:pageIn .34s cubic-bezier(.22,.8,.3,1) both}
+@keyframes pageIn{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@media (prefers-reduced-motion: reduce){ .page.entering{animation:none} }
+#sparkCanvas{position:fixed;inset:0;z-index:880;pointer-events:none}
 .page.on{display:block;animation:pageIn .45s ease both}
 @keyframes pageIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 .wrap{max-width:1180px;margin:0 auto;padding:0 22px}
@@ -1318,7 +1325,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 <!-- ============ LIGHTBOX ============ -->
 <div id="lightbox" onclick="this.classList.remove('on')"><img id="lightImg" alt=""></div>
 
-<div class="verbadge" id="verBadge">OC SHOWCASE v10.0</div>
+<div class="verbadge" id="verBadge">OC SHOWCASE v10.1</div>
 <div id="toast"></div>
 
 <!-- Firebase (compat SDK via CDN) -->
@@ -1395,7 +1402,16 @@ function renderRoute(){
   var r = currentRoute();
   ROUTES.forEach(function(x){
     var pg = document.getElementById("pg-"+x);
-    if (pg) pg.classList.toggle("on", x===r);
+    if (pg){
+      var was = pg.classList.contains("on");
+      pg.classList.toggle("on", x===r);
+      if (x===r && !was){
+        pg.classList.remove("entering");
+        void pg.offsetWidth;             // restart the animation
+        pg.classList.add("entering");
+        setTimeout(function(){ pg.classList.remove("entering"); }, 400);
+      }
+    }
   });
   document.querySelectorAll(".navlinks a").forEach(function(a){
     a.classList.toggle("active", a.getAttribute("data-r")===r);
@@ -1409,7 +1425,7 @@ function renderRoute(){
   document.body.style.overflow = "";
   window.scrollTo(0,0);
   requestAnimationFrame(bindReveals);
-  if (r==="home"){ renderShowcase(); } else { stopShowcase(); stopModeTimers(); }
+  if (r==="home"){ renderShowcase(); setTimeout(heroSpark, 450); } else { stopShowcase(); stopModeTimers(); }
   if (r==="demos"){ initCalendar(); renderBADemo(); initSplit(); initFormDemo(); }
   if (r==="admin") renderAdmin();
   if (r==="hq") renderHQ();
@@ -1421,6 +1437,35 @@ window.addEventListener("hashchange", renderRoute);
 var nav = document.getElementById("nav");
 var burger = document.getElementById("burger");
 var mmenu = document.getElementById("mmenu");
+/* ===== standalone (home-screen app) safe-area enforcement =====
+   iOS in app mode can (a) ignore the status-bar meta and run content under
+   the clock, and (b) report env(safe-area-inset-top) as 0. So: detect app
+   mode in JS, PROBE the real env() value, and if iOS lies, set the inset
+   ourselves. Everything downstream already derives from --safe-t. */
+function enforceSafeArea(){
+  var standalone = (window.navigator.standalone === true) ||
+                   (window.matchMedia && matchMedia("(display-mode: standalone)").matches);
+  if (!standalone) return; // Safari: env() handles it (0 needed anyway)
+  var probe = document.createElement("div");
+  probe.style.cssText = "position:fixed;top:env(safe-area-inset-top,0px);left:0;width:1px;height:1px;visibility:hidden;pointer-events:none";
+  document.body.appendChild(probe);
+  var measured = probe.getBoundingClientRect().top;
+  document.body.removeChild(probe);
+  var inset = measured;
+  if (!inset || inset < 10){
+    // env() is lying — fall back by screen shape: tall iPhones (notch /
+    // Dynamic Island) need ~59pt, older squat screens ~24pt
+    var ratio = Math.max(screen.height, screen.width) / Math.min(screen.height, screen.width);
+    inset = ratio >= 2 ? 59 : 24;
+  }
+  document.documentElement.style.setProperty("--safe-t", inset + "px");
+  var ratio2 = Math.max(screen.height, screen.width) / Math.min(screen.height, screen.width);
+  document.documentElement.style.setProperty("--safe-b", (ratio2 >= 2 ? 34 : 0) + "px");
+  document.documentElement.classList.add("standalone");
+}
+enforceSafeArea();
+window.addEventListener("orientationchange", function(){ setTimeout(enforceSafeArea, 350); });
+
 window.addEventListener("scroll", function(){
   nav.classList.toggle("shrunk", window.scrollY > 40);
 }, {passive:true});
@@ -3749,6 +3794,89 @@ function estimateBuild(o){
 }
 function hasAnsPage(a, p){ return (a.pages||[]).indexOf(p) >= 0; }
 function fmtK(n){ return n >= 1000 ? (Math.round(n/100)/10) + "K" : String(n); }
+
+
+/* ================= SPARK ENGINE (subtle, one-shot bursts) ================= */
+var sparks = { c:null, ctx:null, ps:[], running:false };
+var REDUCED = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+function sparkCanvas(){
+  if (sparks.c) return sparks.c;
+  sparks.c = document.createElement("canvas");
+  sparks.c.id = "sparkCanvas";
+  document.body.appendChild(sparks.c);
+  sparks.ctx = sparks.c.getContext("2d");
+  return sparks.c;
+}
+function sparkBurst(x, y, n, spread){
+  if (REDUCED) return;
+  var c = sparkCanvas();
+  c.width = innerWidth; c.height = innerHeight;
+  n = n || 26; spread = spread || Math.PI;
+  for (var i=0;i<n;i++){
+    var ang = -Math.PI/2 + (Math.random()-0.5)*spread;
+    var sp = 2 + Math.random()*6;
+    sparks.ps.push({
+      x:x, y:y,
+      vx:Math.cos(ang)*sp, vy:Math.sin(ang)*sp,
+      life:1, decay:0.02+Math.random()*0.03,
+      w:1+Math.random()*2,
+      hot:Math.random() < 0.3
+    });
+  }
+  if (!sparks.running){ sparks.running = true; requestAnimationFrame(sparkTick); }
+}
+function sparkTick(){
+  var ctx = sparks.ctx, c = sparks.c;
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.globalCompositeOperation = "lighter";
+  var alive = [];
+  for (var i=0;i<sparks.ps.length;i++){
+    var p = sparks.ps[i];
+    p.vy += 0.22;               // gravity
+    p.x += p.vx; p.y += p.vy;
+    p.life -= p.decay;
+    if (p.life <= 0 || p.y > c.height + 10) continue;
+    alive.push(p);
+    var a = Math.max(0, p.life);
+    ctx.strokeStyle = p.hot ? "rgba(255,240,200,"+a+")" : "rgba(255,"+(90+Math.floor(120*a))+",40,"+a+")";
+    ctx.lineWidth = p.w * a;
+    ctx.beginPath();
+    ctx.moveTo(p.x - p.vx*1.6, p.y - p.vy*1.6);
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+  }
+  sparks.ps = alive;
+  if (alive.length){ requestAnimationFrame(sparkTick); }
+  else { sparks.running = false; ctx.clearRect(0,0,c.width,c.height); }
+}
+/* hero underline burst: grinder finishing the cut, once per visit */
+var heroSparked = false;
+function heroSpark(){
+  if (heroSparked || REDUCED) return;
+  var u = document.querySelector("#pg-home .weld");
+  if (!u) return;
+  heroSparked = true;
+  /* ride the tip of the weld-bead animation (1.1s, .35s delay, ease) */
+  var start = performance.now();
+  var DELAY = 0, DUR = 1100;   // heroSpark is already called ~450ms in; bead is mid-run
+  function tip(){
+    var r = u.getBoundingClientRect();
+    if (!r.width){ requestAnimationFrame(tip); return; }
+    var x = r.left + r.width;      // current end of the bead
+    var y = r.top + r.height/2;
+    sparkBurst(x, y, 7, Math.PI*0.85);
+    if (performance.now() - start < DUR){ setTimeout(tip, 110); }
+    else { sparkBurst(x, y, 18, Math.PI); }   // finishing pop
+  }
+  tip();
+}
+/* red CTA taps: small pop at the tap point */
+document.addEventListener("click", function(e){
+  var b = e.target.closest ? e.target.closest(".btn-red") : null;
+  if (!b || REDUCED) return;
+  sparkBurst(e.clientX || (b.getBoundingClientRect().left + b.offsetWidth/2),
+             e.clientY || b.getBoundingClientRect().top, 14, Math.PI*1.2);
+}, true);
 
 /* ================= EMAIL NOTIFICATIONS (EmailJS) ================= */
 function ejReady(){
