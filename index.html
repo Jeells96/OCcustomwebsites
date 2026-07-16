@@ -1325,7 +1325,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 <!-- ============ LIGHTBOX ============ -->
 <div id="lightbox" onclick="this.classList.remove('on')"><img id="lightImg" alt=""></div>
 
-<div class="verbadge" id="verBadge">OC SHOWCASE v10.1</div>
+<div class="verbadge" id="verBadge">OC SHOWCASE v10.2</div>
 <div id="toast"></div>
 
 <!-- Firebase (compat SDK via CDN) -->
@@ -1346,22 +1346,50 @@ var firebaseConfig = {
   messagingSenderId: "1011539617993",
   appId: "1:1011539617993:web:64921ffdb52a3d27634518"
 };
-var FB_OK = false, db = null;
+var FB_OK = false, FB_VERIFIED = false, FB_ERR = "", db = null;
+function fbFail(where, e){
+  FB_ERR = where + ": " + fbMsg(e);
+  console.warn("[Firebase]", FB_ERR, e);
+  updateFbNote();
+}
+function fbMsg(e){
+  if (!e) return "unknown error";
+  var m = e.message || String(e);
+  if (/referer|referrer|api key|api_key|blocked/i.test(m)) return "this domain is blocked by your Firebase API key restrictions";
+  if (e.code === "permission-denied") return "Firestore rules are blocking reads/writes";
+  if (e.code === "unavailable") return "can't reach Firestore (network/ad-blocker?)";
+  return (e.code ? e.code + " — " : "") + m.slice(0, 90);
+}
 function initFirebase(){
   try{
-    if (typeof firebase === "undefined" || !firebase.initializeApp) return;
+    if (typeof firebase === "undefined" || !firebase.initializeApp){ updateFbNote(); return; }
     firebase.initializeApp(firebaseConfig);
     db = firebase.firestore();
     FB_OK = true;
+    // don't claim "synced" until a real round-trip succeeds
+    db.collection("ocw_config").doc("settings").get()
+      .then(function(){ FB_VERIFIED = true; FB_ERR = ""; updateFbNote(); })
+      .catch(function(e){ fbFail("connection test", e); });
     subscribeCloud();
-  }catch(e){ FB_OK = false; }
+  }catch(e){ FB_OK = false; fbFail("init", e); }
   updateFbNote();
 }
 function updateFbNote(){
   var n = document.getElementById("fbNote");
   if (!n) return;
-  if (FB_OK){ n.textContent = "☁ Live sync ON — orders land here from any device"; n.style.borderColor = "var(--green)"; n.style.color = "var(--green)"; }
-  else { n.textContent = "⚠ Offline — this device only (couldn't reach cloud)"; }
+  if (FB_ERR){
+    n.textContent = "✕ Sync failing — " + FB_ERR;
+    n.style.borderColor = "var(--red)"; n.style.color = "var(--red)";
+  } else if (FB_OK && FB_VERIFIED){
+    n.textContent = "☁ Live sync ON — verified, orders land here from any device";
+    n.style.borderColor = "var(--green)"; n.style.color = "var(--green)";
+  } else if (FB_OK){
+    n.textContent = "… Connecting to cloud sync";
+    n.style.borderColor = ""; n.style.color = "";
+  } else {
+    n.textContent = "⚠ Offline — this device only (couldn't reach cloud)";
+    n.style.borderColor = "var(--red)"; n.style.color = "var(--red)";
+  }
 }
 function subscribeCloud(){
   if (!FB_OK) return;
@@ -1369,27 +1397,28 @@ function subscribeCloud(){
     db.collection("ocw_config").doc("settings").onSnapshot(function(doc){
       if (doc.exists){ store.settings = Object.assign({}, DEFAULT_SET, doc.data()); applySettings();
         if (currentRoute()==="hq" && hqUnlocked) fillSettingsForm(); }
-    });
+    }, function(e){ fbFail("settings sync", e); });
     db.collection("ocw_orders").orderBy("epoch","desc").onSnapshot(function(snap){
       store.orders = [];
       snap.forEach(function(d){ store.orders.push(Object.assign({_docId:d.id}, d.data())); });
       try{ localStorage.setItem("ocw_orders_cache", JSON.stringify(store.orders)); }catch(e){}
+      FB_VERIFIED = true; FB_ERR = ""; updateFbNote();
       if (currentRoute()==="hq" && hqUnlocked) renderOrders();
-    });
+    }, function(e){ fbFail("orders sync", e); });
     db.collection("ocw_photos").orderBy("epoch","desc").onSnapshot(function(snap){
       store.photos = [];
       snap.forEach(function(d){ store.photos.push({id:d.id, data:d.data().data}); });
       cachePhotos();
       renderShowcase();
       if (currentRoute()==="hq" && hqUnlocked) renderPhotoMgr();
-    });
+    }, function(e){ fbFail("photos sync", e); });
     db.collection("ocw_ba").orderBy("epoch","desc").onSnapshot(function(snap){
       store.bapairs = [];
       snap.forEach(function(d){ store.bapairs.push({id:d.id, before:d.data().before, after:d.data().after}); });
       cacheBA();
       if (currentRoute()==="demos") renderBADemo();
       if (currentRoute()==="hq" && hqUnlocked) renderBAMgr();
-    });
+    }, function(e){ fbFail("before/after sync", e); });
   }catch(e){}
 }
 /* ================= ROUTER (back-button safe) ================= */
@@ -3172,7 +3201,7 @@ function wizSubmit(){
   };
   // write to cloud if available; always cache locally + show immediately
   if (FB_OK){
-    try{ db.collection("ocw_orders").doc(code).set(order); }catch(e){}
+    db.collection("ocw_orders").doc(code).set(order).catch(function(e){ fbFail("order upload", e); });
   }
   store.orders.unshift(order);
   cacheOrders();
@@ -3305,12 +3334,12 @@ function renderOrders(){
 }
 function cycleStatus(o){
   o.status = o.status==="new" ? "building" : o.status==="building" ? "delivered" : "new";
-  if (FB_OK){ try{ db.collection("ocw_orders").doc(o.code).update({status:o.status}); }catch(e){} }
+  if (FB_OK){ db.collection("ocw_orders").doc(o.code).update({status:o.status}).catch(function(e){ fbFail("order update", e); }); }
   cacheOrders(); renderOrders();
 }
 function delOrder(o){
   if (!confirm("Delete order " + o.code + " (" + (o.ans.biz||"") + ")? This can't be undone.")) return;
-  if (FB_OK){ try{ db.collection("ocw_orders").doc(o.code).delete(); }catch(e){} }
+  if (FB_OK){ db.collection("ocw_orders").doc(o.code).delete().catch(function(e){ fbFail("order delete", e); }); }
   store.orders = store.orders.filter(function(x){ return x.code !== o.code; });
   cacheOrders(); renderOrders();
 }
@@ -3555,7 +3584,7 @@ function handlePhotoFiles(files){
         var id = "PH" + Date.now().toString(36) + Math.floor(Math.random()*900+100);
         var rec = {id:id, data:dataUrl};
         store.photos.unshift(rec);
-        if (FB_OK){ try{ db.collection("ocw_photos").doc(id).set({data:dataUrl, epoch:Date.now()}); }catch(e){} }
+        if (FB_OK){ db.collection("ocw_photos").doc(id).set({data:dataUrl, epoch:Date.now()}).catch(function(e){ fbFail("photo upload", e); }); }
         cachePhotos();
         renderPhotoMgr();
         renderShowcase();
@@ -3592,7 +3621,7 @@ function renderPhotoMgr(){
 }
 function delPhoto(id){
   store.photos = store.photos.filter(function(p){ return p.id !== id; });
-  if (FB_OK){ try{ db.collection("ocw_photos").doc(id).delete(); }catch(e){} }
+  if (FB_OK){ db.collection("ocw_photos").doc(id).delete().catch(function(e){ fbFail("photo delete", e); }); }
   cachePhotos(); renderPhotoMgr(); renderShowcase();
   toast("Photo removed.");
 }
@@ -3624,7 +3653,7 @@ function saveSettings(){
     s["t"+t+"feat"] = feats;
   }
   cacheSettings(); applySettings();
-  if (FB_OK){ try{ db.collection("ocw_config").doc("settings").set(s); }catch(e){} }
+  if (FB_OK){ db.collection("ocw_config").doc("settings").set(s).catch(function(e){ fbFail("settings save", e); }); }
   toast(FB_OK ? "Saved & synced — live across every device." : "Saved on this device.");
 }
 
@@ -3659,7 +3688,7 @@ function saveBAPair(){
   var id = "BA" + Date.now().toString(36) + Math.floor(Math.random()*900+100);
   var rec = {id:id, before:pendingBA.before, after:pendingBA.after};
   store.bapairs.unshift(rec);
-  if (FB_OK){ try{ db.collection("ocw_ba").doc(id).set({before:rec.before, after:rec.after, epoch:Date.now()}); }catch(e){} }
+  if (FB_OK){ db.collection("ocw_ba").doc(id).set({before:rec.before, after:rec.after, epoch:Date.now()}).catch(function(e){ fbFail("before/after save", e); }); }
   cacheBA();
   pendingBA = {before:null, after:null};
   paintBASlots();
@@ -3668,7 +3697,7 @@ function saveBAPair(){
 }
 function delBAPair(id){
   store.bapairs = store.bapairs.filter(function(p){ return p.id !== id; });
-  if (FB_OK){ try{ db.collection("ocw_ba").doc(id).delete(); }catch(e){} }
+  if (FB_OK){ db.collection("ocw_ba").doc(id).delete().catch(function(e){ fbFail("before/after delete", e); }); }
   cacheBA(); renderBAMgr();
   toast("Pair removed.");
 }
@@ -3935,7 +3964,7 @@ function ejParams(o){
 function noteMail(o, txt){
   o.mail = (o.mail ? o.mail + " · " : "") + txt;
   cacheOrders();
-  if (FB_OK && o.code){ try{ db.collection("ocw_orders").doc(o.code).update({mail:o.mail}); }catch(e){} }
+  if (FB_OK && o.code){ db.collection("ocw_orders").doc(o.code).update({mail:o.mail}).catch(function(e){}); }
   if (currentRoute()==="hq" && hqUnlocked) renderOrders();
 }
 function sendOrderEmails(o){
@@ -4280,7 +4309,7 @@ function fallbackPrintQuote(c, biz, meta, notes, discTotal){
 function clearOrders(){
   if (!store.orders.length){ toast("Nothing to delete."); return; }
   if (!confirm("Delete ALL " + store.orders.length + " orders? This can't be undone.")) return;
-  if (FB_OK){ try{ store.orders.forEach(function(o){ db.collection("ocw_orders").doc(o.code).delete(); }); }catch(e){} }
+  if (FB_OK){ store.orders.forEach(function(o){ db.collection("ocw_orders").doc(o.code).delete().catch(function(e){ fbFail("order purge", e); }); }); }
   store.orders = []; cacheOrders(); renderOrders();
   toast("All orders deleted.");
 }
