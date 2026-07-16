@@ -833,7 +833,6 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
         <tr><td>Premium Photo Displays</td><td>Background photo shuffle or slideshow instead of a basic gallery</td><td style="color:var(--red);font-family:'Oswald';font-weight:700;font-size:13px;letter-spacing:1.5px">REQUEST A QUOTE</td></tr>
         <tr><td>News &amp; Updates</td><td>A section you can post news and updates to yourself</td><td style="color:var(--red);font-family:'Oswald';font-weight:700;font-size:13px;letter-spacing:1.5px">REQUEST A QUOTE</td></tr>
         <tr><td>Logo &amp; Branding</td><td>Custom logo, colors &amp; brand kit</td><td style="color:var(--red);font-family:'Oswald';font-weight:700;font-size:13px;letter-spacing:1.5px">REQUEST A QUOTE</td></tr>
-        <tr><td>Show Up Higher on Google</td><td>Search tune-up so more customers find you</td><td style="color:var(--red);font-family:'Oswald';font-weight:700;font-size:13px;letter-spacing:1.5px">REQUEST A QUOTE</td></tr>
         <tr><td>Business Email</td><td>you@yourbusiness.com professional address</td><td style="color:var(--red);font-family:'Oswald';font-weight:700;font-size:13px;letter-spacing:1.5px">REQUEST A QUOTE</td></tr>
       </tbody>
     </table>
@@ -1161,7 +1160,6 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
         <div><label class="fl">Photo Galleries $</label><input class="fi" id="s_a_gallery" inputmode="numeric"></div>
         <div><label class="fl">News Section $</label><input class="fi" id="s_a_blog" inputmode="numeric"></div>
         <div><label class="fl">Logo Kit $</label><input class="fi" id="s_a_logo" inputmode="numeric"></div>
-        <div><label class="fl">Google Ranking $</label><input class="fi" id="s_a_seo" inputmode="numeric"></div>
         <div><label class="fl">Biz Email $</label><input class="fi" id="s_a_email" inputmode="numeric"></div>
         <div class="full2"><label class="fl">Pricing Page Note</label><textarea class="fi" id="s_note" rows="2"></textarea></div>
 
@@ -1315,7 +1313,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 <!-- ============ LIGHTBOX ============ -->
 <div id="lightbox" onclick="this.classList.remove('on')"><img id="lightImg" alt=""></div>
 
-<div class="verbadge" id="verBadge">OC SHOWCASE v9.7</div>
+<div class="verbadge" id="verBadge">OC SHOWCASE v9.8</div>
 <div id="toast"></div>
 
 <!-- Firebase (compat SDK via CDN) -->
@@ -2185,10 +2183,10 @@ function renderSchedule(){
 var DEFAULT_SET = {
   ej_on:1, ej_key:"J1lAlu6JA47aW-W1R", ej_svc:"service_cwfrqra", ej_tpl_owner:"template_ik8631i", ej_tpl_cust:"template_wk30wdj", ej_to:"office@oregoncity-customwebsites.com", ej_from:"OC Custom Websites",
   t1b:600,t1y:250,t2b:1000,t2y:400,t3b:2000,t3y:700,
-  a_page:75,a_gallery:100,a_blog:150,a_logo:200,a_seo:200,a_email:50,
+  a_page:75,a_gallery:100,a_blog:150,a_logo:200,a_email:50,
   t1name:"The Storefront", t2name:"The Booking Rig", t3name:"The Command Center",
   t1pages:3, t2pages:6, t3pages:0,   /* 0 = unlimited */
-  t1feat:["Full custom design (no templates)","Up to 3 pages","Your own .com domain","Mobile-perfect on every phone","Tap-to-call & contact form","Map, hours & service area","Found-on-Google setup","Updates & support included"],
+  t1feat:["Full custom design (no templates)","Up to 3 pages","Your own .com domain","Mobile-perfect on every phone","Tap-to-call & contact form","Map, hours & service area","Updates & support included"],
   t2feat:["Live availability calendar","Trip / appointment request forms","Instant booking confirmations","Google reviews & star ratings","Testimonial showcase","Specials & newsletter tools","Before / after sliders","FAQ section"],
   t3feat:["Client accounts & login","Booking application & approval flow","Owner admin dashboard","Schedule builder","Deposits & payment collection","Automated email/text reminders","Cancellation & reschedule handling","Priority same-week support"],
   note:"◆ Founding-client rate: first builds in each business type get an introductory discount in exchange for a testimonial. Ask when you reach out."};
@@ -2712,7 +2710,6 @@ function wizQDef(tier){
   ups.push({k:"up_gal", l:"Extra photo galleries", tag:"QUOTE"});
   ups.push({k:"up_blog", l:"News / updates section you post to", tag:"QUOTE"});
   ups.push({k:"up_logo", l:"Logo & branding kit", tag:"QUOTE"});
-  ups.push({k:"up_seo", l:"Show up higher on Google", tag:"QUOTE"});
   ups.push({k:"up_email", l:"Professional email (you@yourbusiness.com)", tag:"QUOTE"});
   S.push({t:"Optional Extras", intro:"Want any of these on the build? We'll price them into your quote — nothing's locked in.", f:[
     {k:"upsells", l:"", ty:"upchecks", opts:ups}
@@ -2994,7 +2991,7 @@ function upFlags(){
     up_cal:"Booking calendar (Tier 2 upgrade)", up_rev:"Reviews section (Tier 2 upgrade)",
     up_dash:"Owner dashboard (Tier 3 upgrade)", up_dep:"Deposits & reminders (Tier 3 upgrade)",
     up_gal:"Extra photo galleries add-on", up_blog:"News/updates section add-on",
-    up_logo:"Logo & branding add-on", up_seo:"Higher Google ranking add-on", up_email:"Professional email add-on"};
+    up_logo:"Logo & branding add-on", up_email:"Professional email add-on"};
   (a.upsells||[]).forEach(function(k){ if (upNames[k]) flags.push("Interested: " + upNames[k]); });
   return flags;
 }
@@ -3168,7 +3165,7 @@ function hqDots(){
 function hqLock(){ hqUnlocked = false; hqClearPin(); renderHQ(); go("home"); }
 function fillSettingsForm(){
   var s = store.settings;
-  ["t1b","t1y","t2b","t2y","t3b","t3y","a_page","a_gallery","a_blog","a_logo","a_seo","a_email"].forEach(function(k){
+  ["t1b","t1y","t2b","t2y","t3b","t3y","a_page","a_gallery","a_blog","a_logo","a_email"].forEach(function(k){
     var el = document.getElementById("s_"+k); if (el) el.value = s[k];
   });
   var note = document.getElementById("s_note"); if (note) note.value = s.note;
@@ -3552,7 +3549,7 @@ function delPhoto(id){
 
 function saveSettings(){
   var s = store.settings;
-  ["t1b","t1y","t2b","t2y","t3b","t3y","a_page","a_gallery","a_blog","a_logo","a_seo","a_email"].forEach(function(k){
+  ["t1b","t1y","t2b","t2y","t3b","t3y","a_page","a_gallery","a_blog","a_logo","a_email"].forEach(function(k){
     var v = parseInt(document.getElementById("s_"+k).value, 10);
     if (!isNaN(v) && v >= 0) s[k] = v;
   });
@@ -3913,7 +3910,7 @@ function openQuote(o){
   }
   // add-on interests
   var upMap = {up_gal:["Extra photo galleries","a_gallery"], up_blog:["News / updates section","a_blog"],
-               up_logo:["Logo & branding kit","a_logo"], up_seo:["Higher Google ranking","a_seo"],
+               up_logo:["Logo & branding kit","a_logo"],
                up_email:["Professional email address","a_email"]};
   (a.upsells||[]).forEach(function(k){
     if (upMap[k]){
