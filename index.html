@@ -28,6 +28,9 @@
   --red:#CE2B2B; --red-d:#7E1618; --red-glow:rgba(206,43,43,.45);
   --white:#F2F4F6; --offw:#C9D0D6; --amber:#F5A623; --green:#3FA35B;
   --nav-h:72px;
+  --safe-t:env(safe-area-inset-top, 0px);
+  --safe-b:env(safe-area-inset-bottom, 0px);
+  --nav-total:calc(72px + env(safe-area-inset-top, 0px));
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
@@ -56,9 +59,11 @@ h1,h2,h3,.display{font-family:'Anton',sans-serif;font-weight:400;letter-spacing:
 
 /* ---------- nav ---------- */
 nav{
-  position:fixed;top:0;left:0;right:0;z-index:900;height:var(--nav-h);
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  height:calc(var(--nav-h) + var(--safe-t));
+  padding-top:var(--safe-t);
   display:flex;align-items:center;justify-content:space-between;
-  padding:0 20px;
+  padding-left:20px;padding-right:20px;
   background:rgba(16,18,22,.82);
   -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
   border-bottom:1px solid #2A3038;
@@ -89,7 +94,7 @@ nav.shrunk{height:56px;box-shadow:0 6px 24px rgba(0,0,0,.55)}
 .burger.open span:nth-child(2){opacity:0}
 .burger.open span:nth-child(3){top:21px;transform:rotate(-45deg)}
 .mobilemenu{
-  position:fixed;top:var(--nav-h);left:0;right:0;z-index:890;background:#101215;
+  position:fixed;top:calc(var(--nav-h) + var(--safe-t));left:0;right:0;z-index:890;background:#101215;
   border-bottom:2px solid var(--red);transform:translateY(-110%);transition:transform .35s ease;
 }
 .mobilemenu.open{transform:translateY(0)}
@@ -100,13 +105,13 @@ nav.shrunk{height:56px;box-shadow:0 6px 24px rgba(0,0,0,.55)}
 .mobilemenu a:active{background:var(--gun)}
 
 /* ---------- page shell / transitions ---------- */
-.page{display:none;padding-top:var(--nav-h);min-height:100vh}
+.page{display:none;padding-top:calc(var(--nav-h) + var(--safe-t));min-height:100vh}
 .page.on{display:block;animation:pageIn .45s ease both}
 @keyframes pageIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 .wrap{max-width:1180px;margin:0 auto;padding:0 22px}
 
 /* ---------- hero ---------- */
-.hero{position:relative;min-height:calc(100vh - var(--nav-h));display:flex;align-items:center;overflow:hidden}
+.hero{position:relative;min-height:calc(100vh - var(--nav-h) - var(--safe-t));display:flex;align-items:center;overflow:hidden}
 .hero-bg{position:absolute;inset:-60px 0;z-index:0;opacity:.5;will-change:transform}
 .hero-vig{position:absolute;inset:0;z-index:1;background:
   radial-gradient(ellipse 90% 70% at 50% 42%,transparent 30%,rgba(13,15,18,.92) 100%),
@@ -353,7 +358,7 @@ input.fi:focus,select.fi:focus,textarea.fi:focus{border-color:var(--red);box-sha
 footer{background:#0E1114;border-top:1px solid #2A3038;padding:40px 0 110px;margin-top:60px}
 footer .frow{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
 footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-transform:uppercase}
-.verbadge{position:fixed;bottom:14px;right:14px;z-index:950;font-size:10.5px;letter-spacing:2px;
+.verbadge{position:fixed;bottom:calc(14px + var(--safe-b));right:14px;z-index:950;font-size:10.5px;letter-spacing:2px;
   color:var(--steel-hi);background:rgba(16,18,21,.85);border:1px solid var(--steel);padding:5px 10px;
   font-weight:600;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 
@@ -1313,7 +1318,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 <!-- ============ LIGHTBOX ============ -->
 <div id="lightbox" onclick="this.classList.remove('on')"><img id="lightImg" alt=""></div>
 
-<div class="verbadge" id="verBadge">OC SHOWCASE v9.8</div>
+<div class="verbadge" id="verBadge">OC SHOWCASE v9.9</div>
 <div id="toast"></div>
 
 <!-- Firebase (compat SDK via CDN) -->
