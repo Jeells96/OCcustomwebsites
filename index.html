@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Oregon City Custom Websites — Industrial-Grade Web</title>
 <meta name="description" content="Custom websites built tough for local businesses. Honest pricing, real features, zero templates. Oregon City, OR.">
 <!-- ===== home-screen & tab icons (iOS needs a real, opaque PNG — not an SVG) ===== -->
@@ -28,9 +28,8 @@
   --red:#CE2B2B; --red-d:#7E1618; --red-glow:rgba(206,43,43,.45);
   --white:#F2F4F6; --offw:#C9D0D6; --amber:#F5A623; --green:#3FA35B;
   --nav-h:84px;
-  --safe-t:env(safe-area-inset-top, 0px);
-  --safe-b:env(safe-area-inset-bottom, 0px);
-  --nav-total:calc(84px + env(safe-area-inset-top, 0px));
+  --safe-t:0px;   /* iOS insets us natively now — no viewport-fit=cover */
+  --safe-b:0px;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
@@ -113,13 +112,7 @@ nav.shrunk{height:calc(66px + var(--safe-t));box-shadow:0 6px 24px rgba(0,0,0,.5
 }
 @media (prefers-reduced-motion: reduce){ .page.entering{animation:none} }
 #sparkCanvas{position:fixed;inset:0;z-index:880;pointer-events:none}
-/* app mode: hard-coded push below the iPhone status bar. No detection games. */
-@media all and (display-mode: standalone){
-  :root{ --safe-t:62px !important; --safe-b:34px !important; }
-}
-@media all and (display-mode: fullscreen){
-  :root{ --safe-t:62px !important; --safe-b:34px !important; }
-}
+
 .page.on{display:block;animation:pageIn .45s ease both}
 @keyframes pageIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 .wrap{max-width:1180px;margin:0 auto;padding:0 22px}
@@ -1351,7 +1344,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 <!-- ============ LIGHTBOX ============ -->
 <div id="lightbox" onclick="this.classList.remove('on')"><img id="lightImg" alt=""></div>
 
-<div class="verbadge" id="verBadge">OC SHOWCASE v10.8</div>
+<div class="verbadge" id="verBadge">OC SHOWCASE v11.0</div>
 <div id="toast"></div>
 
 <!-- Firebase (compat SDK via CDN) -->
@@ -1492,37 +1485,6 @@ window.addEventListener("hashchange", renderRoute);
 var nav = document.getElementById("nav");
 var burger = document.getElementById("burger");
 var mmenu = document.getElementById("mmenu");
-/* ===== standalone (home-screen app) safe-area enforcement =====
-   iOS in app mode can (a) ignore the status-bar meta and run content under
-   the clock, and (b) report env(safe-area-inset-top) as 0. So: detect app
-   mode in JS, PROBE the real env() value, and if iOS lies, set the inset
-   ourselves. Everything downstream already derives from --safe-t. */
-function enforceSafeArea(){
-  var isiOS = /iPhone|iPad|iPod/.test(navigator.userAgent) ||
-              (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-  var standalone = (window.navigator.standalone === true) ||
-                   (window.matchMedia && matchMedia("(display-mode: standalone)").matches);
-  // Safari always keeps some browser chrome, so the window never spans the
-  // full screen. If it does, we're the app — no matter what iOS claims.
-  var edgeToEdge = isiOS && Math.abs(window.innerHeight - screen.height) < 6;
-  if (!standalone && !edgeToEdge) return; // Safari: env() handles it (0 needed anyway)
-  var probe = document.createElement("div");
-  probe.style.cssText = "position:fixed;top:env(safe-area-inset-top,0px);left:0;width:1px;height:1px;visibility:hidden;pointer-events:none";
-  document.body.appendChild(probe);
-  var measured = probe.getBoundingClientRect().top;
-  document.body.removeChild(probe);
-  var ratio = Math.max(screen.height, screen.width) / Math.min(screen.height, screen.width);
-  var floor = ratio >= 2 ? 62 : 28;
-  var inset = Math.max(measured || 0, floor);
-  document.documentElement.style.setProperty("--safe-t", inset + "px", "important");
-  var ratio2 = Math.max(screen.height, screen.width) / Math.min(screen.height, screen.width);
-  document.documentElement.style.setProperty("--safe-b", (ratio2 >= 2 ? 34 : 0) + "px", "important");
-  document.documentElement.classList.add("standalone");
-}
-enforceSafeArea();
-window.addEventListener("load", function(){ setTimeout(enforceSafeArea, 500); });
-window.addEventListener("orientationchange", function(){ setTimeout(enforceSafeArea, 350); });
-
 window.addEventListener("scroll", function(){
   nav.classList.toggle("shrunk", window.scrollY > 40);
 }, {passive:true});
@@ -4055,7 +4017,7 @@ function heroSpark(){
   }
   tip();
 }
-/* ambient: the weld bar throws a spark every 15s while the home page is up */
+/* ambient: the weld bar throws a spark every 2s while the home page is up */
 var weldTimer = null;
 function startWeldSparks(){
   stopWeldSparks();
@@ -4067,8 +4029,8 @@ function startWeldSparks(){
     var r = u.getBoundingClientRect();
     if (r.bottom < 0 || r.top > innerHeight) return;   // bar scrolled off-screen — save the show
     var x = r.left + 4 + Math.random() * Math.max(1, r.width - 8);
-    sparkBurst(x, r.top + r.height/2, 9, Math.PI*0.9);
-  }, 15000);
+    sparkBurst(x, r.top + r.height/2, 6, Math.PI*0.9);
+  }, 2000);
 }
 function stopWeldSparks(){ if (weldTimer){ clearInterval(weldTimer); weldTimer = null; } }
 
