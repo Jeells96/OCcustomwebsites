@@ -586,6 +586,12 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 #lightbox.on{display:flex}
 #lightbox img{max-width:94vw;max-height:86vh;box-shadow:0 30px 80px rgba(0,0,0,.8);border:4px solid #F2F4F6}
 
+/* ---------- app-mode tap targets ---------- */
+.burger{position:relative}
+.burger::after{content:"";position:absolute;inset:-14px}
+.x{position:relative}
+.x::after{content:"";position:absolute;inset:-12px}
+
 /* ---------- pickable checklist ---------- */
 .chk.pickable div{cursor:pointer;transition:.14s}
 .chk.pickable div:hover{border-color:var(--red);background:#1F252B;transform:translateX(3px)}
@@ -1152,6 +1158,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 
     <div id="hq" style="display:none">
       <div class="fbnote" id="fbNote">Checking sync…</div>
+      <div class="fbnote" id="diagLine" style="margin-top:6px;font-size:10.5px;letter-spacing:.5px"></div>
 
       <div class="tierhead" style="margin-top:26px"><h3>Active Orders</h3><span class="badge n" id="hqCount">0 orders</span></div>
       <p style="color:var(--steel-hi);font-size:14px;margin-bottom:14px">Tap <b style="color:var(--white)">Copy for Claude</b> on any order, then paste it straight into a Claude chat to start the build.</p>
@@ -1325,7 +1332,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 <!-- ============ LIGHTBOX ============ -->
 <div id="lightbox" onclick="this.classList.remove('on')"><img id="lightImg" alt=""></div>
 
-<div class="verbadge" id="verBadge">OC SHOWCASE v10.2</div>
+<div class="verbadge" id="verBadge">OC SHOWCASE v10.5</div>
 <div id="toast"></div>
 
 <!-- Firebase (compat SDK via CDN) -->
@@ -1457,7 +1464,7 @@ function renderRoute(){
   if (r==="home"){ renderShowcase(); setTimeout(heroSpark, 450); } else { stopShowcase(); stopModeTimers(); }
   if (r==="demos"){ initCalendar(); renderBADemo(); initSplit(); initFormDemo(); }
   if (r==="admin") renderAdmin();
-  if (r==="hq") renderHQ();
+  if (r==="hq"){ renderHQ(); setTimeout(renderDiag, 300); }
 }
 function go(r){ location.hash = "#/"+r; }
 window.addEventListener("hashchange", renderRoute);
@@ -1493,11 +1500,40 @@ function enforceSafeArea(){
   document.documentElement.classList.add("standalone");
 }
 enforceSafeArea();
+window.addEventListener("load", function(){ setTimeout(enforceSafeArea, 500); });
 window.addEventListener("orientationchange", function(){ setTimeout(enforceSafeArea, 350); });
 
 window.addEventListener("scroll", function(){
   nav.classList.toggle("shrunk", window.scrollY > 40);
 }, {passive:true});
+/* ===== tap hardening for app mode =====
+   iOS standalone can swallow synthesized click events near the top of the
+   screen. touchend fires regardless — so critical top-strip controls get a
+   direct touchend handler (deduped so mouse clicks don't double-fire). */
+function hardTap(el){
+  if (!el || el.__hard) return;
+  el.__hard = 1;
+  el.setAttribute("data-hard", "1");
+  el.addEventListener("touchend", function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    el.__lastTap = Date.now();
+    el.click();   // programmatic (untrusted) — passes the blocker below
+  }, {passive:false});
+}
+/* kill the browser-synthesized click that follows a touch, so hardened
+   controls never double-fire. Trusted = came from the browser itself. */
+document.addEventListener("click", function(e){
+  var el = e.target && e.target.closest ? e.target.closest("[data-hard]") : null;
+  if (el && e.isTrusted && el.__lastTap && Date.now() - el.__lastTap < 500){
+    e.stopImmediatePropagation();
+    e.preventDefault();
+  }
+}, true);
+hardTap(document.getElementById("burger"));
+document.querySelectorAll(".mhead .x, #wizModal .x").forEach(hardTap);
+hardTap(document.getElementById("verBadge"));
+
 burger.addEventListener("click", function(){
   var open = mmenu.classList.toggle("open");
   burger.classList.toggle("open", open);
@@ -3653,8 +3689,17 @@ function saveSettings(){
     s["t"+t+"feat"] = feats;
   }
   cacheSettings(); applySettings();
-  if (FB_OK){ db.collection("ocw_config").doc("settings").set(s).catch(function(e){ fbFail("settings save", e); }); }
-  toast(FB_OK ? "Saved & synced — live across every device." : "Saved on this device.");
+  if (FB_OK){
+    toast("Saving…");
+    db.collection("ocw_config").doc("settings").set(s)
+      .then(function(){ toast("✓ Saved & synced — live across every device."); })
+      .catch(function(e){
+        fbFail("settings save", e);
+        toast("✕ NOT saved to cloud — " + fbMsg(e));
+      });
+  } else {
+    toast("Saved on this device only — no cloud sync.");
+  }
 }
 
 /* ================= BEFORE / AFTER PAIRS ================= */
@@ -3825,6 +3870,32 @@ function hasAnsPage(a, p){ return (a.pages||[]).indexOf(p) >= 0; }
 function fmtK(n){ return n >= 1000 ? (Math.round(n/100)/10) + "K" : String(n); }
 
 
+
+/* ================= APP-MODE DIAGNOSTICS (HQ) ================= */
+function renderDiag(){
+  var el = document.getElementById("diagLine");
+  if (!el) return;
+  try{
+    var standalone = (window.navigator.standalone === true) ||
+                     (window.matchMedia && matchMedia("(display-mode: standalone)").matches);
+    var safeT = getComputedStyle(document.documentElement).getPropertyValue("--safe-t").trim() || "0px";
+    var b = document.getElementById("burger");
+    var hit = "n/a";
+    if (b){
+      var r = b.getBoundingClientRect();
+      var cx = Math.round(r.left + r.width/2), cy = Math.round(r.top + r.height/2);
+      var topEl = document.elementFromPoint(cx, cy);
+      var covered = topEl && topEl !== b && !b.contains(topEl) && !topEl.contains(b);
+      hit = "burger@" + cx + "," + cy + " → " + (topEl ? (topEl.id ? "#"+topEl.id : topEl.tagName + (topEl.className && typeof topEl.className === "string" ? "."+topEl.className.split(" ")[0] : "")) : "nothing") + (covered ? " ✕ COVERED" : " ✓");
+    }
+    el.textContent = "📟 " + (standalone ? "APP MODE" : "browser") +
+      " · inset " + safeT +
+      " · win " + window.innerWidth + "×" + window.innerHeight +
+      " / scr " + screen.width + "×" + screen.height +
+      " · " + hit;
+  }catch(e){ el.textContent = "📟 diag error: " + e.message; }
+}
+
 /* ================= SPARK ENGINE (subtle, one-shot bursts) ================= */
 var sparks = { c:null, ctx:null, ps:[], running:false };
 var REDUCED = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -3979,7 +4050,7 @@ function sendOrderEmails(o){
     var po = Object.assign({}, p, {recipient: s.ej_to});
     try{
       emailjs.send(s.ej_svc, s.ej_tpl_owner, po)
-        .then(function(){ noteMail(o, "✓ alert sent"); })
+        .then(function(){ noteMail(o, "✓ alert → " + s.ej_to); })
         .catch(function(err){ noteMail(o, "✕ alert: " + ejErr(err)); });
     }catch(e){ noteMail(o, "✕ alert threw"); }
   } else {
@@ -3990,7 +4061,7 @@ function sendOrderEmails(o){
     var pc = Object.assign({}, p, {recipient: p.email});
     try{
       emailjs.send(s.ej_svc, s.ej_tpl_cust, pc)
-        .then(function(){ noteMail(o, "✓ customer confirmed"); })
+        .then(function(){ noteMail(o, "✓ confirm → " + p.email); })
         .catch(function(err){ noteMail(o, "✕ customer: " + ejErr(err)); });
     }catch(e){ noteMail(o, "✕ customer threw"); }
   } else if (s.ej_tpl_cust && !p.email){
