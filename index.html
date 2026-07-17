@@ -113,6 +113,13 @@ nav.shrunk{height:calc(66px + var(--safe-t));box-shadow:0 6px 24px rgba(0,0,0,.5
 }
 @media (prefers-reduced-motion: reduce){ .page.entering{animation:none} }
 #sparkCanvas{position:fixed;inset:0;z-index:880;pointer-events:none}
+/* app mode: hard-coded push below the iPhone status bar. No detection games. */
+@media all and (display-mode: standalone){
+  :root{ --safe-t:62px !important; --safe-b:34px !important; }
+}
+@media all and (display-mode: fullscreen){
+  :root{ --safe-t:62px !important; --safe-b:34px !important; }
+}
 .page.on{display:block;animation:pageIn .45s ease both}
 @keyframes pageIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 .wrap{max-width:1180px;margin:0 auto;padding:0 22px}
@@ -777,6 +784,18 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
     </div>
   </div>
 
+  <div class="wrap sect" style="padding-top:0" id="ordercheck">
+    <div class="tagplate reveal"><h2>Check On My Order</h2></div>
+    <p class="sect-sub reveal">Already sent us a build order? Punch in your order number — once your build kicks off, your own progress page goes live right here.</p>
+    <div class="reveal" style="display:flex;gap:10px;flex-wrap:wrap;max-width:520px">
+      <input class="fi" id="ordCheckIn" placeholder="OC-XXXXX" autocapitalize="characters" autocomplete="off"
+             style="flex:1;min-width:200px;font-family:'Oswald';letter-spacing:2px;font-size:17px"
+             onkeydown="if(event.key==='Enter')checkOrder()">
+      <button class="btn btn-red" onclick="checkOrder()">Check My Order <span class="arr">▸</span></button>
+    </div>
+    <div id="ordCheckMsg" style="margin-top:14px;font-size:14.5px;max-width:520px;line-height:1.6"></div>
+  </div>
+
   <div class="wrap sect" style="padding-top:0">
     <div class="tagplate reveal"><h2>Three Builds. Three Jobs.</h2></div>
     <p class="sect-sub reveal">We don't just build websites — we build the software that runs your business, or both in one. Three complete sample builds. Open them, tap around, break things.</p>
@@ -1332,7 +1351,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 <!-- ============ LIGHTBOX ============ -->
 <div id="lightbox" onclick="this.classList.remove('on')"><img id="lightImg" alt=""></div>
 
-<div class="verbadge" id="verBadge">OC SHOWCASE v10.6</div>
+<div class="verbadge" id="verBadge">OC SHOWCASE v10.7</div>
 <div id="toast"></div>
 
 <!-- Firebase (compat SDK via CDN) -->
@@ -1479,24 +1498,25 @@ var mmenu = document.getElementById("mmenu");
    mode in JS, PROBE the real env() value, and if iOS lies, set the inset
    ourselves. Everything downstream already derives from --safe-t. */
 function enforceSafeArea(){
+  var isiOS = /iPhone|iPad|iPod/.test(navigator.userAgent) ||
+              (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
   var standalone = (window.navigator.standalone === true) ||
                    (window.matchMedia && matchMedia("(display-mode: standalone)").matches);
-  if (!standalone) return; // Safari: env() handles it (0 needed anyway)
+  // Safari always keeps some browser chrome, so the window never spans the
+  // full screen. If it does, we're the app — no matter what iOS claims.
+  var edgeToEdge = isiOS && Math.abs(window.innerHeight - screen.height) < 6;
+  if (!standalone && !edgeToEdge) return; // Safari: env() handles it (0 needed anyway)
   var probe = document.createElement("div");
   probe.style.cssText = "position:fixed;top:env(safe-area-inset-top,0px);left:0;width:1px;height:1px;visibility:hidden;pointer-events:none";
   document.body.appendChild(probe);
   var measured = probe.getBoundingClientRect().top;
   document.body.removeChild(probe);
-  var inset = measured;
-  if (!inset || inset < 10){
-    // env() is lying — fall back by screen shape: tall iPhones (notch /
-    // Dynamic Island) need ~59pt, older squat screens ~24pt
-    var ratio = Math.max(screen.height, screen.width) / Math.min(screen.height, screen.width);
-    inset = ratio >= 2 ? 59 : 24;
-  }
-  document.documentElement.style.setProperty("--safe-t", inset + "px");
+  var ratio = Math.max(screen.height, screen.width) / Math.min(screen.height, screen.width);
+  var floor = ratio >= 2 ? 62 : 28;
+  var inset = Math.max(measured || 0, floor);
+  document.documentElement.style.setProperty("--safe-t", inset + "px", "important");
   var ratio2 = Math.max(screen.height, screen.width) / Math.min(screen.height, screen.width);
-  document.documentElement.style.setProperty("--safe-b", (ratio2 >= 2 ? 34 : 0) + "px");
+  document.documentElement.style.setProperty("--safe-b", (ratio2 >= 2 ? 34 : 0) + "px", "important");
   document.documentElement.classList.add("standalone");
 }
 enforceSafeArea();
@@ -3278,7 +3298,13 @@ function wizSubmit(){
     "<div style='text-align:center;padding:14px 0'>" +
     "<svg class='done-hex' viewBox='0 0 100 110'><polygon points='50,4 94,29 94,81 50,106 6,81 6,29' fill='#22262B' stroke='#3FA35B' stroke-width='7'/><text x='50' y='68' text-anchor='middle' font-family='Anton, sans-serif' font-size='40' fill='#F2F4F6'>✓</text></svg>" +
     "<div class='wstep-h'>Order Received</div>" +
-    "<p style='color:var(--offw);max-width:440px;margin:0 auto;line-height:1.7'>Thanks, " + esc((a.owner||"").split(" ")[0] || "friend") + " — your build sheet for <b style='color:var(--white)'>" + esc(a.biz||"your business") + "</b> is in the shop. We'll go through your answers and get back to you within seven days with an honest quote.</p></div>";
+    "<p style='color:var(--offw);max-width:440px;margin:0 auto;line-height:1.7'>Thanks, " + esc((a.owner||"").split(" ")[0] || "friend") + " — your build sheet for <b style='color:var(--white)'>" + esc(a.biz||"your business") + "</b> is in the shop. We'll go through your answers and get back to you within seven days with an honest quote.</p>" +
+    "<div style='margin:22px auto 0;max-width:440px;background:var(--gun);border:1px solid #2E353D;padding:16px 18px;text-align:left'>" +
+      "<div style='font-family:Oswald;letter-spacing:2px;font-size:12px;color:var(--steel-hi)'>YOUR ORDER NUMBER</div>" +
+      "<div style='font-family:Anton;font-size:26px;letter-spacing:3px;color:var(--red);margin:4px 0 10px'>" + esc(code) + "</div>" +
+      "<p style='color:var(--offw);font-size:13.5px;line-height:1.65;margin:0'>📌 <b style='color:var(--white)'>Save this number.</b> Once your build starts, your own progress page goes live — enter it in <b style='color:var(--white)'>Check On My Order</b> on our home page any time.</p>" +
+      "<p style='color:var(--offw);font-size:13.5px;line-height:1.65;margin:10px 0 0'>📬 A confirmation email is on the way — <b style='color:var(--white)'>check your junk/spam folder</b> if it's not in your inbox, and mark it Not Spam so your quote doesn't get lost.</p>" +
+    "</div></div>";
   document.getElementById("wizBack").style.visibility = "hidden";
   document.getElementById("wizNext").innerHTML = "Close <span class='arr'>▸</span>";
 }
@@ -3899,6 +3925,37 @@ function fmtK(n){ return n >= 1000 ? (Math.round(n/100)/10) + "K" : String(n); }
 
 
 
+/* ================= ORDER TRACKING (order-number pages) ================= */
+function ordCheckGo(url){ location.href = url; }
+function checkOrder(){
+  var inp = document.getElementById("ordCheckIn");
+  var msg = document.getElementById("ordCheckMsg");
+  var v = (inp.value || "").trim().toUpperCase().replace(/\s+/g, "");
+  if (!v){ inp.focus(); return; }
+  if (v.indexOf("OC-") !== 0 && /^[A-Z0-9]{3,10}$/.test(v)) v = "OC-" + v;   // forgive a missing prefix
+  inp.value = v;
+  msg.style.color = "var(--steel-hi)";
+  msg.textContent = "Checking " + v + "…";
+  fetch(encodeURIComponent(v) + ".html", {method:"HEAD", cache:"no-store"})
+    .then(function(r){
+      if (r.ok){
+        msg.style.color = "var(--green, #3FA35B)";
+        msg.textContent = "✓ Found it — opening your build page…";
+        setTimeout(function(){ ordCheckGo(encodeURIComponent(v) + ".html"); }, 350);
+      } else {
+        ordCheckNone(v);
+      }
+    })
+    .catch(function(){ ordCheckNone(v); });
+}
+function ordCheckNone(v){
+  var msg = document.getElementById("ordCheckMsg");
+  msg.style.color = "var(--steel-hi)";
+  msg.innerHTML = "Nothing posted yet for <b style='color:var(--white)'>" + v.replace(/[<>&]/g,"") + "</b>. " +
+    "Your build page goes live once work starts — usually alongside your quote. " +
+    "Double-check the number on your confirmation, or reply to your confirmation email and we'll sort it.";
+}
+
 /* ================= APP-MODE DIAGNOSTICS (HQ) ================= */
 function renderDiag(){
   var el = document.getElementById("diagLine");
@@ -4057,6 +4114,7 @@ function ejParams(o){
     full_brief: orderBrief(o),
     from_name: s.ej_from || "OC Custom Websites",
     to_email: s.ej_to || "",
+    track_url: "https://oregoncity-customwebsites.com/" + (o.code || "") + ".html",
     recipient: ""        // set per-send below — this is what the template's "To Email" should use
   };
 }
