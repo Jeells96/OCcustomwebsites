@@ -27,10 +27,10 @@
   --char:#15181C; --gun:#22262B; --steel:#3A424B; --steel-l:#5C6873; --steel-hi:#8A97A3;
   --red:#CE2B2B; --red-d:#7E1618; --red-glow:rgba(206,43,43,.45);
   --white:#F2F4F6; --offw:#C9D0D6; --amber:#F5A623; --green:#3FA35B;
-  --nav-h:72px;
+  --nav-h:84px;
   --safe-t:env(safe-area-inset-top, 0px);
   --safe-b:env(safe-area-inset-bottom, 0px);
-  --nav-total:calc(72px + env(safe-area-inset-top, 0px));
+  --nav-total:calc(84px + env(safe-area-inset-top, 0px));
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
@@ -69,7 +69,7 @@ nav{
   border-bottom:1px solid #2A3038;
   transition:height .3s ease, box-shadow .3s ease;
 }
-nav.shrunk{height:calc(56px + var(--safe-t));box-shadow:0 6px 24px rgba(0,0,0,.55)}
+nav.shrunk{height:calc(66px + var(--safe-t));box-shadow:0 6px 24px rgba(0,0,0,.55)}
 .brand{display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none}
 .hexlogo{width:44px;height:48px;flex:0 0 auto;filter:drop-shadow(0 2px 6px rgba(0,0,0,.6));transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
 .brand:hover .hexlogo{transform:rotate(-8deg) scale(1.06)}
@@ -1332,7 +1332,7 @@ footer .fsmall{font-size:12.5px;color:var(--steel-l);letter-spacing:1.5px;text-t
 <!-- ============ LIGHTBOX ============ -->
 <div id="lightbox" onclick="this.classList.remove('on')"><img id="lightImg" alt=""></div>
 
-<div class="verbadge" id="verBadge">OC SHOWCASE v10.5</div>
+<div class="verbadge" id="verBadge">OC SHOWCASE v10.6</div>
 <div id="toast"></div>
 
 <!-- Firebase (compat SDK via CDN) -->
@@ -2599,8 +2599,8 @@ function wizQDef(tier){
     {k:"hours", l:"Your hours", ty:"text"},
     {k:"lic", l:"License #, certifications, or insurance to display", ty:"text"},
     {k:"owner", l:"Your name", ty:"text", req:1},
-    {k:"phone", l:"Best phone number", ty:"text"},
-    {k:"email", l:"Best email", ty:"text"}
+    {k:"phone", l:"Best phone number (phone or email required)", ty:"text", pair:"email"},
+    {k:"email", l:"Best email", ty:"text", pair:"phone"}
   ]});
 
   /* ---------- 2. WHAT THE SITE SHOULD DO (drives everything after) ---------- */
@@ -2924,6 +2924,7 @@ function wizCollect(){
   var stepDef = wiz.steps[wiz.step];
   if (!stepDef) return true;
   var ok = true;
+  wiz._msg = "";
   stepDef.f.forEach(function(f){
     if (f.ty === "repeat"){
       var sv = collectSvcRows();
@@ -2942,7 +2943,7 @@ function wizCollect(){
         var oth = document.getElementById("w_"+f.k+"_other");
         if (otherOn){
           var t = oth ? oth.value.trim() : "";
-          if (!t){ ok = false; oth && oth.focus(); toast("Type what you meant by \u201cOther\u201d first."); }
+          if (!t){ ok = false; oth && oth.focus(); wiz._msg = "Type what you meant by \u201cOther\u201d first."; }
           else {
             t.split(",").forEach(function(part){ var p = part.trim(); if (p) vals.push(p); });
           }
@@ -2956,7 +2957,7 @@ function wizCollect(){
       if (f.other && isOtherVal(vv)){
         var oth2 = document.getElementById("w_"+f.k+"_other");
         var t2 = oth2 ? oth2.value.trim() : "";
-        if (!t2){ ok = false; oth2 && oth2.focus(); toast("Tell us what \u201c"+vv+"\u201d means first."); }
+        if (!t2){ ok = false; oth2 && oth2.focus(); wiz._msg = "Tell us what \u201c"+vv+"\u201d means first."; }
         else wiz.ans[f.k] = t2 + " (custom)";
       } else {
         wiz.ans[f.k] = vv;
@@ -2967,6 +2968,33 @@ function wizCollect(){
       if (f.req && !wiz.ans[f.k]){ ok = false; el2 && el2.focus(); }
     }
   });
+  // at least one way to reach them — otherwise the order is a dead end
+  var pairs = stepDef.f.filter(function(f){ return f.pair; });
+  if (pairs.length){
+    var anyFilled = pairs.some(function(f){ return (wiz.ans[f.k] || "").trim(); });
+    if (!anyFilled){
+      ok = false;
+      var first = document.getElementById("w_" + pairs[0].k);
+      if (first) first.focus();
+      wiz._msg = "Add a phone or an email so we can send your quote.";
+    } else {
+      // sanity-check whatever they did give
+      var em = (wiz.ans.email || "").trim();
+      if (em && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){
+        ok = false;
+        var ee = document.getElementById("w_email");
+        if (ee) ee.focus();
+        wiz._msg = "That email doesn't look right — check it?";
+      }
+      var ph = (wiz.ans.phone || "").trim();
+      if (ph && ph.replace(/[^0-9]/g, "").length < 10 && !em){
+        ok = false;
+        var pe = document.getElementById("w_phone");
+        if (pe) pe.focus();
+        wiz._msg = "That phone number looks short — add an email instead?";
+      }
+    }
+  }
   return ok;
 }
 function otherToggle(k, val){
@@ -3043,7 +3071,7 @@ function wizSkip(){
   if (wiz.step < wiz.steps.length - 1){ wiz.step++; wizRender(); }
 }
 function wizNav(dir){
-  if (dir > 0 && !wizCollect()){ toast("Fill the required field first."); return; }
+  if (dir > 0 && !wizCollect()){ toast(wiz._msg || "Fill the required field first."); return; }
   if (dir < 0) wizCollect();
   if (wiz.done){ closeWizard(); return; }
   var wasLast = wiz.step === wiz.steps.length - 1;
